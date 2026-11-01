@@ -2,7 +2,7 @@
 
 Neue Website für Funkelfilm (Videoproduktion, Hamburg). Vorschau: https://cansi798.github.io/funkelfilm/ (noindex).
 
-- **Technik:** Astro 7, rein statisch, keine Tracker, keine externen Schriften/CDNs. Schriften (Poppins, Mulish) selbst gehostet, Filmausschnitte selbst gehostet (MP4 + WebM), YouTube nur nach Klick (youtube-nocookie). Strenge CSP als Meta-Tag.
+- **Technik:** Astro 7, rein statisch, keine Tracker, keine externen Schriften/CDNs. Schriften (Instrument Serif, Archivo) selbst gehostet, Filmausschnitte selbst gehostet (MP4 + WebM), YouTube nur nach Klick (youtube-nocookie). Strenge CSP als Meta-Tag.
 - **Branches:** `quelle` = Quellcode, `main` = gebaute Seite für GitHub Pages.
 - **Inhalte:** eine Quelle der Wahrheit in `src/daten.ts`. Alles stammt von der bisherigen Seite funkelfilm.com; Fehlendes steht in `OFFENE-INFOS.md` und ist in der Vorschau rot gestrichelt markiert.
 - **Bilder/Filme:** Herkunft in `BILDER.md`.
