@@ -1,0 +1,25 @@
+# Funkelfilm
+
+> Funkelfilm aus Hamburg: Imagefilme, Kundenstimmen, Recruitingvideos und Eventfilme. Seit 2017 erzählt Sheeras Iqbal Geschichten in bewegten Bildern – ehrlich, kreativ und hochwertig.
+
+- Inhaber: Sheeras Iqbal, Videograf, Hamburg
+- Kontakt: kontakt@funkelfilm.com
+- Seit 2017 Imagefilme, über 100 Projekte (Stand 2024)
+
+## Leistungen
+- [Imagefilm](https://cansi798.github.io/funkelfilm/imagefilme/): Zeige, was dein Unternehmen besonders macht – authentisch und auf den Punkt.
+- [Kundenstimmen](https://cansi798.github.io/funkelfilm/erfahrungsberichte/): Lass deine Kunden zu Wort kommen und Vertrauen schaffen.
+- [Recruitingvideo](https://cansi798.github.io/funkelfilm/recruitingfilm/): Sprich potenzielle Mitarbeiter direkt an und zeige, warum dein Team besonders ist.
+- [Eventfilm](https://cansi798.github.io/funkelfilm/veranstaltungsfilm/): Halte besondere Momente fest und teile sie mit deinem Publikum.
+
+## Ablauf
+1. Beratung: Deine Vision verstehen
+2. Konzept: Kreative Planung
+3. Dreh: Professionelle Videoproduktion
+4. Postproduktion: Schnitt, Farbe, Ton
+5. Veröffentlichung: Bereit für deine Kanäle
+
+## Seiten
+- [Projekte und Kundenstimmen](https://cansi798.github.io/funkelfilm/erfolgsgeschichten/)
+- [Über Sheeras Iqbal](https://cansi798.github.io/funkelfilm/about/)
+- [Kontakt](https://cansi798.github.io/funkelfilm/kontakt/)
