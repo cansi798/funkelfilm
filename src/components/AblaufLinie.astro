@@ -1,0 +1,55 @@
+---
+// „So entsteht dein Film.“ – vertikale Zeitleiste; die goldene Linie zeichnet sich beim Scrollen mit (an die Scrollposition gekoppelt,
+// springt nie ans Ende, läuft beim Zurückscrollen zurück). Ohne JS bzw. bei reduzierter Bewegung: Linie ganz gezeichnet.
+// Details auf Abruf (Langfassung von der bisherigen Seite).
+import { ABLAUF_KURZ, ABLAUF } from "../daten";
+interface Props { titel?: string; id?: string; }
+const { titel = "So entsteht dein Film.", id = "ablauf" } = Astro.props;
+---
+<section class="abschnitt kompakt ablauf-linie" id={id} aria-labelledby={`${id}-titel`}>
+  <div class="huelle ablauf-raster">
+    <div class="ablauf-kopf">
+      <h2 id={`${id}-titel`}>{titel}</h2>
+      <p>Fünf Schritte, ein Ansprechpartner.</p>
+    </div>
+    <div class="ablauf-spur" data-linie>
+      <span class="ablauf-schiene" aria-hidden="true"><span class="ablauf-gold"></span></span>
+      <ol>
+        {ABLAUF_KURZ.map((s, i) => (
+          <li data-schritt>
+            <span class="ablauf-punkt" aria-hidden="true">{i + 1}</span>
+            <div>
+              <h3>{s.titel}</h3>
+              <p>{s.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <details class="ablauf-mehr">
+        <summary>Mehr zu jedem Schritt</summary>
+        <ol>{ABLAUF.map((a) => <li><strong>{a.titel}.</strong> {a.lang}</li>)}</ol>
+      </details>
+    </div>
+  </div>
+</section>
+<style>
+  .ablauf-raster { display: grid; gap: 2rem clamp(2rem, 6vw, 5rem); }
+  @media (min-width: 60rem) { .ablauf-raster { grid-template-columns: 0.8fr 1.2fr; } .ablauf-kopf { position: sticky; top: calc(var(--kopf-h) + 2rem); align-self: start; } }
+  .ablauf-spur { position: relative; --fort: 1; }
+  :global(.js) .ablauf-spur { --fort: 0; }
+  .ablauf-schiene { position: absolute; left: 1.15rem; top: 1.2rem; bottom: 4.2rem; width: 2px; background: rgba(141, 110, 77, 0.35); }
+  .ablauf-gold { position: absolute; inset: 0; background: var(--gelb); transform-origin: top; transform: scaleY(var(--fort)); }
+  .ablauf-spur ol { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(0.8rem, 2vw, 1.25rem); }
+  .ablauf-spur > ol > li { display: grid; grid-template-columns: 2.3rem 1fr; gap: 1.1rem; align-items: start; }
+  .ablauf-punkt { position: relative; z-index: 1; display: grid; place-items: center; width: 2.3rem; height: 2.3rem; border-radius: 50%; background: var(--nacht); border: 1.5px solid var(--bronze);
+    font: 600 0.9rem/1 var(--titel); color: var(--silber); transition: border-color 0.3s ease, color 0.3s ease, background-color 0.3s ease; }
+  :global(html:not(.js)) .ablauf-punkt, [data-schritt].erreicht .ablauf-punkt { border-color: var(--gelb); color: #0a0a0a; background: var(--gelb); }
+  .ablauf-spur h3 { margin: 0.35rem 0 0.15rem; }
+  .ablauf-spur li p { margin: 0; }
+  .ablauf-mehr { margin-top: 1.5rem; padding-left: 3.4rem; }
+  .ablauf-mehr summary { cursor: pointer; font: 600 0.98rem/1.3 var(--titel); color: var(--weiss); }
+  .ablauf-mehr ol { margin-top: 0.9rem; gap: 0.6rem; padding-left: 1.1rem; list-style: decimal; display: block; }
+  .ablauf-mehr li { margin-bottom: 0.6rem; }
+  .ablauf-mehr strong { color: var(--weiss); }
+  @media (prefers-reduced-motion: reduce) { :global(.js) .ablauf-spur { --fort: 1; } [data-schritt] .ablauf-punkt { border-color: var(--gelb); color: #0a0a0a; background: var(--gelb); } }
+</style>

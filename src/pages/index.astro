@@ -1,129 +1,52 @@
 ---
-// Startseite kompakt nach Customer Journey (Can 01.11.2026: „möglichst wenig Scrollen“):
-// Was macht Funkelfilm? (Hero) → Warum vertrauen? (Band) → Welche Filme? → Wie sieht das aus? → Wie läuft es ab?
-// → Wer steckt dahinter + was sagen Kunden? → Anfrage. Details auf den Unterseiten; am Handy wischbare Reihen statt langer Listen.
+// Startseite nach Jamils Konzept „FUNKELFILM 2027“ (Talk 4222, 01.11.2026): Besucher zuerst verstehen, dann Funkelfilm als Lösung zeigen.
+// Hero → Vertrauen → „Kommt dir das bekannt vor?“ → Lösung → Projekte → Mensch → Ziele → Stimmen → Ablauf → Fragen → Schluss (im Layout).
+// Kompakt gehalten (Can: möglichst wenig Scrollen): am Handy wischbare Reihen und aufklappbare Karten.
 import Basis from "../layouts/Basis.astro";
-import HeroSucher from "../components/HeroSucher.astro";
-import LeistungKarten from "../components/LeistungKarten.astro";
-import FilmKlick from "../components/FilmKlick.astro";
-import Zeitleiste from "../components/Zeitleiste.astro";
-import Stimmen from "../components/Stimmen.astro";
-import Bild from "../components/Bild.astro";
+import HeroFilm from "../components/HeroFilm.astro";
+import Problem from "../components/Problem.astro";
+import Loesung from "../components/Loesung.astro";
+import Referenzen from "../components/Referenzen.astro";
+import Mensch from "../components/Mensch.astro";
+import Ziele from "../components/Ziele.astro";
+import StimmenBand from "../components/StimmenBand.astro";
+import AblaufLinie from "../components/AblaufLinie.astro";
+import Fragen from "../components/Fragen.astro";
 import Skizze from "../components/Skizze.astro";
-import Platzhalter from "../components/Platzhalter.astro";
-import { BAND, PROJEKTE, UEBER, u } from "../daten";
+import { VERTRAUEN, VORSCHAU, u } from "../daten";
 ---
-<Basis vorladen={u("/medien/clips/reel.webp")}>
-  <HeroSucher />
+<Basis vorladen={u("/medien/clips/reel.webp")} beschreibung="Funkelfilm aus Hamburg: Unternehmensfilme, Recruitingfilme, Kundenstimmen und Eventfilme. Wir erzählen deine Geschichte so, dass Kunden Vertrauen aufbauen, bevor sie Kontakt aufnehmen.">
+  <HeroFilm />
 
-  <section class="band" aria-label="Funkelfilm in Kürze">
-    <ul class="huelle band-liste">
-      {BAND.map((b, i) => (
-        <li class:list={{ markiert: i === 1 }}>
-          <strong>{b.wert}{i === 1 && <Skizze form="kreis" breite={160} hoehe={64} seed={22} klasse="band-kreis" />}</strong>
-          <span>{b.text}</span>
+  <section class="vertrauen" aria-label="Funkelfilm in Kürze">
+    <ul class="huelle vertrauen-liste">
+      {VERTRAUEN.map((v, i) => (
+        <li class:list={{ offen: !v.belegt && VORSCHAU }} hidden={!v.belegt && !VORSCHAU}>
+          <span class="v-text">{v.text}{i === 0 && <Skizze form="kreis" breite={200} hoehe={60} seed={22} klasse="v-kreis" />}</span>
+          {v.hinweis && <span class="v-hinweis">{v.hinweis}</span>}
         </li>
       ))}
     </ul>
   </section>
 
-  <section class="abschnitt kompakt" aria-labelledby="leistungen-titel">
-    <div class="huelle">
-      <div class="kopfzeile-zeile">
-        <div class="kopfzeile">
-          <h2 id="leistungen-titel">Deine Vision ist meine Expertise.</h2>
-          <p>Vier Filmarten, ein Anspruch: echt, nahbar, hochwertig.</p>
-        </div>
-        <a class="weiter" href={u("/services/")}>Alle Leistungen</a>
-      </div>
-      <LeistungKarten />
-    </div>
-  </section>
-
-  <section class="abschnitt kompakt tief" aria-labelledby="projekte-titel">
-    <div class="huelle">
-      <div class="kopfzeile-zeile">
-        <div class="kopfzeile mit-klappe">
-          <Skizze form="klappe" breite={74} hoehe={64} seed={31} klasse="klappe" />
-          <h2 id="projekte-titel">Die Projekte sprechen für sich.</h2>
-          <p>Aus einer Idee wird eine Geschichte. Aus einer Geschichte ein Video, das bleibt.</p>
-        </div>
-        <a class="weiter" href={u("/erfolgsgeschichten/")}>Projekte und Stimmen</a>
-      </div>
-      <div class="projekte">
-        <div class="projekt-gross">
-          <Skizze form="rahmen" breite={600} hoehe={340} seed={41} klasse="storyboard" />
-          <FilmKlick {...PROJEKTE[1]} gross />
-        </div>
-        <div class="projekt-neben">
-          <FilmKlick {...PROJEKTE[0]} />
-          <Platzhalter>Showreel und weitere Projekte liefert Funkelfilm.</Platzhalter>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="abschnitt kompakt hell" aria-labelledby="ablauf-titel">
-    <div class="huelle">
-      <div class="kopfzeile">
-        <h2 id="ablauf-titel">Von der Idee bis zum fertigen Film.</h2>
-        <p>Unkomplizierte Abläufe, damit du dich auf das Wesentliche konzentrieren kannst.</p>
-      </div>
-      <Zeitleiste />
-    </div>
-  </section>
-
-  <section class="abschnitt kompakt" aria-labelledby="ueber-titel">
-    <div class="huelle vertrauen">
-      <div class="foto ueber-bild reveal">
-        <Bild name="sheeras" breiten={[400, 640]} sizes="(min-width: 56rem) 22rem, 40vw" verhaeltnis={[4, 5]} alt="Sheeras Iqbal, Videograf und Gründer von Funkelfilm (Schwarz-Weiß-Porträt)" />
-      </div>
-      <div class="ueber-text">
-        <h2 id="ueber-titel">{UEBER.hallo}</h2>
-        <p class="leise">{UEBER.kurz}</p>
-        <a class="weiter" href={u("/about/")}>Mehr über mich</a>
-      </div>
-      <div class="stimmen-reihe">
-        <h3 class="sr">Was Kunden sagen</h3>
-        <Stimmen anzahl={3} reihe />
-        <a class="weiter" href={u("/erfolgsgeschichten/#stimmen")}>Alle Kundenstimmen</a>
-      </div>
-    </div>
-  </section>
+  <Problem />
+  <Loesung />
+  <Referenzen />
+  <Mensch />
+  <Ziele />
+  <StimmenBand />
+  <AblaufLinie />
+  <Fragen />
 </Basis>
 <style>
-  .kompakt { padding-block: clamp(3rem, 6.5vw, 5.5rem); }
-  .band { background: var(--schwarz); border-block: 1px solid var(--linie-dunkel); }
-  .band-liste { list-style: none; margin-block: 0; padding: 1.3rem 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem 1.5rem; }
-  @media (min-width: 64rem) { .band-liste { grid-template-columns: repeat(4, 1fr); padding-block: 1.6rem; } }
-  .band li { display: grid; gap: 0.15rem; padding-left: 0.9rem; border-left: 2px solid var(--gelb); }
-  .band strong { position: relative; justify-self: start; font: 700 clamp(1.15rem, 2vw, 1.5rem)/1.2 var(--titel); }
-  .band span { color: var(--silber); font-size: 0.92rem; line-height: 1.45; }
-  .band :global(.band-kreis) { position: absolute; left: -0.75em; top: -0.5em; width: calc(100% + 1.5em); height: calc(100% + 1em); }
-
-  .mit-klappe { position: relative; }
-  .mit-klappe :global(.klappe) { width: 3.6rem; height: auto; margin-bottom: 0.6rem; color: var(--gelb); }
-  @media (min-width: 64rem) { .mit-klappe :global(.klappe) { position: absolute; left: -5.2rem; top: -0.4rem; margin: 0; } }
-
-  .projekte { display: grid; gap: clamp(1.5rem, 3vw, 2.5rem); align-items: start; }
-  @media (min-width: 64rem) { .projekte { grid-template-columns: 1.55fr 1fr; } }
-  .projekt-gross { position: relative; }
-  .projekt-gross :global(.storyboard) { position: absolute; left: -0.9rem; top: -0.9rem; width: calc(100% + 1.8rem); aspect-ratio: 16 / 9; height: auto; z-index: 1; color: rgba(255, 204, 0, 0.85); }
-  .projekt-neben { display: grid; gap: 0.75rem; }
-  @media (max-width: 47.99rem) {
-    .projekte { grid-auto-flow: column; grid-auto-columns: 86%; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 0.5rem; margin-right: calc(-1 * var(--rand)); padding-right: var(--rand); scrollbar-width: none; }
-    .projekte > * { scroll-snap-align: start; }
-    .projekt-gross :global(.storyboard) { left: -0.5rem; top: -0.5rem; width: calc(100% + 1rem); }
-  }
-
-  .vertrauen { display: grid; gap: 1.5rem clamp(2rem, 4vw, 3.5rem); grid-template-columns: 7.5rem 1fr; align-items: center; }
-  .ueber-bild { aspect-ratio: 4 / 5; }
-  .ueber-text h2 { font-size: clamp(1.25rem, 2.6vw, 2.2rem); margin-bottom: 0.6rem; }
-  .ueber-text .leise { display: none; }
-  .stimmen-reihe { grid-column: 1 / -1; display: grid; gap: 1rem; }
-  @media (min-width: 40rem) { .ueber-text .leise { display: block; } .vertrauen { grid-template-columns: 11rem 1fr; } }
-  @media (min-width: 64rem) {
-    .vertrauen { grid-template-columns: 19rem 1fr; }
-    .ueber-text h2 { max-width: 18em; }
-  }
+  :global(.kompakt) { padding-block: clamp(2.25rem, 4.5vw, 3.5rem); }
+  .vertrauen { background: var(--nacht); border-bottom: 1px solid var(--linie-dunkel); }
+  .vertrauen-liste { list-style: none; margin-block: 0; padding: 1.25rem 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem 1.5rem; }
+  @media (min-width: 64rem) { .vertrauen-liste { grid-template-columns: auto auto auto 1fr; gap: 2.5rem; padding-block: 1.5rem; align-items: center; } }
+  .vertrauen li { display: grid; gap: 0.1rem; font-size: 0.98rem; color: var(--weiss); }
+  .v-text { position: relative; justify-self: start; }
+  .v-hinweis { font-size: 0.8rem; color: var(--silber); }
+  .vertrauen li.offen { outline: 2px dashed var(--rot-vorschau); outline-offset: 4px; }
+  .vertrauen :global(.v-kreis) { position: absolute; left: -0.7em; top: -0.55em; width: calc(100% + 1.4em); height: calc(100% + 1.1em); color: var(--gelb); }
+  @media (max-width: 39.99rem) { .vertrauen li:last-child { grid-column: 1 / -1; } }
 </style>

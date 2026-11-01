@@ -26,11 +26,12 @@ const liste = STIMMEN.slice(0, anzahl);
   .reihe .stimme { background: var(--nacht-2); border: 1px solid var(--linie-dunkel); border-left: 4px solid var(--gelb); }
   .reihe blockquote p { color: var(--weiss); }
   .reihe .wer span { color: var(--silber); }
-  .stimme { display: flex; flex-direction: column; justify-content: space-between; padding: clamp(1.4rem, 3vw, 2rem); background: var(--weiss); border-left: 4px solid var(--gelb); }
+  .stimme { display: flex; flex-direction: column; justify-content: space-between; padding: clamp(1.4rem, 3vw, 2rem); background: var(--nacht-2); border-left: 2px solid var(--gelb); }
   blockquote { margin: 0 0 1.25rem; }
-  blockquote p { margin: 0; font: 600 clamp(1.08rem, 1.5vw, 1.25rem)/1.5 var(--titel); letter-spacing: -0.01em; color: var(--tinte); }
+  blockquote p { margin: 0; font: 400 clamp(1.25rem, 1.8vw, 1.5rem)/1.35 var(--serif); color: var(--weiss); }
   .voll blockquote p { font: 400 1.05rem/1.7 var(--text); }
   .wer { margin: 0; display: grid; gap: 0.1rem; }
   .wer strong { font: 600 1rem/1.3 var(--titel); }
-  .wer span { color: var(--tinte-leise); font-size: 0.95rem; }
+  .wer span { color: var(--silber); font-size: 0.95rem; }
+  .wer strong { color: var(--weiss); }
 </style>

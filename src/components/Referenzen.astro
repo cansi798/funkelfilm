@@ -1,0 +1,64 @@
+---
+// „Die Projekte sprechen für sich.“ – Karten im Streaming-Stil: beim Darüberfahren (am Handy: wenn die Karte im Bild ist)
+// startet eine stumme Vorschau, leichte Vergrößerung, nichts Hektisches. „Projekt ansehen“ lädt YouTube erst nach Klick (Zwei-Klick).
+// Karten ohne echtes Projekt der bisherigen Seite sind als Platzhalter markiert.
+import Icon from "./Icon.astro";
+import Platzhalter from "./Platzhalter.astro";
+import { REFERENZEN, VORSCHAU, u } from "../daten";
+---
+<section class="abschnitt kompakt referenzen" id="projekte" aria-labelledby="projekte-titel">
+  <div class="huelle">
+    <div class="kopfzeile-zeile">
+      <h2 id="projekte-titel">Die Projekte sprechen für sich.</h2>
+      <a class="weiter" href={u("/erfolgsgeschichten/")}>Alle Projekte</a>
+    </div>
+    <ul class="ref-reihe">
+      {REFERENZEN.map((r) => (
+        <li class:list={["ref", { offen: !r.belegt }]}>
+          <div class="ref-bild" data-vorschau data-film={r.youtube || undefined} data-titel={r.titel}>
+            <img src={u(r.poster)} width="800" height="450" alt="" loading="lazy" decoding="async" />
+            {r.clip && <video muted loop playsinline preload="none" data-src={u(r.clip)} aria-hidden="true" tabindex="-1"></video>}
+          </div>
+          <div class="ref-text">
+            <span class="ref-art">{r.art}</span>
+            <h3>{r.titel}</h3>
+            <p>{r.text}</p>
+            {r.youtube ? (
+              <button class="ref-start film-start" type="button"><Icon name="play" /><span>Projekt ansehen</span></button>
+            ) : null}
+          </div>
+          {r.youtube && <p class="ref-hinweis">Lädt YouTube (Google) erst nach Klick.</p>}
+          {!r.belegt && VORSCHAU && <Platzhalter>Kein Recruitingfilm auf der bisherigen Seite benannt. Projekt, Kunde und Freigabe liefert Funkelfilm.</Platzhalter>}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+<style>
+  .kopfzeile-zeile h2 { margin: 0; }
+  .ref-reihe { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(1rem, 2vw, 1.5rem); grid-template-columns: repeat(3, 1fr); }
+  .ref { display: flex; flex-direction: column; background: var(--nacht-2); border-radius: 4px; overflow: hidden; transition: transform 0.6s var(--ease), box-shadow 0.6s var(--ease); }
+  .ref-bild { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #000; }
+  .ref-bild img, .ref-bild video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 6s linear, opacity 0.6s ease; }
+  .ref-bild video { opacity: 0; }
+  .ref-bild.spielt video { opacity: 1; }
+  .ref-bild.spielt img { transform: scale(1.08); }
+  .ref:hover, .ref:focus-within { transform: scale(1.02); box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.95), 0 0 0 1px var(--bronze); }
+  .ref-text { padding: 1.1rem 1.25rem 1.25rem; display: flex; flex-direction: column; flex: 1; }
+  .ref-text .ref-start { margin-top: auto; align-self: flex-start; }
+  .ref-art { display: block; margin-bottom: 0.4rem; font-size: 0.85rem; color: var(--gelb); }
+  .ref-text h3 { font: 400 clamp(1.4rem, 2vw, 1.7rem)/1.12 var(--serif); margin-bottom: 0.35rem; }
+  .ref-text p { margin: 0 0 1rem; font-size: 0.98rem; line-height: 1.5; }
+  .ref-start { display: inline-flex; align-items: center; gap: 0.55rem; min-height: 2.75rem; padding: 0.55rem 1rem; border: 1px solid rgba(243, 241, 236, 0.45); border-radius: 2px;
+    background: transparent; color: var(--weiss); font: 600 0.92rem/1 var(--titel); cursor: pointer; }
+  .ref-start:hover { border-color: var(--gelb); color: var(--gelb); }
+  .ref-start :global(svg) { width: 0.95rem; height: 0.95rem; }
+  .ref-bild :global(iframe) { position: absolute; inset: 0; z-index: 4; width: 100%; height: 100%; border: 0; background: #000; }
+  .ref-hinweis { margin: 0; padding: 0 1.25rem 1rem; font-size: 0.8rem; color: var(--silber); }
+  .ref.offen { outline: 2px dashed var(--rot-vorschau); outline-offset: 3px; }
+  @media (max-width: 47.99rem) {
+    .ref-reihe { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 78%; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0.4rem var(--rand) 0.6rem 0.4rem; margin: 0 calc(-1 * var(--rand)) 0 -0.4rem; scrollbar-width: none; }
+    .ref { scroll-snap-align: start; }
+  }
+  @media (prefers-reduced-motion: reduce) { .ref, .ref-bild img { transition: none; } .ref-bild.spielt img { transform: none; } }
+</style>

@@ -1,0 +1,44 @@
+---
+// „Kommt dir das bekannt vor?“ – vier Gedanken des Besuchers. Beim Hinscrollen zeichnen sich goldene Storyboard-Rahmen
+// um die Karten (rough.js beim Build, Cans Wunsch), nacheinander; danach der Übergang mit einem Pfeil.
+// Am Handy wischbar (weniger Scrollen).
+import Skizze from "./Skizze.astro";
+import { PROBLEM } from "../daten";
+---
+<section class="abschnitt kompakt problem" aria-labelledby="problem-titel">
+  <div class="huelle">
+    <h2 id="problem-titel">{PROBLEM.titel}</h2>
+    <ol class="problem-karten">
+      {PROBLEM.karten.map((k, i) => (
+        <li class="problem-karte">
+          <Skizze form="rahmen" breite={300} hoehe={200} seed={61 + i} klasse={`problem-rahmen r${i}`} />
+          <span class="szene-nr" aria-hidden="true">Szene {i + 1}</span>
+          <p>{k}</p>
+        </li>
+      ))}
+    </ol>
+    <p class="uebergang">
+      <Skizze form="pfeil" breite={90} hoehe={34} seed={71} klasse="uebergang-pfeil" />
+      <span>{PROBLEM.uebergang}</span>
+    </p>
+  </div>
+</section>
+<style>
+  .problem h2 { max-width: 14em; }
+  .problem-karten { list-style: none; margin: clamp(1.75rem, 4vw, 2.75rem) 0 0; padding: 0; display: grid; gap: clamp(1rem, 2vw, 1.5rem); grid-template-columns: repeat(4, 1fr); counter-reset: none; }
+  .problem-karte { position: relative; padding: 1.4rem 1.3rem 1.5rem; min-height: 11rem; background: var(--nacht-2); }
+  .problem-karte p { margin: 0; color: var(--weiss); font: 400 clamp(1.08rem, 1.4vw, 1.22rem)/1.45 var(--text); }
+  .szene-nr { display: block; margin-bottom: 0.9rem; font: 500 0.8rem/1 var(--titel); letter-spacing: 0.04em; color: var(--silber); }
+  .problem-karte :global(.problem-rahmen) { position: absolute; inset: -6px; width: calc(100% + 12px); height: calc(100% + 12px); color: var(--gelb); }
+  /* Storyboard nacheinander: Rahmen 1–4, dann der Pfeil (je 0,55 s Strich, Ende ≈ 1,45 s) */
+  .problem :global(.skizze.an.r1 path) { transition-delay: 0.22s; }
+  .problem :global(.skizze.an.r2 path) { transition-delay: 0.44s; }
+  .problem :global(.skizze.an.r3 path) { transition-delay: 0.66s; }
+  .uebergang { display: flex; align-items: center; gap: 1rem; margin: clamp(1.75rem, 4vw, 2.5rem) 0 0; font: 400 clamp(1.5rem, 2.6vw, 2.2rem)/1.2 var(--serif); color: var(--weiss); }
+  .uebergang :global(.uebergang-pfeil) { flex: none; width: 4.5rem; height: 1.8rem; color: var(--gelb); }
+  @media (max-width: 63.99rem) { .problem-karten { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 39.99rem) {
+    .problem-karten { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 80%; overflow-x: auto; scroll-snap-type: x mandatory; padding: 8px var(--rand) 8px 8px; margin: 1.5rem calc(-1 * var(--rand)) 0 -8px; scrollbar-width: none; }
+    .problem-karte { scroll-snap-align: start; min-height: 9.5rem; }
+  }
+</style>

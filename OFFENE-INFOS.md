@@ -1,6 +1,6 @@
 # Offene Infos – Funkelfilm
 
-Stand: 01.11.2026. Diese Punkte braucht die Seite noch von Funkelfilm (Sheeras Iqbal). In der Vorschau sind die Stellen rot gestrichelt markiert.
+Stand: 02.11.2026 (nach Jamils Konzept „FUNKELFILM 2027“, Talk 4222). Diese Punkte braucht die Seite noch von Funkelfilm (Sheeras Iqbal). In der Vorschau sind die Stellen rot gestrichelt markiert.
 
 ## Bilder, Filme, Rechte
 
@@ -24,3 +24,15 @@ Stand: 01.11.2026. Diese Punkte braucht die Seite noch von Funkelfilm (Sheeras I
 12. **Impressum:** Angaben aus der alten Seite übernommen. Bitte bestätigen und Rechtsform ergänzen. Rechtsgrundlagen sind aktualisiert (§ 5 DDG, § 18 Abs. 2 MStV).
 13. **Datenschutz:** Entwurf. Nach Livegang Hoster, Serverstandort, E-Mail-Anbieter und ggf. Formular-Dienst eintragen.
 14. **Domain und Livegang:** Umzug von funkelfilm.com (bisher Baukasten) auf die neue Seite klären. Die alten Adressen (/services, /about, /imagefilme …) bleiben gleich, es sind keine Weiterleitungen nötig.
+
+## Aus Jamils Konzept „FUNKELFILM 2027“ (Talk 4222) – bitte bestätigen
+
+15. **Name:** Die bisherige Seite und das Impressum schreiben „Sheeras“, das Konzept „Sheeraz“. Die Vorschau nutzt „Sheeras“. Welche Schreibweise stimmt?
+16. **Ich-Aussage freigeben:** „Ich glaube nicht an gestellte Werbespots. Ich glaube daran, echte Menschen und echte Geschichten sichtbar zu machen.“ und „direkt mit dem Filmemacher, ohne große Agentur“ – bitte von Sheeras freigeben lassen.
+17. **Sterne:** Keine Sterne auf der Seite, weil es keine belegte Bewertungsquelle gibt (auch die alte Seite zeigt keine). Gibt es Google-Bewertungen o. Ä. mit Link? Dann können Sterne mit Quelle rein.
+18. **Beispielzitate aus dem Konzept** („Professionell, unkompliziert und auf den Punkt.“, „Wir nutzen den Film bis heute …“) kommen in keiner echten Kundenstimme vor und sind nicht übernommen. Gibt es dazu echte Stimmen mit Namen und Freigabe?
+19. **„Deutschlandweit“** (Vertrauenszeile, FAQ): steht nicht auf der bisherigen Seite. Bitte bestätigen.
+20. **FAQ-Antworten** („Muss ich vor die Kamera? Nein …“, „Wie lange dauert die Produktion?“) bitte bestätigen.
+21. **Leistungen:** „Produkt- und Erklärungsvideos“ und „Dokumentationen“ stehen nicht auf der bisherigen Seite. Bietet Funkelfilm das an?
+22. **Referenzen:** Projektname laut YouTube-Titel „Nexus Fighter Academy | NEXUS KIDS | Eindrücke“; die Beschreibung „Mehr Sichtbarkeit für Nachwuchsarbeit und Vereinsleben“ stammt aus dem Konzept – bitte bestätigen. Für die Recruitingfilm-Karte fehlt ein echtes Projekt (Titel, Kunde, Freigabe); der Vorschau-Ausschnitt stammt aus der Recruiting-Karte der alten Seite.
+23. **„Über 100 Projekte“** stammt von der alten Seite (Stand 2024); das Konzept sagt „Filmprojekte“. Aktuelle Zahl?

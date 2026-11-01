@@ -1,0 +1,46 @@
+---
+// „Hinter jedem Film steht ein Mensch.“ – großes Schwarz-Weiß-Porträt, daneben B-Roll aus echten Produktionen, sanfte Einblendung.
+import Bild from "./Bild.astro";
+import Icon from "./Icon.astro";
+import { MENSCH, u } from "../daten";
+---
+<section class="abschnitt kompakt mensch" aria-labelledby="mensch-titel">
+  <div class="huelle mensch-raster">
+    <div class="foto mensch-bild reveal">
+      <Bild name="sheeras" breiten={[400, 640]} sizes="(min-width: 56rem) 26rem, 42vw" verhaeltnis={[4, 5]} alt="Sheeras Iqbal, Filmemacher und Gründer von Funkelfilm (Schwarz-Weiß-Porträt)" />
+    </div>
+    <div class="mensch-text">
+      <h2 id="mensch-titel">{MENSCH.titel}</h2>
+      {MENSCH.zeilen.map((z, i) => <p class:list={{ gross: i === 0 }}>{z}</p>)}
+      <div class="broll reveal" data-autoclip>
+        <img src={u("/medien/clips/event.webp")} width="800" height="450" alt="" loading="lazy" decoding="async" />
+        <video muted loop playsinline preload="none" data-src={u("/medien/clips/event.mp4")} aria-hidden="true" tabindex="-1"></video>
+        <button class="clip-pause" type="button" data-pause hidden aria-pressed="false">
+          <span class="p-an"><Icon name="pause" /><span class="sr">Film anhalten</span></span>
+          <span class="p-aus"><Icon name="play" /><span class="sr">Film abspielen</span></span>
+        </button>
+      </div>
+      <a class="weiter" href={u("/about/")}>Mehr über Sheeras</a>
+    </div>
+  </div>
+</section>
+<style>
+  .mensch-raster { display: grid; gap: 1.5rem clamp(2rem, 5vw, 4.5rem); grid-template-columns: 9rem 1fr; align-items: start; }
+  @media (min-width: 40rem) { .mensch-raster { grid-template-columns: 14rem 1fr; } }
+  @media (min-width: 64rem) { .mensch-raster { grid-template-columns: minmax(0, 18rem) 1fr; align-items: center; } }
+  .mensch-bild { aspect-ratio: 4 / 5; }
+  .mensch-bild :global(img) { filter: grayscale(1); }
+  .mensch-text p { margin-bottom: 0.8rem; }
+  .mensch-text .gross { font: 400 clamp(1.4rem, 2.2vw, 1.8rem)/1.25 var(--serif); color: var(--weiss); }
+  @media (max-width: 39.99rem) { .mensch-text { grid-column: 1 / -1; } .mensch-raster h2 { font-size: 1.9rem; } }
+  @media (max-width: 39.99rem) { .broll { display: none; } }
+  .broll { position: relative; aspect-ratio: 16 / 9; max-width: 20rem; margin: 1rem 0 0.8rem; overflow: hidden; background: var(--nacht-2); border-radius: 3px; }
+  .broll img, .broll video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .broll video { opacity: 0; transition: opacity 0.8s ease; }
+  .broll.spielt video { opacity: 1; }
+  .clip-pause { position: absolute; z-index: 3; right: 0.5rem; top: 0.5rem; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 0; border-radius: 2px; background: rgba(10, 10, 10, 0.75); color: var(--weiss); cursor: pointer; }
+  .clip-pause :global(svg) { width: 1.05rem; height: 1.05rem; }
+  .clip-pause .p-aus { display: none; }
+  .clip-pause[aria-pressed="true"] .p-an { display: none; }
+  .clip-pause[aria-pressed="true"] .p-aus { display: grid; }
+</style>

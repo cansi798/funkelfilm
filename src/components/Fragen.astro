@@ -1,0 +1,32 @@
+---
+// FAQ aus Jamils Konzept, als aufklappbare Fragen. Nicht belegte Antworten sind in der Vorschau markiert.
+import Platzhalter from "./Platzhalter.astro";
+import { FAQ, VORSCHAU } from "../daten";
+const schema = { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: FAQ.filter((f) => f.belegt).map((f) => ({ "@type": "Question", name: f.frage, acceptedAnswer: { "@type": "Answer", text: f.antwort } })) };
+---
+<section class="abschnitt kompakt fragen" aria-labelledby="fragen-titel">
+  <div class="huelle fragen-raster">
+    <h2 id="fragen-titel">Häufige Fragen</h2>
+    <div class="fragen-liste">
+      {FAQ.map((f) => (
+        <details class="frage">
+          <summary>{f.frage}</summary>
+          <p>{f.antwort}</p>
+          {!f.belegt && VORSCHAU && <Platzhalter>„Deutschlandweit“ steht nicht auf der bisherigen Seite. Bitte von Funkelfilm bestätigen.</Platzhalter>}
+        </details>
+      ))}
+    </div>
+  </div>
+  <script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, "\\u003c")} />
+</section>
+<style>
+  .fragen-raster { display: grid; gap: 1.5rem clamp(2rem, 6vw, 5rem); }
+  @media (min-width: 60rem) { .fragen-raster { grid-template-columns: 0.8fr 1.2fr; } }
+  .frage { border-bottom: 1px solid var(--linie-dunkel); }
+  .frage:first-child { border-top: 1px solid var(--linie-dunkel); }
+  .frage summary { list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.1rem 0; cursor: pointer; font: 500 1.12rem/1.35 var(--titel); color: var(--weiss); }
+  .frage summary::-webkit-details-marker { display: none; }
+  .frage summary::after { content: "+"; flex: none; display: grid; place-items: center; width: 1.7rem; height: 1.7rem; border: 1px solid var(--bronze); border-radius: 50%; color: var(--gelb); font-size: 1.1rem; line-height: 1; }
+  .frage[open] summary::after { content: "–"; }
+  .frage p { margin: 0 0 1.1rem; max-width: 40em; }
+</style>

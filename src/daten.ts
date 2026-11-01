@@ -261,3 +261,107 @@ export const UEBER = {
   mission: 'Videos, die einen Unterschied machen.',
   missionText: 'Ich glaube an die Kraft des Geschichtenerzählens. Mein Ziel ist es, dir dabei zu helfen, deine Botschaft mit der Welt zu teilen.',
 };
+
+// ───────────────────────────────────────────────────────────────────────────────
+// Startseite nach Jamils Konzept „FUNKELFILM 2027“ (Talk 4222, 01.11.2026). Texte wörtlich, humanizer nur leicht.
+// Fakten-Regel: Was die bisherige Seite nicht belegt, ist Platzhalter (VORSCHAU) und steht in OFFENE-INFOS.md.
+
+export const HERO = {
+  titel: 'Deine Arbeit verdient mehr Aufmerksamkeit.',
+  unter: [
+    'Viele Unternehmen leisten hervorragende Arbeit. Doch online sieht man das oft nicht.',
+    'Wir erzählen deine Geschichte so, dass Kunden Vertrauen aufbauen, bevor sie überhaupt Kontakt aufnehmen.',
+  ],
+};
+
+/** Vertrauenszeile. Keine Sterne: Es gibt keine belegte Bewertungsquelle (auch die alte Seite zeigt keine). */
+export const VERTRAUEN = [
+  { text: 'Über 100 Projekte umgesetzt', hinweis: 'Stand 2024', belegt: true },
+  { text: 'Aus Hamburg', hinweis: '', belegt: true },
+  { text: 'Deutschlandweit', hinweis: 'Platzhalter, bitte bestätigen', belegt: false },
+  { text: 'Persönliche Betreuung vom ersten Gespräch bis zur Veröffentlichung', hinweis: '', belegt: true },
+];
+
+export const PROBLEM = {
+  titel: 'Kommt dir das bekannt vor?',
+  karten: [
+    'Dein Unternehmen leistet gute Arbeit. Aber online wirkt alles wie bei der Konkurrenz.',
+    'Interessenten verstehen nicht sofort, was euch besonders macht.',
+    'Neue Mitarbeiter kennen eure Kultur nicht.',
+    'Es fehlt Vertrauen, bevor das erste Gespräch stattfindet.',
+  ],
+  uebergang: 'Genau hier beginnt die Kraft einer echten Geschichte.',
+};
+
+export const LOESUNG = {
+  titel: 'Menschen vertrauen Menschen.',
+  text: 'Ein guter Film zeigt nicht nur, was du machst. Er zeigt:',
+  punkte: ['wie du arbeitest', 'wer hinter dem Unternehmen steht', 'warum Kunden gerne mit dir arbeiten', 'was dich besonders macht'],
+};
+
+/** Referenzen im Kartenstil. belegt=false → Platzhalter-Karte (kein echtes Projekt auf der alten Seite). */
+export const REFERENZEN = [
+  {
+    titel: 'Nexus Fighter Academy – Nexus Kids',
+    text: 'Mehr Sichtbarkeit für Nachwuchsarbeit und Vereinsleben.',
+    art: 'Eindrücke',
+    youtube: 'sX3z4bte2JM',
+    poster: '/medien/bilder/film-nexus-kids-640.webp',
+    clip: '',
+    belegt: true,
+  },
+  {
+    titel: 'Die Goldmalerin',
+    text: 'Mehr Vertrauen für Kunden und Geschäftspartner.',
+    art: 'Unternehmensfilm',
+    youtube: 'WExx2qd8Uc0',
+    poster: '/medien/clips/goldmalerin.webp',
+    clip: '/medien/clips/goldmalerin.mp4',
+    belegt: true,
+  },
+  {
+    titel: 'Recruitingfilm',
+    text: 'Mitarbeiter gewinnen, die wirklich zum Unternehmen passen.',
+    art: 'Projektname folgt',
+    youtube: '',
+    poster: '/medien/clips/recruiting.webp',
+    clip: '/medien/clips/recruiting.mp4',
+    belegt: false,
+  },
+];
+
+export const MENSCH = {
+  titel: 'Hinter jedem Film steht ein Mensch.',
+  zeilen: [
+    'Hallo, ich bin Sheeras.',
+    'Ich glaube nicht an gestellte Werbespots. Ich glaube daran, echte Menschen und echte Geschichten sichtbar zu machen.',
+    'Deshalb arbeitest du bei Funkelfilm direkt mit dem Filmemacher. Ohne Umwege. Ohne große Agentur. Vom ersten Gespräch bis zum fertigen Film.',
+  ],
+};
+
+/** Leistungen nach Kundenzielen. belegt=false → nicht auf der bisherigen Seite, Platzhalter. */
+export const ZIELE = [
+  { ziel: 'Ich möchte mehr Kunden gewinnen', loesung: 'Authentische Unternehmensfilme.', href: '/imagefilme/', clip: '/medien/clips/unternehmen.mp4', poster: '/medien/clips/unternehmen.webp', belegt: true, extra: { text: 'Kundenstimmen-Videos', href: '/erfahrungsberichte/' } },
+  { ziel: 'Ich möchte Mitarbeiter finden', loesung: 'Recruitingfilme.', href: '/recruitingfilm/', clip: '/medien/clips/recruiting.mp4', poster: '/medien/clips/recruiting.webp', belegt: true },
+  { ziel: 'Ich möchte mein Angebot erklären', loesung: 'Produkt- und Erklärungsvideos.', href: '/kontakt/', clip: '/medien/clips/kundenstimmen.mp4', poster: '/medien/clips/kundenstimmen.webp', belegt: false },
+  { ziel: 'Ich möchte ein Event festhalten', loesung: 'Eventfilme.', href: '/veranstaltungsfilm/', clip: '/medien/clips/event.mp4', poster: '/medien/clips/event.webp', belegt: true, platzhalter: '„und Dokumentationen“ (Konzept) bitte bestätigen.' },
+];
+
+/** Ablauf nach Jamils Konzept (Kurzfassung), Langfassung aus der bisherigen Seite (ABLAUF). */
+export const ABLAUF_KURZ = [
+  { titel: 'Kennenlernen', text: 'Wir sprechen über deine Ziele.' },
+  { titel: 'Konzept', text: 'Gemeinsam entwickeln wir die Geschichte.' },
+  { titel: 'Dreh', text: 'Professionelle Aufnahmen vor Ort.' },
+  { titel: 'Postproduktion', text: 'Schnitt, Musik und Feinschliff.' },
+  { titel: 'Veröffentlichung', text: 'Bereit für Website, Social Media und Marketing.' },
+];
+
+/** FAQ aus dem Konzept. belegt=false → Antwort von Funkelfilm bestätigen lassen (Platzhalter). */
+export const FAQ = [
+  { frage: 'Was kostet ein Film?', antwort: 'Jedes Projekt ist individuell. Im Erstgespräch erhältst du eine realistische Einschätzung.', belegt: true },
+  { frage: 'Muss ich vor die Kamera?', antwort: 'Nein. Gemeinsam finden wir die passende Lösung.', belegt: true },
+  { frage: 'Wie lange dauert die Produktion?', antwort: 'Abhängig vom Umfang des Projekts.', belegt: true },
+  { frage: 'Arbeitet Funkelfilm nur in Hamburg?', antwort: 'Nein. Produktionen sind deutschlandweit möglich.', belegt: false },
+];
+
+export const SCHLUSS = { titel: 'Deine Geschichte ist bereits da.', unter: 'Jetzt muss sie nur noch erzählt werden.', knopf: 'Kostenloses Erstgespräch vereinbaren' };

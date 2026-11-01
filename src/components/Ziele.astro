@@ -1,0 +1,67 @@
+---
+// Leistungen nach Kundenzielen (Jamils Konzept): vier Karten, die sich beim Darüberfahren/Fokus leicht öffnen und eine kurze Vorschau zeigen.
+// Am Handy als aufklappbare Liste (<details>), damit die Seite kurz bleibt. Nicht belegte Leistungen sind als Platzhalter markiert.
+import Platzhalter from "./Platzhalter.astro";
+import { ZIELE, VORSCHAU, u } from "../daten";
+---
+<section class="abschnitt kompakt ziele" aria-labelledby="ziele-titel">
+  <div class="huelle">
+    <div class="kopfzeile-zeile">
+      <h2 id="ziele-titel">Was möchtest du erreichen?</h2>
+      <a class="weiter" href={u("/services/")}>Alle Leistungen</a>
+    </div>
+    <ul class="ziel-liste">
+      {ZIELE.map((z, i) => (
+        <li class:list={["ziel", { offen: !z.belegt }]}>
+          <details class="ziel-karte">
+            <summary><span class="ziel-frage">{z.ziel}</span><span class="ziel-plus" aria-hidden="true"></span></summary>
+            <div class="ziel-inhalt">
+              <div class="ziel-bild" data-vorschau>
+                <img src={u(z.poster)} width="800" height="450" alt="" loading="lazy" decoding="async" />
+                <video muted loop playsinline preload="none" data-src={u(z.clip)} aria-hidden="true" tabindex="-1"></video>
+              </div>
+              <p class="ziel-loesung">{z.loesung}</p>
+              {z.extra && <p class="ziel-extra">Auch: <a href={u(z.extra.href)}>{z.extra.text}</a></p>}
+              {z.belegt ? <a class="weiter" href={u(z.href)}>Mehr erfahren<span class="sr"> – {z.loesung}</span></a> : null}
+              {!z.belegt && VORSCHAU && <Platzhalter>Nicht auf der bisherigen Seite – bitte bestätigen.</Platzhalter>}
+              {z.platzhalter && <Platzhalter>{z.platzhalter}</Platzhalter>}
+            </div>
+          </details>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+<style>
+  .kopfzeile-zeile h2 { margin: 0; }
+  .ziel-liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.75rem; }
+  .ziel-karte { background: var(--nacht-2); border: 1px solid transparent; border-radius: 4px; transition: border-color var(--dur-fast) ease; }
+  .ziel-karte:hover, .ziel-karte[open] { border-color: rgba(141, 110, 77, 0.6); }
+  summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.1rem 1.25rem; cursor: pointer; }
+  summary::-webkit-details-marker { display: none; }
+  .ziel-frage { font: 400 clamp(1.3rem, 2vw, 1.6rem)/1.2 var(--serif); color: var(--weiss); }
+  .ziel-plus { position: relative; flex: none; width: 1.6rem; height: 1.6rem; border: 1px solid var(--bronze); border-radius: 50%; }
+  .ziel-plus::before, .ziel-plus::after { content: ""; position: absolute; left: 50%; top: 50%; width: 0.7rem; height: 1.5px; background: var(--gelb); translate: -50% -50%; transition: transform var(--dur-fast) ease; }
+  .ziel-plus::after { transform: rotate(90deg); }
+  details[open] .ziel-plus::after { transform: rotate(0deg); }
+  .ziel-inhalt { padding: 0 1.25rem 1.25rem; }
+  .ziel-bild { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 3px; margin-bottom: 0.9rem; background: #000; }
+  .ziel-bild img, .ziel-bild video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .ziel-bild video { opacity: 0; transition: opacity 0.5s ease; }
+  .ziel-bild.spielt video { opacity: 1; }
+  .ziel-loesung { margin: 0 0 0.5rem; color: var(--weiss); font-size: 1.08rem; }
+  .ziel-extra { margin: 0 0 0.6rem; font-size: 0.95rem; }
+  .ziel-extra a { color: var(--weiss); text-decoration: underline; text-decoration-color: var(--bronze); text-underline-offset: 0.2em; }
+  .offen .ziel-karte { outline: 2px dashed var(--rot-vorschau); outline-offset: 2px; }
+  /* Breit: vier Karten nebeneinander, alle offen; Vorschau beim Darüberfahren */
+  @media (min-width: 64rem) {
+    .ziel-liste { grid-template-columns: repeat(4, 1fr); align-items: start; gap: 1rem; }
+    .ziel-karte { height: 100%; }
+    summary { padding-bottom: 0.7rem; min-height: 4.8rem; align-items: flex-start; }
+    .ziel-plus { display: none; }
+    /* Karten öffnen sich leicht beim Darüberfahren/Fokus, die Vorschau erscheint (Jamils Konzept) */
+    .ziel-bild { aspect-ratio: auto; height: 0; margin-bottom: 0; opacity: 0; transition: height 0.5s var(--ease), opacity 0.4s ease, margin 0.5s var(--ease); }
+    .ziel:hover .ziel-bild, .ziel:focus-within .ziel-bild { height: 8.5rem; opacity: 1; margin-bottom: 0.9rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { .ziel-bild { transition: none !important; } }
+</style>

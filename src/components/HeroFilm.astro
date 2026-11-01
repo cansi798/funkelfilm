@@ -1,0 +1,71 @@
+---
+// Hero nach Jamils Konzept: ein einziger Film im Vollbild, langsame Schnitte, leichtes Filmkorn, Parallax beim Scrollen. Kein Slider.
+// Der Kamerasucher bleibt als feiner Rahmen (Ecken + Timecode), passt zur Ruhe. Das Video lädt erst nach Einstieg + Seitenaufbau;
+// Pause-Knopf; bei reduzierter Bewegung kein Autoplay und kein Parallax (Standbild).
+import { HERO, u } from "../daten";
+import Icon from "./Icon.astro";
+const poster = u("/medien/clips/reel.webp");
+const posterKlein = u("/medien/clips/reel-640.webp");
+---
+<section class="hero" aria-labelledby="hero-titel" data-sucher>
+  <div class="hero-film" data-parallax>
+    <img class="sucher-poster" src={poster} srcset={`${posterKlein} 640w, ${poster} 1280w`} sizes="100vw" width="1280" height="720" alt="" fetchpriority="high" decoding="async" />
+    <video class="sucher-video" muted loop playsinline preload="none" data-src={u("/medien/clips/reel.mp4")} data-tempo="0.85" aria-hidden="true" tabindex="-1" width="960" height="540"></video>
+  </div>
+  <div class="hero-schleier" aria-hidden="true"></div>
+  <div class="hero-rahmen" aria-hidden="true">
+    <span class="ecke e1"></span><span class="ecke e2"></span><span class="ecke e3"></span><span class="ecke e4"></span>
+    <span class="zeit" data-zeit>00:00:00:00</span>
+  </div>
+  <div class="huelle hero-inhalt">
+    <h1 id="hero-titel">{HERO.titel}</h1>
+    <div class="hero-unter">{HERO.unter.map((t) => <p>{t}</p>)}</div>
+    <div class="knoepfe">
+      <a class="knopf" href={u("/kontakt/")}>Kostenloses Erstgespräch</a>
+      <a class="knopf rahmen" href="#projekte">Projekte ansehen</a>
+    </div>
+  </div>
+  <button class="sucher-pause" type="button" data-pause hidden aria-pressed="false">
+    <span class="p-an"><Icon name="pause" /><span class="sr">Film anhalten</span></span>
+    <span class="p-aus"><Icon name="play" /><span class="sr">Film abspielen</span></span>
+  </button>
+</section>
+<style>
+  .hero { position: relative; display: grid; align-items: end; min-height: min(calc(100svh - var(--kopf-h)), 54rem); overflow: hidden; background: #050505; isolation: isolate; }
+  @media (max-width: 47.99rem) { .hero { min-height: calc(100svh - var(--kopf-h) - 2.5rem); } }
+  .hero-film { position: absolute; inset: -6% 0 -6% 0; z-index: -2; will-change: transform; }
+  .sucher-poster, .sucher-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .sucher-video { opacity: 0; transition: opacity 1.2s ease; }
+  .hero.laeuft .sucher-video { opacity: 1; }
+  .hero-schleier { position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(180deg, rgba(10, 10, 10, 0.35) 0%, rgba(10, 10, 10, 0.15) 35%, rgba(10, 10, 10, 0.78) 78%, #0a0a0a 100%),
+                linear-gradient(90deg, rgba(10, 10, 10, 0.72) 0%, rgba(10, 10, 10, 0) 65%); }
+  .hero-rahmen { position: absolute; inset: clamp(0.9rem, 2.4vw, 1.75rem); pointer-events: none; contain: layout paint; }
+  .ecke { position: absolute; width: clamp(1.1rem, 2.6vw, 1.9rem); height: clamp(1.1rem, 2.6vw, 1.9rem); border: 0 solid rgba(243, 241, 236, 0.55); }
+  .e1 { left: 0; top: 0; border-left-width: 1.5px; border-top-width: 1.5px; }
+  .e2 { right: 0; top: 0; border-right-width: 1.5px; border-top-width: 1.5px; }
+  .e3 { left: 0; bottom: 0; border-left-width: 1.5px; border-bottom-width: 1.5px; }
+  .e4 { right: 0; bottom: 0; border-right-width: 1.5px; border-bottom-width: 1.5px; }
+  .zeit { position: absolute; right: 2.4rem; top: 0.55rem; width: 6.6em; height: 1em; text-align: right; contain: strict;
+    font: 500 0.72rem/1 var(--titel); font-variant-numeric: tabular-nums; letter-spacing: 0.06em; color: rgba(243, 241, 236, 0.7); }
+  .hero-inhalt { padding-block: clamp(3rem, 8vw, 6rem) clamp(3.5rem, 7vw, 5.5rem); }
+  .hero h1 { max-width: 11em; margin-bottom: 1.25rem; }
+  .hero-unter { max-width: 34rem; margin-bottom: 1.75rem; }
+  .hero-unter p { margin: 0 0 0.6rem; font-size: clamp(1.02rem, 1.4vw, 1.18rem); line-height: 1.6; color: #d9d5cd; }
+  /* Ankommen: Schärfe zieht ruhig auf (nach dem Einstieg) */
+  :global(.js) .hero .sucher-poster { filter: blur(8px); transform: scale(1.04); }
+  :global(.js) .hero .ecke { opacity: 0; }
+  :global(.js) .hero.an .sucher-poster { filter: none; transform: none; transition: filter 1.2s var(--ease), transform 1.4s var(--ease); }
+  :global(.js) .hero.an .ecke { opacity: 1; transition: opacity 1s ease 0.4s; }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .hero .sucher-poster, :global(.js) .hero .ecke { filter: none !important; transform: none !important; opacity: 1 !important; transition: none !important; }
+  }
+  .sucher-pause { position: absolute; right: clamp(1.4rem, 3vw, 2.4rem); bottom: clamp(1.4rem, 3vw, 2.4rem); display: grid; place-items: center; width: 2.75rem; height: 2.75rem;
+    border: 1px solid rgba(243, 241, 236, 0.3); border-radius: 2px; background: rgba(10, 10, 10, 0.4); color: var(--weiss); cursor: pointer; }
+  .sucher-pause:hover { border-color: var(--bronze); }
+  @media (max-width: 47.99rem) { .sucher-pause { top: 2.6rem; bottom: auto; right: 1.6rem; } }
+  .sucher-pause :global(svg) { width: 1.1rem; height: 1.1rem; }
+  .sucher-pause .p-aus { display: none; }
+  .sucher-pause[aria-pressed="true"] .p-an { display: none; }
+  .sucher-pause[aria-pressed="true"] .p-aus { display: grid; }
+</style>

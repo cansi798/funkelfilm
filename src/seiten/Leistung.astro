@@ -2,7 +2,7 @@
 // Vorlage für die vier Leistungsseiten (gleich aufgebaut).
 import Basis from "../layouts/Basis.astro";
 import SeitenKopf from "../components/SeitenKopf.astro";
-import Zeitleiste from "../components/Zeitleiste.astro";
+import AblaufLinie from "../components/AblaufLinie.astro";
 import FilmKlick from "../components/FilmKlick.astro";
 import Platzhalter from "../components/Platzhalter.astro";
 import { LEISTUNGEN, PROJEKTE, u } from "../daten";
@@ -49,15 +49,7 @@ const schema = [{
     </div>
   </section>
 
-  <section class="abschnitt hell" id="ablauf" aria-labelledby="ablauf-titel">
-    <div class="huelle">
-      <div class="kopfzeile">
-        <h2 id="ablauf-titel">Die Vorgehensweise</h2>
-        <p>Fünf Schritte, ein Ansprechpartner.</p>
-      </div>
-      <Zeitleiste />
-    </div>
-  </section>
+  <AblaufLinie titel="Die Vorgehensweise" />
 
   <section class="abschnitt" aria-labelledby="weitere-titel">
     <div class="huelle">

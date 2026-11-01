@@ -1,59 +1,46 @@
 ---
-// Wow-Einstieg (Can 01.11.2026, 23:17): Film-Vorspann zählt 3–2–1, ein Funke blitzt auf (der Name!), das Logo leuchtet,
-// dann öffnet sich eine Blende von der Mitte aus und gibt die Seite frei (danach stellt der Sucher im Hero scharf).
-// Regeln: ca. 2,6 s, reines CSS auf einer Uhr; die Ebene lässt Klicks durch (pointer-events: none), „Überspringen“-Knopf,
-// Esc oder Klick beenden sofort. Nur beim ersten Seitenaufruf der Sitzung (sessionStorage, seite.js), ohne JS und bei
-// reduzierter Bewegung gar nicht. Fest positioniert → kein Layout-Sprung.
+// Einstieg „Schwarzblende mit Lichtfunken“ (Jamils Konzept 4222: ruhig, Netflix-Doku/A24 statt Countdown).
+// Ein goldener Funke gleitet aus dem Dunkel zur Mitte, zieht einen breiten Lichtstreif (wie eine anamorphe Linse),
+// das Logo erscheint im Licht, dann blendet das Schwarz weich in den Hero-Film über. Ca. 2,6 s, reines CSS auf einer Uhr.
+// Regeln: Ebene lässt Klicks durch (pointer-events: none), „Überspringen“, Esc oder Klick beenden sofort; nur beim ersten
+// Seitenaufruf der Sitzung (sessionStorage, seite.js); ohne JS und bei reduzierter Bewegung gar nicht; fest positioniert → kein CLS.
 import { u } from "../daten";
 ---
 <div class="intro" aria-hidden="true">
-  <div class="intro-leader">
-    <svg class="intro-ring" viewBox="0 0 200 200" width="200" height="200">
-      <circle cx="100" cy="100" r="92" /><circle cx="100" cy="100" r="74" />
-      <path d="M100 0v200M0 100h200" />
-    </svg>
-    <span class="intro-sweep"></span>
-    <span class="intro-zahl z3">3</span><span class="intro-zahl z2">2</span><span class="intro-zahl z1">1</span>
-  </div>
-  <svg class="intro-funke" viewBox="0 0 100 100" width="100" height="100"><path d="M50 0 C54 38 62 46 100 50 C62 54 54 62 50 100 C46 62 38 54 0 50 C38 46 46 38 50 0Z" /></svg>
+  <span class="intro-streif"></span>
+  <span class="intro-funke"></span>
   <img class="intro-logo" src={u("/medien/logo-weiss-480.png")} width="480" height="143" alt="" decoding="async" />
 </div>
 <button class="intro-skip" type="button" data-intro-skip>Intro überspringen</button>
 <style>
-  @property --loch { syntax: "<length>"; inherits: false; initial-value: 0px; }
   .intro, .intro-skip { display: none; }
   :global(html.mit-intro) .intro {
-    display: grid; place-items: center; position: fixed; inset: 0; z-index: 200; pointer-events: none; background: var(--nacht);
-    -webkit-mask: radial-gradient(circle at 50% 50%, transparent var(--loch), #000 calc(var(--loch) + 1px));
-            mask: radial-gradient(circle at 50% 50%, transparent var(--loch), #000 calc(var(--loch) + 1px));
-    animation: iris 0.75s cubic-bezier(0.7, 0, 0.25, 1) 1.85s forwards, weg 0.2s linear 2.55s forwards;
+    display: grid; place-items: center; position: fixed; inset: 0; z-index: 200; pointer-events: none; background: #050505;
+    animation: blende 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.85s forwards;
   }
   :global(html.mit-intro) .intro-skip {
     display: inline-flex; position: fixed; z-index: 201; right: 1rem; bottom: max(1rem, env(safe-area-inset-bottom)); min-height: 2.75rem; align-items: center;
-    padding: 0.5rem 1rem; border: 1px solid rgba(255, 255, 255, 0.45); border-radius: 2px; background: rgba(7, 7, 26, 0.6); color: var(--weiss);
-    font: 600 0.9rem/1 var(--titel); cursor: pointer; animation: weg 0.2s linear 2.3s forwards;
+    padding: 0.5rem 1rem; border: 1px solid rgba(243, 241, 236, 0.35); border-radius: 2px; background: rgba(5, 5, 5, 0.6); color: var(--weiss);
+    font: 500 0.9rem/1 var(--titel); cursor: pointer; animation: weg 0.25s linear 2.3s forwards;
   }
   .intro > * { grid-area: 1 / 1; }
-  .intro-leader { position: relative; width: min(46vmin, 15rem); aspect-ratio: 1; animation: weg 0.25s ease 1.05s forwards; }
-  .intro-ring { width: 100%; height: 100%; }
-  .intro-ring circle, .intro-ring path { fill: none; stroke: rgba(255, 255, 255, 0.55); stroke-width: 1.5; }
-  .intro-sweep { position: absolute; inset: 4%; border-radius: 50%;
-    background: conic-gradient(from 0deg, rgba(255, 204, 0, 0.55), rgba(255, 204, 0, 0) 32%, transparent 100%);
-    animation: drehen 0.35s linear 3; }
-  .intro-zahl { position: absolute; inset: 0; display: grid; place-items: center; font: 700 clamp(3.5rem, 14vmin, 6rem)/1 var(--titel); color: var(--weiss); opacity: 0; }
-  .z3 { animation: zahl 0.35s steps(1) 0s; }
-  .z2 { animation: zahl 0.35s steps(1) 0.35s; }
-  .z1 { animation: zahl 0.35s steps(1) 0.7s; }
-  .intro-funke { width: min(30vmin, 9rem); height: auto; fill: var(--gelb); opacity: 0; filter: drop-shadow(0 0 18px rgba(255, 204, 0, 0.9));
-    animation: funke 0.9s cubic-bezier(0.2, 0.9, 0.3, 1) 1.05s forwards; }
-  .intro-logo { width: min(70vw, 26rem); height: auto; opacity: 0; animation: logo 0.8s var(--ease) 1.25s forwards; }
-  @keyframes drehen { to { transform: rotate(360deg); } }
-  @keyframes zahl { 0%, 100% { opacity: 1; } }
-  @keyframes funke { 0% { opacity: 0; transform: scale(0.1) rotate(-45deg); } 35% { opacity: 1; transform: scale(1.25) rotate(0deg); } 100% { opacity: 0; transform: scale(2.4) rotate(20deg); } }
-  @keyframes logo { 0% { opacity: 0; transform: scale(0.92); filter: blur(6px); } 100% { opacity: 1; transform: none; filter: none; } }
-  @keyframes iris { to { --loch: 150vmax; } }
+  .intro-funke { width: 0.9rem; height: 0.9rem; border-radius: 50%; background: #fff3c4;
+    box-shadow: 0 0 12px 4px rgba(212, 160, 23, 0.95), 0 0 46px 14px rgba(212, 160, 23, 0.45);
+    opacity: 0; animation: funke 1.5s cubic-bezier(0.25, 0.8, 0.25, 1) 0.1s forwards; }
+  .intro-streif { width: min(90vw, 60rem); height: 2px; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(255, 236, 170, 0.95), rgba(212, 160, 23, 0.55) 40%, rgba(212, 160, 23, 0) 100%);
+    opacity: 0; transform: scaleX(0.05); animation: streif 1.3s cubic-bezier(0.2, 0.8, 0.2, 1) 0.75s forwards; }
+  .intro-logo { width: min(64vw, 22rem); height: auto; opacity: 0; animation: logo 0.9s var(--ease) 1.05s forwards; }
+  @keyframes funke {
+    0% { opacity: 0; transform: translate(-22vw, 6vh) scale(0.4); }
+    25% { opacity: 1; }
+    70% { opacity: 1; transform: translate(0, 0) scale(1); }
+    100% { opacity: 0; transform: translate(0, 0) scale(2.2); }
+  }
+  @keyframes streif { 0% { opacity: 0; transform: scaleX(0.05); } 35% { opacity: 1; } 100% { opacity: 0; transform: scaleX(1); } }
+  @keyframes logo { 0% { opacity: 0; filter: blur(8px); transform: scale(0.97); } 100% { opacity: 1; filter: none; transform: none; } }
+  @keyframes blende { to { opacity: 0; visibility: hidden; } }
   @keyframes weg { to { opacity: 0; visibility: hidden; } }
-  /* Überspringen: sofort ausblenden */
-  :global(html.mit-intro.intro-weg) .intro, :global(html.mit-intro.intro-weg) .intro-skip { animation: weg 0.2s linear forwards; }
+  :global(html.mit-intro.intro-weg) .intro, :global(html.mit-intro.intro-weg) .intro-skip { animation: weg 0.25s linear forwards; }
   @media (prefers-reduced-motion: reduce) { .intro, .intro-skip { display: none !important; } }
 </style>

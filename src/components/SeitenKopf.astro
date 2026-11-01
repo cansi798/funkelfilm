@@ -27,7 +27,7 @@ const { titel, intro, clip, ueber } = Astro.props;
   </div>
 </section>
 <style>
-  .seitenkopf { padding-block: clamp(2.5rem, 7vw, 5.5rem) clamp(2.5rem, 6vw, 4.5rem); background: radial-gradient(110% 90% at 85% 30%, #15153a 0%, var(--nacht) 60%); }
+  .seitenkopf { padding-block: clamp(2.5rem, 7vw, 5.5rem) clamp(2.5rem, 6vw, 4.5rem); background: radial-gradient(110% 90% at 85% 30%, #1c1813 0%, var(--nacht) 60%); }
   .seitenkopf-raster { display: grid; gap: 2rem; align-items: center; }
   @media (min-width: 64rem) { .mitclip .seitenkopf-raster { grid-template-columns: 1.05fr 1fr; gap: 4rem; } }
   .seitenkopf h1 { font-size: clamp(2.05rem, 4.4vw, 3.4rem); max-width: 15em; }
@@ -37,7 +37,7 @@ const { titel, intro, clip, ueber } = Astro.props;
   .seitenkopf-clip video { opacity: 0; transition: opacity 0.6s ease; }
   .seitenkopf-clip.spielt video { opacity: 1; }
   .e { position: absolute; z-index: 2; width: 1.6rem; height: 1.6rem; border: 0 solid rgba(255, 255, 255, 0.9); }
-  .clip-pause { position: absolute; z-index: 3; right: 0.6rem; top: 0.6rem; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 0; border-radius: 2px; background: rgba(7, 7, 26, 0.7); color: var(--weiss); cursor: pointer; }
+  .clip-pause { position: absolute; z-index: 3; right: 0.6rem; top: 0.6rem; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 0; border-radius: 2px; background: rgba(10, 10, 10, 0.7); color: var(--weiss); cursor: pointer; }
   .clip-pause :global(svg) { width: 1.1rem; height: 1.1rem; }
   .clip-pause .p-aus { display: none; }
   .clip-pause[aria-pressed="true"] .p-an { display: none; }

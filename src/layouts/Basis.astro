@@ -1,10 +1,10 @@
 ---
-// Schriften selbst gehostet (fontsource): Poppins für Überschriften, Mulish (früher „Muli“) für Text – beide aus der bisherigen Seite.
-import "@fontsource/poppins/latin-600.css";
-import "@fontsource/poppins/latin-700.css";
-import "@fontsource-variable/mulish/wght.css";
-import poppinsUrl from "@fontsource/poppins/files/poppins-latin-700-normal.woff2?url";
-import mulishUrl from "@fontsource-variable/mulish/files/mulish-latin-wght-normal.woff2?url";
+// Schriften selbst gehostet (fontsource): Instrument Serif für Überschriften (filmisch, ruhig), Archivo für Text und Bedienung.
+// Jamils Konzept „FUNKELFILM 2027“ (Talk 4222): Netflix-Doku/Leica/A24 statt Agentur – Poppins/Mulish wirkten zu sehr nach Agentur.
+import "@fontsource/instrument-serif/latin-400.css";
+import "@fontsource-variable/archivo/wght.css";
+import serifUrl from "@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2?url";
+import archivoUrl from "@fontsource-variable/archivo/files/archivo-latin-wght-normal.woff2?url";
 import "../styles/global.css";
 import Kopf from "../components/Kopf.astro";
 import Fuss from "../components/Fuss.astro";
@@ -23,7 +23,7 @@ interface Props {
   vorladen?: string;
 }
 const { titel, beschreibung = BESCHREIBUNG, schema = [], aufruf = true, vorladen } = Astro.props;
-const voll = titel ? `${titel} | ${NAME}` : `Videoproduktion in Hamburg: Imagefilme, Kundenstimmen, Recruiting- und Eventfilme | ${NAME}`;
+const voll = titel ? `${titel} | ${NAME}` : `Unternehmensfilme, Recruitingfilme und Eventfilme aus Hamburg | ${NAME}`;
 const kanon = new URL(Astro.url.pathname, Astro.site);
 const start = new URL(u("/"), Astro.site).href;
 
@@ -54,15 +54,15 @@ const ld = (o: unknown) => JSON.stringify(o).replace(/</g, "\\u003c");
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; media-src 'self'; font-src 'self'; style-src 'self'; script-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <link rel="preload" href={poppinsUrl} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={mulishUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={serifUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={archivoUrl} as="font" type="font/woff2" crossorigin />
     {vorladen && <link rel="preload" as="image" href={vorladen} fetchpriority="high" />}
     <script is:inline src={u("/js/seite.js")}></script>
     <title>{voll}</title>
     <meta name="description" content={beschreibung} />
     {VORSCHAU && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={kanon} />
-    <meta name="theme-color" content="#07071a" />
+    <meta name="theme-color" content="#0a0a0a" />
     <link rel="icon" href={u("/favicon-32.png")} sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href={u("/apple-touch-icon.png")} />
     <meta property="og:type" content="website" />
@@ -94,6 +94,7 @@ const ld = (o: unknown) => JSON.stringify(o).replace(/</g, "\\u003c");
     </main>
     <Fuss />
     <NachOben />
+    <div class="korn" aria-hidden="true"></div>
   </body>
 </html>
 <style>
