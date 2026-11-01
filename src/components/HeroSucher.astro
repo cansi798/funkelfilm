@@ -63,7 +63,7 @@ const posterKlein = u("/medien/clips/reel-640.webp");
   .sucher-video { opacity: 0; transition: opacity 600ms ease; }
   .sucher.laeuft .sucher-video { opacity: 1; }
   .sucher-bild::after { content: ""; position: absolute; inset: 0; background: radial-gradient(90% 90% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.55) 100%); pointer-events: none; }
-  .sucher-rahmen { position: absolute; inset: 0; pointer-events: none; color: var(--weiss); font: 600 0.78rem/1 var(--titel); font-variant-numeric: tabular-nums; }
+  .sucher-rahmen { position: absolute; inset: 0; pointer-events: none; contain: layout paint; color: var(--weiss); font: 600 0.78rem/1 var(--titel); font-variant-numeric: tabular-nums; }
   .ecke { position: absolute; width: clamp(1.25rem, 3.4vw, 2.25rem); height: clamp(1.25rem, 3.4vw, 2.25rem); border: 0 solid rgba(255, 255, 255, 0.9); }
   .e1 { left: 0.9rem; top: 0.9rem; border-left-width: 2px; border-top-width: 2px; }
   .e2 { right: 0.9rem; top: 0.9rem; border-right-width: 2px; border-top-width: 2px; }
@@ -72,7 +72,7 @@ const posterKlein = u("/medien/clips/reel-640.webp");
   .fokus { position: absolute; left: 50%; top: 50%; width: 18%; aspect-ratio: 1; translate: -50% -50%; border: 1.5px solid var(--gelb); opacity: 0; }
   .rec { position: absolute; left: 2.1rem; top: 1.6rem; display: flex; align-items: center; gap: 0.4rem; letter-spacing: 0.04em; }
   .rec i { width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--gelb); box-shadow: 0 0 10px 2px rgba(255, 204, 0, 0.55); }
-  .zeit { position: absolute; right: 2.1rem; top: 1.6rem; letter-spacing: 0.04em; }
+  .zeit { position: absolute; right: 2.1rem; top: 1.6rem; letter-spacing: 0.04em; width: 6.4em; text-align: right; contain: strict; height: 1em; }
   @media (max-width: 30rem) { .rec { left: 1.6rem; top: 1.3rem; } .zeit { right: 1.6rem; top: 1.3rem; } }
 
   /* Ankommen: Schärfe zieht auf, Ecken rasten ein, Fokusfeld schließt sich (alles ≤ 1,4 s, eine Uhr: CSS) */

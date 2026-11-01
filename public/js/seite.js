@@ -44,8 +44,10 @@ document.documentElement.classList.add("js");
       new IntersectionObserver(function (e) { imBild = e[0].isIntersecting; if (imBild) spielen(); else video.pause(); }, { threshold: 0.15 }).observe(box);
     }
     if (beiZeit) {
-      var tick = function () { beiZeit(video.currentTime); requestAnimationFrame(tick); };
-      requestAnimationFrame(tick);
+      // Timecode 10× pro Sekunde, nur solange der Film läuft (statt jedes Bild: spart Rechenzeit)
+      var uhr = null;
+      video.addEventListener("playing", function () { if (!uhr) uhr = setInterval(function () { beiZeit(video.currentTime); }, 100); });
+      video.addEventListener("pause", function () { clearInterval(uhr); uhr = null; });
     }
     laden(video); spielen();
   }
@@ -103,13 +105,13 @@ document.documentElement.classList.add("js");
       nachIntro(function () { requestAnimationFrame(function () { requestAnimationFrame(function () { sucher.classList.add("an"); }); }); });
       var zeit = sucher.querySelector("[data-zeit]");
       var video = sucher.querySelector("video");
-      if (video && !ruhig && !sparen) nachLaden(function () {
+      if (video && !ruhig && !sparen) nachIntro(function () { nachLaden(function () {
         steuern(sucher, video, "laeuft", function (t) {
           if (!zeit) return;
           var s = Math.floor(t), f = Math.floor((t - s) * 25);
           zeit.textContent = "00:" + zweistellig(Math.floor(s / 60)) + ":" + zweistellig(s % 60) + ":" + zweistellig(f);
         });
-      });
+      }); });
     }
     // Clips im Kopf der Unterseiten
     document.querySelectorAll("[data-autoclip]").forEach(function (box) {
