@@ -6,7 +6,19 @@
 // 5) Karten: stummer Ausschnitt beim Darüberfahren/Fokus. 6) YouTube erst nach Klick (youtube-nocookie). 7) Anfrage → fertige E-Mail.
 document.documentElement.classList.add("js");
 (function () {
+  var html = document.documentElement;
   var ruhig = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // 0) Wow-Einstieg nur beim ersten Seitenaufruf der Sitzung (sofort im <head>, damit nichts aufblitzt)
+  var intro = false;
+  try { if (!ruhig && !sessionStorage.getItem("ff-intro")) { intro = true; sessionStorage.setItem("ff-intro", "1"); } } catch (e) { intro = false; }
+  if (intro) html.classList.add("mit-intro");
+  var introFertig = [];
+  function nachIntro(fn) { if (!intro) fn(); else introFertig.push(fn); }
+  function introEnde() {
+    if (!intro) return; intro = false;
+    var f = introFertig; introFertig = []; f.forEach(function (fn) { fn(); });
+    setTimeout(function () { html.classList.remove("mit-intro", "intro-weg"); }, 260);
+  }
   var sparen = navigator.connection && navigator.connection.saveData;
 
   function nachLaden(fn) {
@@ -41,16 +53,34 @@ document.documentElement.classList.add("js");
   function zweistellig(n) { return (n < 10 ? "0" : "") + n; }
 
   document.addEventListener("DOMContentLoaded", function () {
-    // 2) Reveal und Szenen
-    var ziele = document.querySelectorAll("[data-szene], .reveal");
-    var starten = function (el) { el.classList.add("an"); };
-    if (!("IntersectionObserver" in window)) ziele.forEach(starten);
-    else {
-      var io = new IntersectionObserver(function (eintraege) {
-        eintraege.forEach(function (e) { if (e.isIntersecting) { starten(e.target); io.unobserve(e.target); } });
-      }, { threshold: 0.35 });
-      ziele.forEach(function (el) { io.observe(el); });
+    // 0) Einstieg: endet nach 2,6 s von selbst; Überspringen-Knopf, Esc oder Klick beenden sofort (Klicks gehen trotzdem durch)
+    if (intro) {
+      var timer = setTimeout(introEnde, 2650);
+      var abbrechen = function () { if (!intro) return; clearTimeout(timer); html.classList.add("intro-weg"); introEnde(); };
+      var skip = document.querySelector("[data-intro-skip]");
+      if (skip) skip.addEventListener("click", abbrechen);
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape") abbrechen(); });
+      document.addEventListener("pointerdown", function (e) { if (!skip || !skip.contains(e.target)) abbrechen(); }, { once: true });
+      // Hero-Teile schon kurz vor dem Ende freigeben, damit die Blende direkt in die Scharfstellung übergeht
+      setTimeout(function () { var f = introFertig; introFertig = []; f.forEach(function (fn) { fn(); }); }, 1900);
     }
+
+    // 2) Reveal, Szenen und Skizzen: starten erst im Bild und laufen dann ganz durch (springen nie ans Ende)
+    document.querySelectorAll('[data-skizze="nach-intro"]').forEach(function (el) {
+      nachIntro(function () { setTimeout(function () { el.classList.add("an"); }, 700); });
+    });
+    // erst nach dem Einstieg beobachten – was unter der Blende liegt, soll man auch ablaufen sehen
+    nachIntro(function () {
+      var ziele = document.querySelectorAll('[data-szene], .reveal, [data-skizze="sichtbar"]');
+      var starten = function (el) { el.classList.add("an"); };
+      if (!("IntersectionObserver" in window)) ziele.forEach(starten);
+      else {
+        var io = new IntersectionObserver(function (eintraege) {
+          eintraege.forEach(function (e) { if (e.isIntersecting) { starten(e.target); io.unobserve(e.target); } });
+        }, { threshold: 0.35 });
+        ziele.forEach(function (el) { io.observe(el); });
+      }
+    });
 
     // 3) Kopfzeile + Nach oben
     var kopf = document.querySelector(".kopf");
@@ -70,7 +100,7 @@ document.documentElement.classList.add("js");
     // 4) Sucher (Hero)
     var sucher = document.querySelector("[data-sucher]");
     if (sucher) {
-      requestAnimationFrame(function () { requestAnimationFrame(function () { sucher.classList.add("an"); }); });
+      nachIntro(function () { requestAnimationFrame(function () { requestAnimationFrame(function () { sucher.classList.add("an"); }); }); });
       var zeit = sucher.querySelector("[data-zeit]");
       var video = sucher.querySelector("video");
       if (video && !ruhig && !sparen) nachLaden(function () {
