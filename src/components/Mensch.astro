@@ -12,7 +12,7 @@ import { MENSCH, u } from "../daten";
     <div class="mensch-text">
       <h2 id="mensch-titel">{MENSCH.titel}</h2>
       {MENSCH.zeilen.map((z, i) => <p class:list={{ gross: i === 0 }}>{z}</p>)}
-      <div class="broll reveal" data-autoclip>
+      <div class="broll reveal" data-autoclip data-spaet>
         <img src={u("/medien/clips/event.webp")} width="800" height="450" alt="" loading="lazy" decoding="async" />
         <video muted loop playsinline preload="none" data-src={u("/medien/clips/event.mp4")} aria-hidden="true" tabindex="-1"></video>
         <button class="clip-pause" type="button" data-pause hidden aria-pressed="false">

@@ -128,7 +128,7 @@ document.documentElement.classList.add("js");
       if (!v || ruhig || sparen) return;
       if (box.hasAttribute("data-spaet") && "IntersectionObserver" in window) {
         // erst laden, wenn der Abschnitt ins Bild kommt (spart Daten und Ladezeit)
-        var io2 = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { io2.disconnect(); steuern(box, v, "spielt"); } }, { rootMargin: "200px 0px" });
+        var io2 = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { io2.disconnect(); steuern(box, v, "spielt"); } }, { threshold: 0.25 });
         io2.observe(box);
       } else nachLaden(function () { steuern(box, v, "spielt"); });
     });
