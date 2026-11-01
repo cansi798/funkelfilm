@@ -1,0 +1,81 @@
+---
+// Vorlage für die vier Leistungsseiten (gleich aufgebaut).
+import Basis from "../layouts/Basis.astro";
+import SeitenKopf from "../components/SeitenKopf.astro";
+import Zeitleiste from "../components/Zeitleiste.astro";
+import FilmKlick from "../components/FilmKlick.astro";
+import Platzhalter from "../components/Platzhalter.astro";
+import { LEISTUNGEN, PROJEKTE, u } from "../daten";
+interface Props { slug: string; }
+const l = LEISTUNGEN.find((x) => x.slug === Astro.props.slug)!;
+const andere = LEISTUNGEN.filter((x) => x.slug !== l.slug);
+const film = l.slug === "imagefilme" ? PROJEKTE[0] : null;
+const schema = [{
+  "@context": "https://schema.org", "@type": "Service", name: l.titel, serviceType: "Videoproduktion", description: l.seitenIntro,
+  provider: { "@id": `${new URL(u("/"), Astro.site).href}#firma` }, areaServed: "Hamburg",
+}];
+---
+<Basis titel={l.ueberschrift} beschreibung={`${l.seitenIntro} ${l.titel} von Funkelfilm aus Hamburg.`} schema={schema} vorladen={u(l.clip.poster)}>
+  <SeitenKopf ueber={l.titel} titel={l.seitenH1} intro={l.seitenIntro} clip={l.clip}>
+    <div class="knoepfe">
+      <a class="knopf" href={u("/kontakt/")}>{l.knopf}</a>
+      <a class="knopf rahmen" href="#ablauf">So läuft es ab</a>
+    </div>
+  </SeitenKopf>
+
+  <section class="abschnitt" aria-labelledby="warum-titel">
+    <div class="huelle warum">
+      <div>
+        <h2 id="warum-titel">{l.ueberschrift}</h2>
+        {l.text.map((t) => <p class="lead leise">{t}</p>)}
+        <p class="leise">{l.warum}</p>
+      </div>
+      <ul class="vorteile">
+        {l.vorteile.map((v) => <li class="reveal"><h3>{v.titel}</h3><p>{v.text}</p></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="abschnitt tief" aria-labelledby="beispiel-titel">
+    <div class="huelle">
+      <div class="kopfzeile">
+        <h2 id="beispiel-titel">Ein Beispiel</h2>
+      </div>
+      {film ? (
+        <div class="beispiel"><FilmKlick {...film} gross /></div>
+      ) : (
+        <Platzhalter>Hier gehört ein fertiger {l.titel} von Funkelfilm hin. Der auf der bisherigen Seite eingebundene Film ist auf YouTube nicht mehr abrufbar.</Platzhalter>
+      )}
+    </div>
+  </section>
+
+  <section class="abschnitt hell" id="ablauf" aria-labelledby="ablauf-titel">
+    <div class="huelle">
+      <div class="kopfzeile">
+        <h2 id="ablauf-titel">Die Vorgehensweise</h2>
+        <p>Fünf Schritte, ein Ansprechpartner.</p>
+      </div>
+      <Zeitleiste />
+    </div>
+  </section>
+
+  <section class="abschnitt" aria-labelledby="weitere-titel">
+    <div class="huelle">
+      <h2 id="weitere-titel" class="weitere-titel">Weitere Filme</h2>
+      <ul class="weitere">
+        {andere.map((a) => <li><a class="weiter" href={u(`/${a.slug}/`)}>{a.titel}</a></li>)}
+      </ul>
+    </div>
+  </section>
+</Basis>
+<style>
+  .warum { display: grid; gap: clamp(2rem, 5vw, 4rem); }
+  @media (min-width: 60rem) { .warum { grid-template-columns: 1.1fr 1fr; align-items: start; } }
+  .vorteile { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
+  .vorteile li { padding: 1.25rem 1.4rem; border: 1px solid var(--linie-dunkel); border-left: 3px solid var(--gelb); background: var(--nacht-2); }
+  .vorteile h3 { margin: 0 0 0.35rem; }
+  .vorteile p { margin: 0; color: var(--silber); }
+  .beispiel { max-width: 52rem; }
+  .weitere-titel { font-size: clamp(1.4rem, 2.4vw, 1.8rem); }
+  .weitere { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.75rem 2rem; }
+</style>

@@ -1,0 +1,30 @@
+---
+import Basis from "../layouts/Basis.astro";
+import SeitenKopf from "../components/SeitenKopf.astro";
+import FilmKlick from "../components/FilmKlick.astro";
+import Stimmen from "../components/Stimmen.astro";
+import Platzhalter from "../components/Platzhalter.astro";
+import { PROJEKTE } from "../daten";
+---
+<Basis titel="Projekte und Erfolgsgeschichten" beschreibung="Filme von Funkelfilm und was Kunden über die Zusammenarbeit mit Sheeras Iqbal sagen.">
+  <SeitenKopf ueber="Projekte" titel="Filme, die Botschaften klar transportieren und nachhaltig wirken." />
+  <section class="abschnitt tief" aria-labelledby="filme-titel">
+    <div class="huelle">
+      <div class="kopfzeile"><h2 id="filme-titel">Ausgewählte Filme</h2></div>
+      <div class="filme">
+        {PROJEKTE.map((p) => <FilmKlick {...p} gross />)}
+      </div>
+      <Platzhalter>Showreel und weitere Projekte (Titel, Kunde, Art des Films, Freigabe zur Nennung) liefert Funkelfilm.</Platzhalter>
+    </div>
+  </section>
+  <section class="abschnitt hell" id="stimmen" aria-labelledby="stimmen-titel">
+    <div class="huelle">
+      <div class="kopfzeile"><h2 id="stimmen-titel">Erfolgsgeschichten in Worten</h2><p>Was Unternehmen über die Zusammenarbeit sagen.</p></div>
+      <Stimmen voll />
+    </div>
+  </section>
+</Basis>
+<style>
+  .filme { display: grid; gap: clamp(1.5rem, 3vw, 2.5rem); margin-bottom: 1.5rem; }
+  @media (min-width: 60rem) { .filme { grid-template-columns: 1fr 1fr; } }
+</style>

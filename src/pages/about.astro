@@ -1,0 +1,56 @@
+---
+import Basis from "../layouts/Basis.astro";
+import SeitenKopf from "../components/SeitenKopf.astro";
+import Bild from "../components/Bild.astro";
+import { UEBER, REISE, INHABER, u } from "../daten";
+const schema = [{ "@context": "https://schema.org", "@type": "Person", name: INHABER, jobTitle: "Videograf", worksFor: { "@id": `${new URL(u("/"), Astro.site).href}#firma` } }];
+---
+<Basis titel="Über mich: Sheeras Iqbal, Videograf" beschreibung="Sheeras Iqbal begleitet seit 2017 Menschen und Unternehmen dabei, ihre Ideen in bewegte Bilder zu verwandeln – mit Herz, Verstand und ehrlichem Storytelling." schema={schema}>
+  <SeitenKopf ueber="Über mich" titel={UEBER.h1} />
+  <section class="abschnitt ueber-start">
+    <div class="huelle ueber">
+      <div class="foto ueber-bild">
+        <Bild name="sheeras-pullover" breiten={[400, 640]} sizes="(min-width: 56rem) 26rem, 80vw" verhaeltnis={[4, 5]} laden="eager" alt="Sheeras Iqbal im Porträt (Schwarz-Weiß)" />
+      </div>
+      <div>
+        {UEBER.lang.map((t, i) => <p class:list={{ lead: i === 0, leise: true }}>{t}</p>)}
+        <a class="knopf" href={u("/kontakt/")}>Kontakt aufnehmen</a>
+      </div>
+    </div>
+  </section>
+  <section class="abschnitt tief" aria-labelledby="reise-titel">
+    <div class="huelle">
+      <div class="kopfzeile"><h2 id="reise-titel">Meine Reise in bewegten Bildern</h2></div>
+      <ol class="reise">
+        {REISE.map((r) => (
+          <li class="reveal">
+            <div class="foto reise-bild"><Bild name={r.bild} breiten={[480]} sizes="(min-width: 56rem) 24rem, 90vw" verhaeltnis={[1, 1]} alt="" /></div>
+            <p class="jahr">{r.jahr}</p>
+            <h3>{r.titel}</h3>
+            <p class="leise">{r.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+  <section class="abschnitt hell" aria-labelledby="mission-titel">
+    <div class="huelle mission">
+      <p class="art">Meine Mission</p>
+      <h2 id="mission-titel">{UEBER.mission}</h2>
+      <p class="lead leise">{UEBER.missionText}</p>
+    </div>
+  </section>
+</Basis>
+<style>
+  .ueber-start { padding-top: clamp(1rem, 3vw, 2rem); }
+  .ueber { display: grid; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+  @media (min-width: 56rem) { .ueber { grid-template-columns: minmax(0, 26rem) 1fr; } }
+  .ueber-bild { aspect-ratio: 4 / 5; max-width: 26rem; }
+  .reise { list-style: none; margin: 0; padding: 0; display: grid; gap: 2rem; }
+  @media (min-width: 56rem) { .reise { grid-template-columns: repeat(3, 1fr); } }
+  .reise-bild { aspect-ratio: 1; margin-bottom: 1rem; }
+  .jahr { margin: 0 0 0.25rem; font: 700 2rem/1 var(--titel); color: var(--gelb); font-variant-numeric: tabular-nums; }
+  .reise h3 { margin-bottom: 0.4rem; }
+  .mission { max-width: 46rem; }
+  .art { margin: 0 0 0.5rem; font: 600 1rem/1.3 var(--titel); color: var(--tinte-leise); }
+</style>

@@ -1,0 +1,34 @@
+---
+// Film von YouTube erst nach Klick laden (Zwei-Klick-Lösung, youtube-nocookie). Vorher nur ein selbst gehostetes Standbild.
+import Bild from "./Bild.astro";
+import Icon from "./Icon.astro";
+interface Props { titel: string; art: string; youtube: string; bild: string; bildBreiten: number[]; gross?: boolean; }
+const { titel, art, youtube, bild, bildBreiten, gross = false } = Astro.props;
+---
+<figure class:list={["film", { gross }]}>
+  <div class="film-buehne" data-film={youtube} data-titel={titel}>
+    <Bild name={bild} breiten={bildBreiten} sizes={gross ? "(min-width: 64rem) 46rem, 100vw" : "(min-width: 64rem) 30rem, 100vw"} verhaeltnis={[16, 9]} alt="" />
+    <button class="film-start" type="button">
+      <span class="film-play"><Icon name="play" /></span>
+      <span class="film-start-text"><strong>Film abspielen</strong><span>Lädt YouTube (Google). Erst dann werden Daten übertragen.</span></span>
+    </button>
+  </div>
+  <figcaption><span class="film-art">{art}</span><span class="film-titel">{titel}</span></figcaption>
+</figure>
+<style>
+  .film { margin: 0; }
+  .film-buehne { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--schwarz); }
+  .film-buehne :global(picture), .film-buehne :global(img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .film-buehne :global(iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .film-start { position: absolute; inset: 0; display: flex; align-items: flex-end; gap: 0.9rem; padding: clamp(0.9rem, 2.5vw, 1.4rem); border: 0; cursor: pointer; text-align: left; color: var(--weiss);
+    background: linear-gradient(180deg, transparent 35%, rgba(0, 0, 0, 0.78) 100%); font: inherit; }
+  .film-play { flex: none; display: grid; place-items: center; width: 3.4rem; height: 3.4rem; border-radius: 50%; background: var(--gelb); color: var(--schwarz); transition: transform var(--dur-fast) var(--ease); }
+  .film-play :global(svg) { width: 1.4rem; height: 1.4rem; translate: 2px 0; }
+  .film-start:hover .film-play { transform: scale(1.06); }
+  .film-start-text { display: grid; gap: 0.1rem; font-size: 0.85rem; line-height: 1.4; color: var(--silber); }
+  .film-start-text strong { font: 600 1rem/1.3 var(--titel); color: var(--weiss); }
+  figcaption { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 0.75rem; margin-top: 0.85rem; }
+  .film-titel { font: 600 1.15rem/1.3 var(--titel); }
+  .film-art { order: 2; color: var(--silber); font-size: 0.95rem; }
+  .gross .film-titel { font-size: clamp(1.2rem, 2vw, 1.5rem); }
+</style>

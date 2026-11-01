@@ -1,0 +1,33 @@
+---
+import Basis from "../layouts/Basis.astro";
+import Luecke from "../components/Luecke.astro";
+import Platzhalter from "../components/Platzhalter.astro";
+import { IMPRESSUM, MAIL } from "../daten";
+---
+<Basis titel="Impressum" beschreibung="Impressum von Funkelfilm, Hamburg." aufruf={false}>
+  <section class="abschnitt hell recht">
+    <div class="huelle schmal">
+      <h1>Impressum</h1>
+      <Platzhalter>Entwurf. Die Angaben stammen aus dem Impressum der bisherigen Seite und müssen vor dem Livegang von Funkelfilm bestätigt werden. Rechtsgrundlage heute: § 5 DDG (statt TMG) und § 18 Abs. 2 MStV (statt RStV).</Platzhalter>
+      <h2>Angaben gemäß § 5 DDG</h2>
+      <p>{IMPRESSUM.name}<br />{IMPRESSUM.firma}<br />{IMPRESSUM.strasse}<br />{IMPRESSUM.plzOrt}<br />{IMPRESSUM.land}</p>
+      <h2>Kontakt</h2>
+      <p>Telefon: {IMPRESSUM.telefon}<br />E-Mail: <a href={`mailto:${MAIL}`}>{MAIL}</a></p>
+      <h2>Umsatzsteuer-ID</h2>
+      <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: {IMPRESSUM.ustId}</p>
+      <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+      <p>{IMPRESSUM.name}, Anschrift wie oben</p>
+      <h2>Rechtsform</h2>
+      <p><Luecke>Rechtsform bestätigen (z. B. Einzelunternehmen)</Luecke></p>
+      <h2>Bildrechte</h2>
+      <p>Fotos und Filmausschnitte: Funkelfilm. <Luecke>Bildnachweise und Freigaben der gezeigten Personen bestätigen</Luecke></p>
+    </div>
+  </section>
+</Basis>
+<style>
+  .recht { padding-top: clamp(2.5rem, 6vw, 4.5rem); }
+  .schmal { max-width: 46rem; }
+  .recht h1 { font-size: clamp(2rem, 4vw, 3rem); }
+  .recht h2 { font-size: 1.2rem; margin: 2rem 0 0.5rem; }
+  .recht a { font-weight: 700; box-shadow: inset 0 -2px 0 var(--gelb); }
+</style>

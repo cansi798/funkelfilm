@@ -1,0 +1,7 @@
+---
+// Bisheriges Logo von funkelfilm.com (PNG, weiß). Eine Vektordatei fehlt noch (OFFENE-INFOS).
+import { u } from "../daten";
+interface Props { klasse?: string; }
+const { klasse = "" } = Astro.props;
+---
+<img class={`logo ${klasse}`} src={u("/medien/logo-weiss-480.png")} srcset={`${u("/medien/logo-weiss-480.png")} 480w, ${u("/medien/logo-weiss-960.png")} 960w`} sizes="12rem" width="480" height="143" alt="Funkelfilm" />

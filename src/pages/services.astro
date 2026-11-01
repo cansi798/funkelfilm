@@ -1,0 +1,40 @@
+---
+import Basis from "../layouts/Basis.astro";
+import SeitenKopf from "../components/SeitenKopf.astro";
+import { LEISTUNGEN, u } from "../daten";
+---
+<Basis titel="Leistungen: Imagefilm, Kundenstimmen, Recruiting- und Eventfilm" beschreibung="Imagefilme, Testimonial-Videos, Recruitingfilme und Eventfilme von Funkelfilm aus Hamburg – authentisch, emotional und ohne große Show.">
+  <SeitenKopf ueber="Leistungen" titel="Mit Videos begeistern – einfach, echt und wirkungsvoll." intro="Jede Marke hat ihre eigene Geschichte. Ich helfe dir, sie so zu erzählen, dass sie Menschen wirklich erreicht – in Bildern, die berühren und hängen bleiben." />
+  <section class="abschnitt" aria-label="Filmarten">
+    <div class="huelle zeilen">
+      {LEISTUNGEN.map((l, i) => (
+        <article class:list={["zeile", "reveal", { gedreht: i % 2 === 1 }]} aria-labelledby={`l-${l.slug}`}>
+          <div class="zeile-bild" data-vorschau>
+            <img src={u(l.clip.poster)} width={l.clip.breite} height={l.clip.hoehe} alt="" loading={i === 0 ? "eager" : "lazy"} decoding="async" />
+            <video muted loop playsinline preload="none" data-src={u(l.clip.datei)} aria-hidden="true" tabindex="-1"></video>
+          </div>
+          <div class="zeile-text">
+            <p class="art">{l.titel}</p>
+            <h2 id={`l-${l.slug}`}>{l.ueberschrift}</h2>
+            {l.text.map((t) => <p class="leise">{t}</p>)}
+            <div class="knoepfe">
+              <a class="knopf" href={u("/kontakt/")}>{l.knopf}</a>
+              <a class="knopf rahmen" href={u(`/${l.slug}/`)}>Mehr erfahren<span class="sr"> zu {l.titel}</span></a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</Basis>
+<style>
+  .zeilen { display: grid; gap: clamp(3.5rem, 8vw, 6rem); }
+  .zeile { display: grid; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
+  @media (min-width: 60rem) { .zeile { grid-template-columns: 1.1fr 1fr; } .zeile.gedreht .zeile-bild { order: 2; } }
+  .zeile-bild { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--schwarz); }
+  .zeile-bild img, .zeile-bild video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .zeile-bild video { opacity: 0; transition: opacity 0.4s ease; }
+  .zeile-bild.spielt video { opacity: 1; }
+  .art { margin: 0 0 0.5rem; font: 600 1rem/1.3 var(--titel); color: var(--gelb); }
+  .zeile h2 { font-size: clamp(1.6rem, 3vw, 2.3rem); }
+</style>

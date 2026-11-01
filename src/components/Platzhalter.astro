@@ -1,0 +1,5 @@
+---
+// Sichtbarer Platzhalter, nur in der Vorschau (an den Vorschau-Schalter gekoppelt).
+import { VORSCHAU } from "../daten";
+---
+{VORSCHAU && <p class="platzhalter"><strong>Platzhalter:</strong> <slot /></p>}

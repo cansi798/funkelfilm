@@ -1,0 +1,103 @@
+---
+// Schriften selbst gehostet (fontsource): Poppins für Überschriften, Mulish (früher „Muli“) für Text – beide aus der bisherigen Seite.
+import "@fontsource/poppins/latin-600.css";
+import "@fontsource/poppins/latin-700.css";
+import "@fontsource-variable/mulish/wght.css";
+import poppinsUrl from "@fontsource/poppins/files/poppins-latin-700-normal.woff2?url";
+import mulishUrl from "@fontsource-variable/mulish/files/mulish-latin-wght-normal.woff2?url";
+import "../styles/global.css";
+import Kopf from "../components/Kopf.astro";
+import Fuss from "../components/Fuss.astro";
+import Aufruf from "../components/Aufruf.astro";
+import NachOben from "../components/NachOben.astro";
+import { VORSCHAU, NAME, BESCHREIBUNG, MAIL, ORT, INHABER, SOZIAL, u } from "../daten";
+
+interface Props {
+  titel?: string;
+  beschreibung?: string;
+  schema?: Record<string, unknown>[];
+  /** Abschluss-Aufruf (aus auf Kontakt, Impressum, Datenschutz) */
+  aufruf?: boolean;
+  /** Bild für die Vorschau beim Teilen */
+  vorladen?: string;
+}
+const { titel, beschreibung = BESCHREIBUNG, schema = [], aufruf = true, vorladen } = Astro.props;
+const voll = titel ? `${titel} | ${NAME}` : `Videoproduktion in Hamburg: Imagefilme, Kundenstimmen, Recruiting- und Eventfilme | ${NAME}`;
+const kanon = new URL(Astro.url.pathname, Astro.site);
+const start = new URL(u("/"), Astro.site).href;
+
+// Strukturierte Daten: nur belegte Angaben der bisherigen Seite (keine Bewertungen, keine Preise).
+const firma = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "@id": `${start}#firma`,
+  name: NAME,
+  url: start,
+  email: `mailto:${MAIL}`,
+  founder: { "@type": "Person", name: INHABER, jobTitle: "Videograf" },
+  address: { "@type": "PostalAddress", addressLocality: ORT, addressCountry: "DE" },
+  areaServed: ORT,
+  sameAs: SOZIAL.map((s) => s.href),
+  knowsAbout: ["Imagefilm", "Testimonial-Video", "Recruitingfilm", "Eventfilm", "Videoproduktion"],
+};
+const jsonLd = [
+  firma,
+  { "@context": "https://schema.org", "@type": "WebSite", "@id": `${start}#website`, url: start, name: NAME, inLanguage: "de-DE", publisher: { "@id": `${start}#firma` } },
+  ...schema,
+];
+const ld = (o: unknown) => JSON.stringify(o).replace(/</g, "\\u003c");
+---
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; media-src 'self'; font-src 'self'; style-src 'self'; script-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <link rel="preload" href={poppinsUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={mulishUrl} as="font" type="font/woff2" crossorigin />
+    {vorladen && <link rel="preload" as="image" href={vorladen} fetchpriority="high" />}
+    <script is:inline src={u("/js/seite.js")}></script>
+    <title>{voll}</title>
+    <meta name="description" content={beschreibung} />
+    {VORSCHAU && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={kanon} />
+    <meta name="theme-color" content="#07071a" />
+    <link rel="icon" href={u("/favicon-32.png")} sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href={u("/apple-touch-icon.png")} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:site_name" content={NAME} />
+    <meta property="og:title" content={voll} />
+    <meta property="og:description" content={beschreibung} />
+    <meta property="og:url" content={kanon} />
+    <meta property="og:image" content={new URL(u("/og.png"), Astro.site).href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <link rel="sitemap" href={u("/sitemap.xml")} />
+    {jsonLd.map((o) => <script type="application/ld+json" set:html={ld(o)} />)}
+  </head>
+  <body>
+    <a class="skip" href="#inhalt">Zum Inhalt springen</a>
+    {VORSCHAU && (
+      <div class="vorschau" role="note">
+        <div class="huelle">
+          <strong>Vorschau.</strong> Noch nicht veröffentlicht.<span class="lang"> Für Suchmaschinen gesperrt. Rot gestrichelt = Platzhalter. Bilder und Filme stammen von funkelfilm.com und sind nur zur Vorschau eingebunden.</span><span class="kurz"> Rot gestrichelt = Platzhalter.</span>
+        </div>
+      </div>
+    )}
+    <Kopf />
+    <main id="inhalt">
+      <slot />
+      {aufruf && <Aufruf />}
+    </main>
+    <Fuss />
+    <NachOben />
+  </body>
+</html>
+<style>
+  .vorschau { background: #fff4f2; color: #5c120d; border-bottom: 2px dashed var(--rot-vorschau); font-size: 0.86rem; line-height: 1.5; padding-block: 0.45rem; }
+  .vorschau strong { color: var(--rot-vorschau); font-weight: 700; }
+  .vorschau .kurz { display: none; }
+  @media (max-width: 40rem) { .vorschau .lang { display: none; } .vorschau .kurz { display: inline; } }
+</style>

@@ -1,0 +1,92 @@
+---
+// Die Vorgehensweise als Schnitt-Zeitleiste: fünf Clips auf einer Spur, ein gelber Abspielkopf fährt einmal darüber (1,4 s, eine CSS-Uhr),
+// jeder Clip leuchtet auf, wenn der Kopf ihn erreicht. Startet erst, wenn die Zeitleiste im Bild ist. Ohne JS / reduzierte Bewegung: Endbild.
+// Details auf Abruf (<details>), damit die Seite kurz bleibt.
+import { ABLAUF } from "../daten";
+interface Props { offen?: boolean; }
+const { offen = false } = Astro.props;
+---
+<div class="zeitleiste" data-szene>
+  <div class="lineal" aria-hidden="true"></div>
+  <ol class="spur">
+    {ABLAUF.map((s, i) => (
+      <li class="clip">
+        <span class="nr" aria-hidden="true">{i + 1}</span>
+        <h3>{s.titel}</h3>
+        <p>{s.kurz}</p>
+      </li>
+    ))}
+  </ol>
+  <div class="kopfbahn" aria-hidden="true"><span class="abspielkopf"></span></div>
+</div>
+<details class="ablauf-details" open={offen}>
+  <summary>So läuft jeder Schritt ab</summary>
+  <ol>
+    {ABLAUF.map((s) => <li><strong>{s.titel} – {s.kurz}.</strong> {s.lang}</li>)}
+  </ol>
+</details>
+<style>
+  .zeitleiste { position: relative; padding-top: 1.75rem; overflow-x: clip; }
+  .lineal { position: absolute; left: 0; right: 0; top: 0; height: 0.9rem; border-bottom: 1px solid var(--linie-hell);
+    background: repeating-linear-gradient(90deg, var(--tinte-leise) 0 1px, transparent 1px 2.5%) bottom / 100% 0.45rem no-repeat,
+                repeating-linear-gradient(90deg, var(--tinte) 0 1px, transparent 1px 20%) bottom / 100% 0.9rem no-repeat; opacity: 0.55; }
+  .spur { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; grid-template-columns: repeat(5, 1fr); }
+  .clip { position: relative; padding: 1rem 1rem 1.15rem; min-height: 9.5rem; background: var(--weiss); border-top: 4px solid var(--linie-hell);
+    transition: border-color 0.25s ease, background-color 0.25s ease; }
+  .clip .nr { display: block; font: 700 1.6rem/1 var(--titel); color: var(--tinte); margin-bottom: 0.9rem; font-variant-numeric: tabular-nums; }
+  .clip h3 { margin: 0 0 0.3rem; font-size: 1.08rem; }
+  .clip p { margin: 0; color: var(--tinte-leise); font-size: 0.95rem; line-height: 1.5; }
+  .kopfbahn { position: absolute; inset: 0 0 0 0; pointer-events: none; }
+  .abspielkopf { position: absolute; left: 0; top: -0.35rem; bottom: 0; width: 2px; background: var(--gelb); box-shadow: 0 0 0 1px rgba(7, 7, 26, 0.15); }
+  .abspielkopf::before { content: ""; position: absolute; left: 50%; top: 0; width: 0.9rem; height: 0.9rem; translate: -50% 0; background: var(--gelb); clip-path: polygon(0 0, 100% 0, 100% 60%, 50% 100%, 0 60%); }
+
+  /* Endbild (ohne JS): alle Clips aktiv, Kopf am Ende */
+  .clip { border-top-color: var(--gelb); }
+  .kopfbahn { transform: translateX(100%); }
+  .abspielkopf { translate: -2px 0; }
+  /* Mit JS: Start erst im Bild */
+  :global(.js) .zeitleiste .clip { border-top-color: var(--linie-hell); }
+  :global(.js) .zeitleiste .kopfbahn { transform: translateX(0); }
+  :global(.js) .zeitleiste.an .kopfbahn { transform: translateX(100%); transition: transform 1.4s linear; }
+  :global(.js) .zeitleiste.an .clip { border-top-color: var(--gelb); }
+  :global(.js) .zeitleiste.an .clip:nth-child(1) { transition-delay: 0.05s; }
+  :global(.js) .zeitleiste.an .clip:nth-child(2) { transition-delay: 0.33s; }
+  :global(.js) .zeitleiste.an .clip:nth-child(3) { transition-delay: 0.61s; }
+  :global(.js) .zeitleiste.an .clip:nth-child(4) { transition-delay: 0.89s; }
+  :global(.js) .zeitleiste.an .clip:nth-child(5) { transition-delay: 1.17s; }
+
+  /* Handy: senkrechte Spur, Kopf fährt nach unten */
+  @media (max-width: 47.99rem) {
+    .zeitleiste { padding-top: 0; padding-left: 1.5rem; }
+    .lineal { top: 0; bottom: 0; left: 0; right: auto; width: 0.9rem; height: auto; border-bottom: 0; border-right: 1px solid var(--linie-hell);
+      background: repeating-linear-gradient(180deg, var(--tinte-leise) 0 1px, transparent 1px 2.5%) right / 0.45rem 100% no-repeat,
+                  repeating-linear-gradient(180deg, var(--tinte) 0 1px, transparent 1px 20%) right / 0.9rem 100% no-repeat; }
+    .spur { grid-template-columns: 1fr; }
+    .clip { min-height: 0; display: grid; grid-template-columns: 2.25rem 1fr; column-gap: 0.75rem; border-top: 0; border-left: 4px solid var(--gelb); padding: 0.85rem 1rem; }
+    .clip .nr { grid-row: span 2; margin: 0; font-size: 1.35rem; }
+    .kopfbahn, :global(.js) .zeitleiste .kopfbahn { transform: translateY(100%); }
+    .abspielkopf { left: -0.4rem; right: auto; top: 0; bottom: auto; width: auto; height: 2px; width: calc(100% + 0.4rem); translate: 0 -2px; }
+    .abspielkopf::before { left: 0; top: 50%; translate: 0 -50%; clip-path: polygon(0 0, 60% 0, 100% 50%, 60% 100%, 0 100%); }
+    :global(.js) .zeitleiste .clip { border-left-color: var(--linie-hell); }
+    :global(.js) .zeitleiste .kopfbahn { transform: translateY(0); }
+    :global(.js) .zeitleiste.an .kopfbahn { transform: translateY(100%); }
+    :global(.js) .zeitleiste.an .clip { border-left-color: var(--gelb); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .zeitleiste .kopfbahn { transform: translateX(100%) !important; transition: none !important; }
+    :global(.js) .zeitleiste .clip { border-top-color: var(--gelb) !important; transition: none !important; }
+  }
+  @media (prefers-reduced-motion: reduce) and (max-width: 47.99rem) {
+    :global(.js) .zeitleiste .kopfbahn { transform: translateY(100%) !important; }
+    :global(.js) .zeitleiste .clip { border-left-color: var(--gelb) !important; }
+  }
+
+  .ablauf-details { margin-top: 1.5rem; border-top: 1px solid var(--linie-hell); }
+  .ablauf-details summary { cursor: pointer; padding: 1rem 0; font: 600 1rem/1.3 var(--titel); list-style: none; display: flex; align-items: center; gap: 0.6rem; }
+  .ablauf-details summary::-webkit-details-marker { display: none; }
+  .ablauf-details summary::before { content: "+"; display: grid; place-items: center; width: 1.6rem; height: 1.6rem; border: 1.5px solid currentColor; border-radius: 2px; font-size: 1.1rem; line-height: 1; }
+  .ablauf-details[open] summary::before { content: "–"; }
+  .ablauf-details ol { margin: 0 0 1rem; padding-left: 1.25rem; max-width: 50rem; color: var(--tinte-leise); }
+  .ablauf-details li { margin-bottom: 0.75rem; }
+  .ablauf-details strong { color: var(--tinte); }
+</style>

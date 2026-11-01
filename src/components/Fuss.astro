@@ -1,0 +1,60 @@
+---
+import Logo from "./Logo.astro";
+import Icon from "./Icon.astro";
+import { NAV, SOZIAL, MAIL, CLAIM, ORT, LEISTUNGEN, u } from "../daten";
+const jahr = new Date().getFullYear();
+---
+<footer class="fuss">
+  <div class="huelle fuss-raster">
+    <div class="fuss-marke">
+      <a href={u("/")} aria-label="Funkelfilm – zur Startseite"><Logo /></a>
+      <p class="leise">{CLAIM}<br />Videoproduktion aus {ORT}.</p>
+      <ul class="sozial">
+        {SOZIAL.map((s) => (
+          <li><a href={s.href} rel="noopener" aria-label={`Funkelfilm bei ${s.name} (externe Seite)`}><Icon name={s.name.toLowerCase() as "instagram" | "youtube" | "facebook"} /></a></li>
+        ))}
+      </ul>
+    </div>
+    <nav aria-label="Leistungen">
+      <h2 class="fuss-titel">Leistungen</h2>
+      <ul>{LEISTUNGEN.map((l) => <li><a href={u(`/${l.slug}/`)}>{l.titel}</a></li>)}</ul>
+    </nav>
+    <nav aria-label="Seiten">
+      <h2 class="fuss-titel">Funkelfilm</h2>
+      <ul>{NAV.map((n) => <li><a href={u(n.href)}>{n.titel}</a></li>)}</ul>
+    </nav>
+    <div>
+      <h2 class="fuss-titel">Kontakt</h2>
+      <ul>
+        <li><a href={`mailto:${MAIL}`}>{MAIL}</a></li>
+        <li><a href={u("/kontakt/")}>Kostenloses Erstgespräch</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="huelle fuss-unten">
+    <p>© {jahr} Funkelfilm</p>
+    <ul>
+      <li><a href={u("/impressum/")}>Impressum</a></li>
+      <li><a href={u("/datenschutz/")}>Datenschutz</a></li>
+    </ul>
+  </div>
+</footer>
+<style>
+  .fuss { background: var(--schwarz); border-top: 1px solid var(--linie-dunkel); padding-block: clamp(3rem, 7vw, 5rem) 1.5rem; font-size: 0.98rem; }
+  .fuss-raster { display: grid; gap: 2.25rem 1.5rem; grid-template-columns: 1fr 1fr; }
+  .fuss-marke { grid-column: 1 / -1; }
+  @media (min-width: 64rem) { .fuss-marke { grid-column: auto; } }
+  @media (min-width: 64rem) { .fuss-raster { grid-template-columns: 1.6fr 1fr 1fr 1.2fr; } }
+  .fuss :global(.logo) { width: 10rem; height: auto; margin-bottom: 1rem; }
+  .fuss-titel { font: 600 0.95rem/1.3 var(--titel); letter-spacing: 0; color: var(--gelb); margin: 0 0 0.8rem; }
+  .fuss ul { list-style: none; margin: 0; padding: 0; }
+  .fuss li a { display: inline-block; padding: 0.35rem 0; color: var(--silber); }
+  .fuss li a:hover { color: var(--weiss); text-decoration: underline; }
+  .sozial { display: flex; gap: 0.5rem; margin-top: 1rem; }
+  .sozial a { display: grid !important; place-items: center; width: 2.75rem; height: 2.75rem; border: 1px solid var(--linie-dunkel); border-radius: 2px; padding: 0 !important; }
+  .sozial a:hover { border-color: var(--gelb); color: var(--gelb) !important; }
+  .sozial :global(svg) { width: 1.25rem; height: 1.25rem; }
+  .fuss-unten { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1.5rem; margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid var(--linie-dunkel); color: var(--silber); font-size: 0.9rem; }
+  .fuss-unten p { margin: 0; }
+  .fuss-unten ul { display: flex; gap: 1.25rem; }
+</style>

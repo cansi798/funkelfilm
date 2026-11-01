@@ -1,0 +1,13 @@
+---
+import Basis from "../layouts/Basis.astro";
+import { u } from "../daten";
+---
+<Basis titel="Seite nicht gefunden" aufruf={false}>
+  <section class="abschnitt">
+    <div class="huelle">
+      <h1>Diese Szene gibt es nicht.</h1>
+      <p class="lead leise">Die Seite wurde verschoben oder die Adresse ist falsch geschrieben.</p>
+      <div class="knoepfe"><a class="knopf" href={u("/")}>Zur Startseite</a><a class="knopf rahmen" href={u("/kontakt/")}>Kontakt</a></div>
+    </div>
+  </section>
+</Basis>

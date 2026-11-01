@@ -1,0 +1,17 @@
+---
+// „Nach oben“-Knopf (wie Kerim): erscheint nach etwa einem Bildschirm, ohne JS ein normaler Anker.
+import Icon from "./Icon.astro";
+---
+<a class="nach-oben" href="#inhalt" aria-label="Nach oben"><Icon name="hoch" /></a>
+<style>
+  .nach-oben {
+    position: fixed; right: max(1rem, env(safe-area-inset-right)); bottom: max(1rem, env(safe-area-inset-bottom)); z-index: 40;
+    display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 2px;
+    background: var(--gelb); color: var(--schwarz); box-shadow: 0 8px 24px -10px rgba(0, 0, 0, 0.8);
+    transition: opacity var(--dur-reveal) var(--ease), transform var(--dur-reveal) var(--ease);
+  }
+  .nach-oben :global(svg) { width: 1.35rem; height: 1.35rem; }
+  :global(.js) .nach-oben { opacity: 0; transform: translateY(12px); pointer-events: none; }
+  :global(.js) .nach-oben.sichtbar { opacity: 1; transform: none; pointer-events: auto; }
+  @media (prefers-reduced-motion: reduce) { .nach-oben { transition: none; } }
+</style>

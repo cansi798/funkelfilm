@@ -1,0 +1,13 @@
+---
+// Responsives Bild aus /medien/bilder (AVIF + WebP), Dateien heißen <name>-<breite>.avif|webp
+import { u } from "../daten";
+interface Props { name: string; breiten: number[]; alt: string; sizes: string; verhaeltnis: [number, number]; laden?: "lazy" | "eager"; prio?: boolean; klasse?: string; }
+const { name, breiten, alt, sizes, verhaeltnis, laden = "lazy", prio = false, klasse } = Astro.props;
+const set = (ext: string) => breiten.map((b) => `${u(`/medien/bilder/${name}-${b}.${ext}`)} ${b}w`).join(", ");
+const groesste = breiten[breiten.length - 1];
+const hoehe = Math.round((groesste * verhaeltnis[1]) / verhaeltnis[0]);
+---
+<picture class={klasse}>
+  <source type="image/avif" srcset={set("avif")} sizes={sizes} />
+  <img src={u(`/medien/bilder/${name}-${groesste}.webp`)} srcset={set("webp")} sizes={sizes} width={groesste} height={hoehe} alt={alt} loading={laden} decoding="async" fetchpriority={prio ? "high" : undefined} />
+</picture>

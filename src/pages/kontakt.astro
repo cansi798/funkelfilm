@@ -1,0 +1,23 @@
+---
+import Basis from "../layouts/Basis.astro";
+import SeitenKopf from "../components/SeitenKopf.astro";
+import Anfrage from "../components/Anfrage.astro";
+import Bild from "../components/Bild.astro";
+---
+<Basis titel="Kontakt: kostenloses Erstgespräch" beschreibung="Du hast eine Idee oder ein Projekt im Kopf? Schreib Funkelfilm für ein kostenloses Erstgespräch zu deinem Video." aufruf={false}>
+  <SeitenKopf ueber="Kontakt" titel="Lass uns ins Gespräch kommen." intro="Du hast eine Idee oder ein Projekt im Kopf? Ich freue mich darauf, mehr darüber zu erfahren und gemeinsam mit dir etwas Besonderes zu schaffen." />
+  <section class="abschnitt kontakt-start">
+    <div class="huelle kontakt">
+      <Anfrage />
+      <div class="foto kontakt-bild">
+        <Bild name="sucher-set" breiten={[640, 1100]} sizes="(min-width: 60rem) 34rem, 100vw" verhaeltnis={[16, 10]} alt="Blick über eine Kamera auf ein Set mit zwei Personen (Schwarz-Weiß-Foto)" />
+      </div>
+    </div>
+  </section>
+</Basis>
+<style>
+  .kontakt-start { padding-top: clamp(1rem, 3vw, 2rem); }
+  .kontakt { display: grid; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  @media (min-width: 60rem) { .kontakt { grid-template-columns: 1.1fr 1fr; } }
+  .kontakt-bild { aspect-ratio: 16 / 10; }
+</style>

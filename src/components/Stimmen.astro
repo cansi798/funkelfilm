@@ -1,0 +1,28 @@
+---
+// Kundenstimmen wörtlich von funkelfilm.com. kurz = wörtlicher Auszug, voll = ganzer Text.
+import { STIMMEN } from "../daten";
+interface Props { anzahl?: number; voll?: boolean; }
+const { anzahl = STIMMEN.length, voll = false } = Astro.props;
+const liste = STIMMEN.slice(0, anzahl);
+---
+<ul class:list={["stimmen", { voll }]}>
+  {liste.map((s) => (
+    <li class="stimme reveal">
+      <blockquote>
+        <p>„{voll ? s.text : s.kurz}“</p>
+      </blockquote>
+      <p class="wer"><strong>{s.name}</strong><span>{s.firma}</span></p>
+    </li>
+  ))}
+</ul>
+<style>
+  .stimmen { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(1.25rem, 3vw, 2rem); }
+  @media (min-width: 56rem) { .stimmen:not(.voll) { grid-template-columns: repeat(3, 1fr); } .stimmen.voll { grid-template-columns: 1fr 1fr; } }
+  .stimme { display: flex; flex-direction: column; justify-content: space-between; padding: clamp(1.4rem, 3vw, 2rem); background: var(--weiss); border-left: 4px solid var(--gelb); }
+  blockquote { margin: 0 0 1.25rem; }
+  blockquote p { margin: 0; font: 600 clamp(1.08rem, 1.5vw, 1.25rem)/1.5 var(--titel); letter-spacing: -0.01em; color: var(--tinte); }
+  .voll blockquote p { font: 400 1.05rem/1.7 var(--text); }
+  .wer { margin: 0; display: grid; gap: 0.1rem; }
+  .wer strong { font: 600 1rem/1.3 var(--titel); }
+  .wer span { color: var(--tinte-leise); font-size: 0.95rem; }
+</style>

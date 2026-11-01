@@ -1,0 +1,47 @@
+---
+// Kopf der Unterseiten: H1, Einleitung, optional Clip im Sucher-Rahmen (ruhig, ohne Animation).
+import { u, type Clip } from "../daten";
+import Icon from "./Icon.astro";
+interface Props { titel: string; intro?: string; clip?: Clip; ueber?: string; }
+const { titel, intro, clip, ueber } = Astro.props;
+---
+<section class:list={["seitenkopf", { mitclip: !!clip }]}>
+  <div class="huelle seitenkopf-raster">
+    <div>
+      {ueber && <p class="ueber">{ueber}</p>}
+      <h1>{titel}</h1>
+      {intro && <p class="lead leise">{intro}</p>}
+      <slot />
+    </div>
+    {clip && (
+      <div class="seitenkopf-clip" data-autoclip>
+        <img src={u(clip.poster)} width={clip.breite} height={clip.hoehe} alt="" fetchpriority="high" decoding="async" />
+        <video muted loop playsinline preload="none" data-src={u(clip.datei)} aria-hidden="true" tabindex="-1"></video>
+        <span class="e e1" aria-hidden="true"></span><span class="e e2" aria-hidden="true"></span>
+        <button class="clip-pause" type="button" data-pause hidden aria-pressed="false">
+          <span class="p-an"><Icon name="pause" /><span class="sr">Film anhalten</span></span>
+          <span class="p-aus"><Icon name="play" /><span class="sr">Film abspielen</span></span>
+        </button>
+      </div>
+    )}
+  </div>
+</section>
+<style>
+  .seitenkopf { padding-block: clamp(2.5rem, 7vw, 5.5rem) clamp(2.5rem, 6vw, 4.5rem); background: radial-gradient(110% 90% at 85% 30%, #15153a 0%, var(--nacht) 60%); }
+  .seitenkopf-raster { display: grid; gap: 2rem; align-items: center; }
+  @media (min-width: 64rem) { .mitclip .seitenkopf-raster { grid-template-columns: 1.05fr 1fr; gap: 4rem; } }
+  .seitenkopf h1 { font-size: clamp(2.05rem, 4.4vw, 3.4rem); max-width: 15em; }
+  .ueber { margin: 0 0 0.75rem; font: 600 1rem/1.3 var(--titel); color: var(--gelb); }
+  .seitenkopf-clip { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--schwarz); }
+  .seitenkopf-clip img, .seitenkopf-clip video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .seitenkopf-clip video { opacity: 0; transition: opacity 0.6s ease; }
+  .seitenkopf-clip.spielt video { opacity: 1; }
+  .e { position: absolute; z-index: 2; width: 1.6rem; height: 1.6rem; border: 0 solid rgba(255, 255, 255, 0.9); }
+  .clip-pause { position: absolute; z-index: 3; right: 0.6rem; top: 0.6rem; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 0; border-radius: 2px; background: rgba(7, 7, 26, 0.7); color: var(--weiss); cursor: pointer; }
+  .clip-pause :global(svg) { width: 1.1rem; height: 1.1rem; }
+  .clip-pause .p-aus { display: none; }
+  .clip-pause[aria-pressed="true"] .p-an { display: none; }
+  .clip-pause[aria-pressed="true"] .p-aus { display: grid; }
+  .e1 { left: 0.8rem; top: 0.8rem; border-left-width: 2px; border-top-width: 2px; }
+  .e2 { right: 0.8rem; bottom: 0.8rem; border-right-width: 2px; border-bottom-width: 2px; }
+</style>
