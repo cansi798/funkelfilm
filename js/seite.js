@@ -27,7 +27,16 @@ document.documentElement.classList.add("js");
   }
   // WebM (VP9) wo möglich (kleiner, auch in Chromium ohne H.264), sonst MP4 (Safari)
   var webm = document.createElement("video").canPlayType('video/webm; codecs="vp9"') !== "";
-  function laden(video) { if (!video.src && video.dataset.src) { video.src = webm ? video.dataset.src.replace(/\.mp4$/, ".webm") : video.dataset.src; } }
+  function laden(video) {
+    if (!video.src && video.dataset.src) {
+      video.src = webm ? video.dataset.src.replace(/\.mp4$/, ".webm") : video.dataset.src;
+      if (video.dataset.tempo) {
+        var t = parseFloat(video.dataset.tempo);
+        var setzen = function () { video.defaultPlaybackRate = t; video.playbackRate = t; };
+        setzen(); video.addEventListener("loadedmetadata", setzen);
+      }
+    }
+  }
 
   // Video mit Pause-Knopf, pausiert außerhalb des Bildes (spart Akku), respektiert die Wahl des Besuchers
   function steuern(box, video, klasse, beiZeit) {
@@ -116,23 +125,83 @@ document.documentElement.classList.add("js");
     // Clips im Kopf der Unterseiten
     document.querySelectorAll("[data-autoclip]").forEach(function (box) {
       var v = box.querySelector("video");
-      if (v && !ruhig && !sparen) nachLaden(function () { steuern(box, v, "spielt"); });
+      if (!v || ruhig || sparen) return;
+      if (box.hasAttribute("data-spaet") && "IntersectionObserver" in window) {
+        // erst laden, wenn der Abschnitt ins Bild kommt (spart Daten und Ladezeit)
+        var io2 = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { io2.disconnect(); steuern(box, v, "spielt"); } }, { rootMargin: "200px 0px" });
+        io2.observe(box);
+      } else nachLaden(function () { steuern(box, v, "spielt"); });
     });
 
-    // 5) Karten: Ausschnitt beim Darüberfahren (nur Maus) oder Tastatur-Fokus
+    // 5) Karten: Vorschau beim Darüberfahren (Maus) bzw. Tastatur-Fokus; am Handy, solange die Karte gut im Bild ist
     var maus = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     document.querySelectorAll("[data-vorschau]").forEach(function (bild) {
       var v = bild.querySelector("video"), karte = bild.closest("li, article") || bild;
-      if (!v || ruhig || sparen) return;
-      var an = function () { laden(v); var p = v.play(); if (p && p.catch) p.catch(function () {}); bild.classList.add("spielt"); };
-      var aus = function () { v.pause(); bild.classList.remove("spielt"); };
+      if (ruhig) return;
+      var an = function () { if (v && !sparen) { laden(v); var p = v.play(); if (p && p.catch) p.catch(function () {}); } bild.classList.add("spielt"); };
+      var aus = function () { if (v) v.pause(); bild.classList.remove("spielt"); };
       if (maus) { karte.addEventListener("mouseenter", an); karte.addEventListener("mouseleave", aus); }
+      else if ("IntersectionObserver" in window) {
+        new IntersectionObserver(function (e) { if (e[0].intersectionRatio >= 0.7) an(); else aus(); }, { threshold: [0, 0.7] }).observe(bild);
+      }
       karte.addEventListener("focusin", an); karte.addEventListener("focusout", aus);
     });
 
+    // Leistungs-Karten: breit alle offen, schmal nur die erste (nur bei Breitenänderung neu entscheiden – iOS feuert resize beim Scrollen)
+    var ziele = document.querySelectorAll(".ziel-karte");
+    var breiteAlt = 0;
+    var zieleSetzen = function () {
+      var b = window.innerWidth; if (b === breiteAlt) return; breiteAlt = b;
+      var breit = b >= 1024;
+      ziele.forEach(function (d) { d.open = breit; });
+    };
+    if (ziele.length) { zieleSetzen(); window.addEventListener("resize", zieleSetzen); }
+
+    // Stimmen-Laufband: Pause-Knopf
+    var bandKnopf = document.querySelector("[data-band-pause]"), band = document.querySelector("[data-band]");
+    if (bandKnopf && band) bandKnopf.addEventListener("click", function () {
+      var halt = !band.classList.contains("halt"); band.classList.toggle("halt", halt); bandKnopf.setAttribute("aria-pressed", halt ? "true" : "false");
+    });
+
+    // Vergleich ohne/mit Film: Regler + an die Scrollposition gekoppelt (bis der Besucher selbst schiebt)
+    var vergleich = document.querySelector("[data-vergleich]"), regler = vergleich && vergleich.querySelector("[data-regler]");
+    var selbst = false;
+    var teilSetzen = function (prozent) { vergleich.style.setProperty("--teil", prozent + "%"); if (regler) regler.value = String(Math.round(prozent)); };
+    if (regler) regler.addEventListener("input", function () { selbst = true; teilSetzen(+regler.value); });
+
+    // Ablauf: goldene Linie folgt der Scrollposition
+    var linie = document.querySelector("[data-linie]"), schritte = linie ? linie.querySelectorAll("[data-schritt]") : [];
+
+    var parallax = document.querySelector("[data-parallax]");
+    function scrollSzenen() {
+      var h = window.innerHeight;
+      if (parallax && !ruhig) {
+        var r0 = parallax.parentNode.getBoundingClientRect();
+        if (r0.bottom > 0) parallax.style.transform = "translate3d(0," + Math.round(-r0.top * 0.12) + "px,0)";
+      }
+      if (vergleich && !selbst && !ruhig) {
+        var r = vergleich.getBoundingClientRect();
+        if (r.bottom > 0 && r.top < h) {
+          var p = Math.min(1, Math.max(0, (h - r.top) / (h + r.height * 0.4)));
+          teilSetzen(88 - p * 76);
+        }
+      }
+      if (linie && !ruhig) {
+        var r2 = linie.getBoundingClientRect();
+        if (r2.bottom > 0 && r2.top < h) {
+          var f = Math.min(1, Math.max(0, (h * 0.75 - r2.top) / (r2.height * 0.8)));
+          linie.style.setProperty("--fort", f.toFixed(3));
+          schritte.forEach(function (sch, i) { sch.classList.toggle("erreicht", f >= i / Math.max(1, schritte.length - 1) - 0.02); });
+        }
+      }
+    }
+    var szenenGeplant = false;
+    window.addEventListener("scroll", function () { if (!szenenGeplant) { szenenGeplant = true; requestAnimationFrame(function () { szenenGeplant = false; scrollSzenen(); }); } }, { passive: true });
+    scrollSzenen();
+
     // 6) YouTube erst nach Klick
     document.querySelectorAll("[data-film]").forEach(function (buehne) {
-      var knopf = buehne.querySelector(".film-start");
+      var knopf = buehne.querySelector(".film-start") || (buehne.parentNode && buehne.parentNode.querySelector(".film-start"));
       if (!knopf) return;
       knopf.addEventListener("click", function () {
         var f = document.createElement("iframe");
@@ -143,6 +212,7 @@ document.documentElement.classList.add("js");
         f.referrerPolicy = "strict-origin-when-cross-origin";
         buehne.textContent = "";
         buehne.appendChild(f);
+        if (knopf.isConnected) knopf.hidden = true;
         f.focus();
       });
     });
