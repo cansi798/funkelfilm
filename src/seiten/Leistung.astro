@@ -12,7 +12,7 @@ const andere = LEISTUNGEN.filter((x) => x.slug !== l.slug);
 const film = l.slug === "imagefilme" ? PROJEKTE[0] : null;
 const schema = [{
   "@context": "https://schema.org", "@type": "Service", name: l.titel, serviceType: "Videoproduktion", description: l.seitenIntro,
-  provider: { "@id": `${new URL(u("/"), Astro.site).href}#firma` }, areaServed: "Hamburg",
+  provider: { "@id": `${new URL(u("/"), Astro.site).href}#firma` }
 }];
 ---
 <Basis titel={l.ueberschrift} beschreibung={`${l.seitenIntro} ${l.titel} von Funkelfilm aus Hamburg.`} schema={schema} vorladen={u(l.clip.poster)}>

@@ -1,26 +1,25 @@
 ---
-// Abschluss jeder Seite: ein klarer Weg zur Anfrage (Text von funkelfilm.com).
-import Bild from "./Bild.astro";
+// Abschluss jeder Seite: ein klarer Weg zur Anfrage (Text von funkelfilm.com). Kompakt als Band (weniger Scrollen).
+import Skizze from "./Skizze.astro";
 import { u } from "../daten";
 ---
 <section class="aufruf" aria-labelledby="aufruf-titel">
   <div class="huelle aufruf-raster">
-    <div class="aufruf-text reveal">
+    <Skizze form="kamera" breite={120} hoehe={96} seed={51} klasse="aufruf-kamera" />
+    <div class="aufruf-text">
       <h2 id="aufruf-titel">Lass uns deine Vision zum Leben erwecken.</h2>
-      <p class="lead leise">Du hast eine Idee oder ein Projekt im Kopf? Ich freue mich darauf, mehr darüber zu erfahren und gemeinsam mit dir etwas Besonderes zu schaffen.</p>
-      <div class="knoepfe">
-        <a class="knopf" href={u("/kontakt/")}>Kostenloses Erstgespräch</a>
-        <a class="knopf rahmen" href={u("/erfolgsgeschichten/")}>Projekte ansehen</a>
-      </div>
+      <p class="leise">Du hast eine Idee oder ein Projekt im Kopf? Ich freue mich darauf, mehr darüber zu erfahren und gemeinsam mit dir etwas Besonderes zu schaffen.</p>
     </div>
-    <div class="foto aufruf-bild">
-      <Bild name="gimbal" breiten={[640, 1100]} sizes="(min-width: 64rem) 36rem, 100vw" verhaeltnis={[16, 10]} alt="Sheeras Iqbal filmt mit einer Kamera am Gimbal in einem hellen Flur (Schwarz-Weiß-Foto)" />
+    <div class="knoepfe">
+      <a class="knopf" href={u("/kontakt/")}>Kostenloses Erstgespräch</a>
     </div>
   </div>
 </section>
 <style>
-  .aufruf { background: var(--schwarz); padding-block: clamp(4rem, 9vw, 7rem); border-top: 1px solid var(--linie-dunkel); }
-  .aufruf-raster { display: grid; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
-  @media (min-width: 64rem) { .aufruf-raster { grid-template-columns: 1.1fr 1fr; } }
-  .aufruf-bild { aspect-ratio: 16 / 10; }
+  .aufruf { background: var(--schwarz); padding-block: clamp(3rem, 6vw, 4.5rem); border-top: 1px solid var(--linie-dunkel); }
+  .aufruf-raster { display: grid; gap: 1.25rem 2.5rem; align-items: center; }
+  .aufruf-text h2 { margin-bottom: 0.6rem; }
+  .aufruf-text p { margin: 0; max-width: 40em; }
+  .aufruf :global(.aufruf-kamera) { width: 5.5rem; height: auto; color: var(--gelb); }
+  @media (min-width: 60rem) { .aufruf-raster { grid-template-columns: auto 1fr auto; } .aufruf :global(.aufruf-kamera) { width: 7rem; } }
 </style>

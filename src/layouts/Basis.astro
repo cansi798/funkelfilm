@@ -10,6 +10,7 @@ import Kopf from "../components/Kopf.astro";
 import Fuss from "../components/Fuss.astro";
 import Aufruf from "../components/Aufruf.astro";
 import NachOben from "../components/NachOben.astro";
+import Intro from "../components/Intro.astro";
 import { VORSCHAU, NAME, BESCHREIBUNG, MAIL, ORT, INHABER, SOZIAL, u } from "../daten";
 
 interface Props {
@@ -36,7 +37,6 @@ const firma = {
   email: `mailto:${MAIL}`,
   founder: { "@type": "Person", name: INHABER, jobTitle: "Videograf" },
   address: { "@type": "PostalAddress", addressLocality: ORT, addressCountry: "DE" },
-  areaServed: ORT,
   sameAs: SOZIAL.map((s) => s.href),
   knowsAbout: ["Imagefilm", "Testimonial-Video", "Recruitingfilm", "Eventfilm", "Videoproduktion"],
 };
@@ -79,6 +79,7 @@ const ld = (o: unknown) => JSON.stringify(o).replace(/</g, "\\u003c");
   </head>
   <body>
     <a class="skip" href="#inhalt">Zum Inhalt springen</a>
+    <Intro />
     {VORSCHAU && (
       <div class="vorschau" role="note">
         <div class="huelle">

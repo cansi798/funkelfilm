@@ -1,11 +1,11 @@
 ---
 // Kundenstimmen wörtlich von funkelfilm.com. kurz = wörtlicher Auszug, voll = ganzer Text.
 import { STIMMEN } from "../daten";
-interface Props { anzahl?: number; voll?: boolean; }
-const { anzahl = STIMMEN.length, voll = false } = Astro.props;
+interface Props { anzahl?: number; voll?: boolean; reihe?: boolean; }
+const { anzahl = STIMMEN.length, voll = false, reihe = false } = Astro.props;
 const liste = STIMMEN.slice(0, anzahl);
 ---
-<ul class:list={["stimmen", { voll }]}>
+<ul class:list={["stimmen", { voll, reihe }]}>
   {liste.map((s) => (
     <li class="stimme reveal">
       <blockquote>
@@ -18,6 +18,14 @@ const liste = STIMMEN.slice(0, anzahl);
 <style>
   .stimmen { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(1.25rem, 3vw, 2rem); }
   @media (min-width: 56rem) { .stimmen:not(.voll) { grid-template-columns: repeat(3, 1fr); } .stimmen.voll { grid-template-columns: 1fr 1fr; } }
+  /* Reihe: am Handy wischbar statt untereinander (weniger Scrollen) */
+  @media (max-width: 55.99rem) {
+    .reihe { grid-auto-flow: column; grid-auto-columns: 84%; overflow-x: auto; scroll-snap-type: x mandatory; margin-right: calc(-1 * var(--rand)); padding-right: var(--rand); padding-bottom: 0.4rem; scrollbar-width: none; }
+    .reihe > li { scroll-snap-align: start; }
+  }
+  .reihe .stimme { background: var(--nacht-2); border: 1px solid var(--linie-dunkel); border-left: 4px solid var(--gelb); }
+  .reihe blockquote p { color: var(--weiss); }
+  .reihe .wer span { color: var(--silber); }
   .stimme { display: flex; flex-direction: column; justify-content: space-between; padding: clamp(1.4rem, 3vw, 2rem); background: var(--weiss); border-left: 4px solid var(--gelb); }
   blockquote { margin: 0 0 1.25rem; }
   blockquote p { margin: 0; font: 600 clamp(1.08rem, 1.5vw, 1.25rem)/1.5 var(--titel); letter-spacing: -0.01em; color: var(--tinte); }

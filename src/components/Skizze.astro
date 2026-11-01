@@ -1,0 +1,29 @@
+---
+// Handgezeichnete Regie-Notiz (rough.js beim Build). Zeichnet sich einmal selbst, sobald sie gut zur Hälfte im Bild ist
+// (seite.js setzt „an“), Strich für Strich in ≤ 1,4 s. Ohne JS bzw. bei reduzierter Bewegung: fertig gezeichnet.
+// data-skizze="nach-intro": startet erst, wenn der Einstieg vorbei ist (Hero).
+import { skizze, type Form } from "../lib/skizze";
+interface Props { form: Form; breite: number; hoehe: number; klasse?: string; seed?: number; nachIntro?: boolean; dick?: boolean; }
+const { form, breite, hoehe, klasse = "", seed = 3, nachIntro = false, dick = false } = Astro.props;
+const striche = skizze(form, breite, hoehe, seed);
+const stufen = 6; // Verzögerungs-Klassen s0…s5 (CSP: keine style-Attribute)
+---
+<svg class:list={["skizze", `skizze-${form}`, klasse, { dick }]} viewBox={`0 0 ${breite} ${hoehe}`} width={breite} height={hoehe}
+  aria-hidden="true" focusable="false" data-skizze={nachIntro ? "nach-intro" : "sichtbar"} preserveAspectRatio="none">
+  {striche.map((s, i) => (
+    <path d={s.d} pathLength="1" class={`s${Math.min(stufen - 1, Math.floor((i * stufen) / Math.max(1, striche.length)))}`} />
+  ))}
+</svg>
+<style>
+  .skizze { display: block; max-width: none; overflow: visible; pointer-events: none; color: var(--gelb); }
+  .skizze path { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  .skizze.dick path { stroke-width: 3.2; }
+  :global(.js) .skizze path { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+  :global(.js) .skizze.an path { stroke-dashoffset: 0; transition: stroke-dashoffset 0.55s cubic-bezier(0.45, 0, 0.25, 1); }
+  :global(.js) .skizze.an .s1 { transition-delay: 0.15s; }
+  :global(.js) .skizze.an .s2 { transition-delay: 0.3s; }
+  :global(.js) .skizze.an .s3 { transition-delay: 0.5s; }
+  :global(.js) .skizze.an .s4 { transition-delay: 0.65s; }
+  :global(.js) .skizze.an .s5 { transition-delay: 0.8s; }
+  @media (prefers-reduced-motion: reduce) { :global(.js) .skizze path { stroke-dasharray: none; stroke-dashoffset: 0; transition: none !important; } }
+</style>

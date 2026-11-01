@@ -9,10 +9,11 @@
     "build": "astro build"
   },
   "dependencies": {
-    "astro": "^7.4.1"
+    "astro": "^7.4.1",
+    "roughjs": "^4.6.6"
   },
   "devDependencies": {
-    "@fontsource/poppins": "^5.2.6",
-    "@fontsource-variable/mulish": "^5.2.6"
+    "@fontsource-variable/mulish": "^5.2.6",
+    "@fontsource/poppins": "^5.2.6"
   }
 }

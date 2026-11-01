@@ -15,11 +15,11 @@ const jahr = new Date().getFullYear();
         ))}
       </ul>
     </div>
-    <nav aria-label="Leistungen">
+    <nav class="fuss-nav" aria-label="Leistungen">
       <h2 class="fuss-titel">Leistungen</h2>
       <ul>{LEISTUNGEN.map((l) => <li><a href={u(`/${l.slug}/`)}>{l.titel}</a></li>)}</ul>
     </nav>
-    <nav aria-label="Seiten">
+    <nav class="fuss-nav" aria-label="Seiten">
       <h2 class="fuss-titel">Funkelfilm</h2>
       <ul>{NAV.map((n) => <li><a href={u(n.href)}>{n.titel}</a></li>)}</ul>
     </nav>
@@ -43,6 +43,7 @@ const jahr = new Date().getFullYear();
   .fuss { background: var(--schwarz); border-top: 1px solid var(--linie-dunkel); padding-block: clamp(3rem, 7vw, 5rem) 1.5rem; font-size: 0.98rem; }
   .fuss-raster { display: grid; gap: 2.25rem 1.5rem; grid-template-columns: 1fr 1fr; }
   .fuss-marke { grid-column: 1 / -1; }
+  @media (max-width: 39.99rem) { .fuss-nav { display: none; } .fuss { padding-top: 2.5rem; } }
   @media (min-width: 64rem) { .fuss-marke { grid-column: auto; } }
   @media (min-width: 64rem) { .fuss-raster { grid-template-columns: 1.6fr 1fr 1fr 1.2fr; } }
   .fuss :global(.logo) { width: 10rem; height: auto; margin-bottom: 1rem; }

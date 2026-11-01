@@ -4,12 +4,14 @@
 // Ohne JS bzw. bei reduzierter Bewegung: scharfes Standbild, kein Autoplay. Das Video lädt erst nach dem Seitenaufbau (Ladezeit).
 import { CLAIM, UNTERZEILE, u } from "../daten";
 import Icon from "./Icon.astro";
+import Skizze from "./Skizze.astro";
+const [satz1, satz2] = CLAIM.split(". ");
 const poster = u("/medien/clips/reel.webp");
 const posterKlein = u("/medien/clips/reel-640.webp");
 ---
 <section class="hero" aria-labelledby="hero-titel">
   <div class="huelle hero-raster">
-    <h1 id="hero-titel" class="hero-titel">{CLAIM.split(". ").map((t, i, a) => <span>{i < a.length - 1 ? t + ". " : t}</span>)}</h1>
+    <h1 id="hero-titel" class="hero-titel"><span>{satz1}. </span><span class="kern">{satz2}<Skizze form="unterstrich" breite={420} hoehe={26} klasse="kern-strich" nachIntro dick /></span></h1>
     <p class="hero-unter lead">{UNTERZEILE}</p>
     <figure class="sucher" data-sucher>
       <div class="sucher-bild">
@@ -39,6 +41,8 @@ const posterKlein = u("/medien/clips/reel-640.webp");
     background: radial-gradient(120% 90% at 78% 40%, #15153a 0%, var(--nacht) 58%); }
   .hero-raster { display: grid; gap: 1.25rem 0; grid-template-areas: "titel" "unter" "sucher" "knoepfe"; align-items: start; }
   .hero-titel { grid-area: titel; margin: 0; max-width: 11em; }
+  .kern { position: relative; display: inline-block; }
+  .hero-titel :global(.kern-strich) { position: absolute; left: -0.1em; right: -0.05em; bottom: -0.2em; width: calc(100% + 0.15em); height: 0.32em; }
   .hero-unter { grid-area: unter; margin: 0; color: var(--silber); max-width: 26em; }
   .hero-knoepfe { grid-area: knoepfe; }
   .sucher { grid-area: sucher; margin: 0.75rem 0 0.5rem; position: relative; }
@@ -47,6 +51,7 @@ const posterKlein = u("/medien/clips/reel-640.webp");
       grid-template-areas: "titel sucher" "unter sucher" "knoepfe sucher"; grid-template-rows: 1fr auto 1fr; align-items: center; }
     .hero-titel { font-size: clamp(2.5rem, 3.45vw, 3.4rem); max-width: none; }
     .hero-titel span { display: block; white-space: nowrap; }
+    .hero-titel span.kern { display: inline-block; }
     .hero-titel { align-self: end; }
     .hero-knoepfe { align-self: start; margin-top: 0.75rem; }
     .sucher { margin: 0; }

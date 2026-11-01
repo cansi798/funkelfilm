@@ -1,6 +1,7 @@
 ---
-// Startseite nach Customer Journey: Was macht Funkelfilm? (Hero) → Warum ihm vertrauen? (Band) → Welche Filme? → Wie sieht das aus? (Projekte)
-// → Wie läuft es ab? → Wer steckt dahinter? → Was sagen Kunden? → Anfrage (Aufruf im Layout).
+// Startseite kompakt nach Customer Journey (Can 01.11.2026: „möglichst wenig Scrollen“):
+// Was macht Funkelfilm? (Hero) → Warum vertrauen? (Band) → Welche Filme? → Wie sieht das aus? → Wie läuft es ab?
+// → Wer steckt dahinter + was sagen Kunden? → Anfrage. Details auf den Unterseiten; am Handy wischbare Reihen statt langer Listen.
 import Basis from "../layouts/Basis.astro";
 import HeroSucher from "../components/HeroSucher.astro";
 import LeistungKarten from "../components/LeistungKarten.astro";
@@ -8,6 +9,7 @@ import FilmKlick from "../components/FilmKlick.astro";
 import Zeitleiste from "../components/Zeitleiste.astro";
 import Stimmen from "../components/Stimmen.astro";
 import Bild from "../components/Bild.astro";
+import Skizze from "../components/Skizze.astro";
 import Platzhalter from "../components/Platzhalter.astro";
 import { BAND, PROJEKTE, UEBER, u } from "../daten";
 ---
@@ -16,16 +18,21 @@ import { BAND, PROJEKTE, UEBER, u } from "../daten";
 
   <section class="band" aria-label="Funkelfilm in Kürze">
     <ul class="huelle band-liste">
-      {BAND.map((b) => <li><strong>{b.wert}</strong><span>{b.text}</span></li>)}
+      {BAND.map((b, i) => (
+        <li class:list={{ markiert: i === 1 }}>
+          <strong>{b.wert}{i === 1 && <Skizze form="kreis" breite={160} hoehe={64} seed={22} klasse="band-kreis" />}</strong>
+          <span>{b.text}</span>
+        </li>
+      ))}
     </ul>
   </section>
 
-  <section class="abschnitt" aria-labelledby="leistungen-titel">
+  <section class="abschnitt kompakt" aria-labelledby="leistungen-titel">
     <div class="huelle">
       <div class="kopfzeile-zeile">
         <div class="kopfzeile">
           <h2 id="leistungen-titel">Deine Vision ist meine Expertise.</h2>
-          <p>Professionelle Videos, die deine Marke hervorheben und dein Publikum nachhaltig begeistern.</p>
+          <p>Vier Filmarten, ein Anspruch: echt, nahbar, hochwertig.</p>
         </div>
         <a class="weiter" href={u("/services/")}>Alle Leistungen</a>
       </div>
@@ -33,26 +40,30 @@ import { BAND, PROJEKTE, UEBER, u } from "../daten";
     </div>
   </section>
 
-  <section class="abschnitt tief" aria-labelledby="projekte-titel">
+  <section class="abschnitt kompakt tief" aria-labelledby="projekte-titel">
     <div class="huelle">
       <div class="kopfzeile-zeile">
-        <div class="kopfzeile">
+        <div class="kopfzeile mit-klappe">
+          <Skizze form="klappe" breite={74} hoehe={64} seed={31} klasse="klappe" />
           <h2 id="projekte-titel">Die Projekte sprechen für sich.</h2>
           <p>Aus einer Idee wird eine Geschichte. Aus einer Geschichte ein Video, das bleibt.</p>
         </div>
         <a class="weiter" href={u("/erfolgsgeschichten/")}>Projekte und Stimmen</a>
       </div>
       <div class="projekte">
-        <FilmKlick {...PROJEKTE[1]} gross />
-        <div class="projekte-neben">
+        <div class="projekt-gross">
+          <Skizze form="rahmen" breite={600} hoehe={340} seed={41} klasse="storyboard" />
+          <FilmKlick {...PROJEKTE[1]} gross />
+        </div>
+        <div class="projekt-neben">
           <FilmKlick {...PROJEKTE[0]} />
-          <Platzhalter>Weitere Filme (Showreel und Projektliste) liefert Funkelfilm. Auf der bisherigen Seite waren vier eingebundene Filme nicht mehr abrufbar.</Platzhalter>
+          <Platzhalter>Showreel und weitere Projekte liefert Funkelfilm.</Platzhalter>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="abschnitt hell" aria-labelledby="ablauf-titel">
+  <section class="abschnitt kompakt hell" aria-labelledby="ablauf-titel">
     <div class="huelle">
       <div class="kopfzeile">
         <h2 id="ablauf-titel">Von der Idee bis zum fertigen Film.</h2>
@@ -62,46 +73,57 @@ import { BAND, PROJEKTE, UEBER, u } from "../daten";
     </div>
   </section>
 
-  <section class="abschnitt" aria-labelledby="ueber-titel">
-    <div class="huelle ueber">
+  <section class="abschnitt kompakt" aria-labelledby="ueber-titel">
+    <div class="huelle vertrauen">
       <div class="foto ueber-bild reveal">
-        <Bild name="sheeras" breiten={[400, 640]} sizes="(min-width: 56rem) 26rem, 80vw" verhaeltnis={[4, 5]} alt="Sheeras Iqbal, Videograf und Gründer von Funkelfilm (Schwarz-Weiß-Porträt)" />
+        <Bild name="sheeras" breiten={[400, 640]} sizes="(min-width: 56rem) 22rem, 40vw" verhaeltnis={[4, 5]} alt="Sheeras Iqbal, Videograf und Gründer von Funkelfilm (Schwarz-Weiß-Porträt)" />
       </div>
       <div class="ueber-text">
         <h2 id="ueber-titel">{UEBER.hallo}</h2>
-        <p class="lead leise">{UEBER.kurz}</p>
+        <p class="leise">{UEBER.kurz}</p>
         <a class="weiter" href={u("/about/")}>Mehr über mich</a>
       </div>
-    </div>
-  </section>
-
-  <section class="abschnitt hell" aria-labelledby="stimmen-titel">
-    <div class="huelle">
-      <div class="kopfzeile-zeile">
-        <div class="kopfzeile">
-          <h2 id="stimmen-titel">Was Kunden sagen.</h2>
-          <p>Stimmen von Unternehmen, mit denen Funkelfilm gearbeitet hat.</p>
-        </div>
-        <a class="weiter" href={u("/erfolgsgeschichten/#stimmen")}>Alle Stimmen</a>
+      <div class="stimmen-reihe">
+        <h3 class="sr">Was Kunden sagen</h3>
+        <Stimmen anzahl={3} reihe />
+        <a class="weiter" href={u("/erfolgsgeschichten/#stimmen")}>Alle Kundenstimmen</a>
       </div>
-      <Stimmen anzahl={3} />
     </div>
   </section>
 </Basis>
 <style>
+  .kompakt { padding-block: clamp(3rem, 6.5vw, 5.5rem); }
   .band { background: var(--schwarz); border-block: 1px solid var(--linie-dunkel); }
-  .band-liste { list-style: none; margin-block: 0; padding: 1.4rem 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem 1.5rem; }
-  @media (min-width: 64rem) { .band-liste { grid-template-columns: repeat(4, 1fr); padding-block: 1.75rem; } }
+  .band-liste { list-style: none; margin-block: 0; padding: 1.3rem 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem 1.5rem; }
+  @media (min-width: 64rem) { .band-liste { grid-template-columns: repeat(4, 1fr); padding-block: 1.6rem; } }
   .band li { display: grid; gap: 0.15rem; padding-left: 0.9rem; border-left: 2px solid var(--gelb); }
-  .band strong { font: 700 clamp(1.15rem, 2vw, 1.5rem)/1.2 var(--titel); }
+  .band strong { position: relative; justify-self: start; font: 700 clamp(1.15rem, 2vw, 1.5rem)/1.2 var(--titel); }
   .band span { color: var(--silber); font-size: 0.92rem; line-height: 1.45; }
+  .band :global(.band-kreis) { position: absolute; left: -0.75em; top: -0.5em; width: calc(100% + 1.5em); height: calc(100% + 1em); }
+
+  .mit-klappe { position: relative; }
+  .mit-klappe :global(.klappe) { width: 3.6rem; height: auto; margin-bottom: 0.6rem; color: var(--gelb); }
+  @media (min-width: 64rem) { .mit-klappe :global(.klappe) { position: absolute; left: -5.2rem; top: -0.4rem; margin: 0; } }
 
   .projekte { display: grid; gap: clamp(1.5rem, 3vw, 2.5rem); align-items: start; }
   @media (min-width: 64rem) { .projekte { grid-template-columns: 1.55fr 1fr; } }
-  .projekte-neben { display: grid; gap: 1rem; }
+  .projekt-gross { position: relative; }
+  .projekt-gross :global(.storyboard) { position: absolute; left: -0.9rem; top: -0.9rem; width: calc(100% + 1.8rem); aspect-ratio: 16 / 9; height: auto; z-index: 1; color: rgba(255, 204, 0, 0.85); }
+  .projekt-neben { display: grid; gap: 0.75rem; }
+  @media (max-width: 47.99rem) {
+    .projekte { grid-auto-flow: column; grid-auto-columns: 86%; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 0.5rem; margin-right: calc(-1 * var(--rand)); padding-right: var(--rand); scrollbar-width: none; }
+    .projekte > * { scroll-snap-align: start; }
+    .projekt-gross :global(.storyboard) { left: -0.5rem; top: -0.5rem; width: calc(100% + 1rem); }
+  }
 
-  .ueber { display: grid; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
-  @media (min-width: 56rem) { .ueber { grid-template-columns: minmax(0, 26rem) 1fr; } }
-  .ueber-bild { aspect-ratio: 4 / 5; max-width: 26rem; }
-  .ueber-text h2 { max-width: 16em; }
+  .vertrauen { display: grid; gap: 1.5rem clamp(2rem, 4vw, 3.5rem); grid-template-columns: 7.5rem 1fr; align-items: center; }
+  .ueber-bild { aspect-ratio: 4 / 5; }
+  .ueber-text h2 { font-size: clamp(1.25rem, 2.6vw, 2.2rem); margin-bottom: 0.6rem; }
+  .ueber-text .leise { display: none; }
+  .stimmen-reihe { grid-column: 1 / -1; display: grid; gap: 1rem; }
+  @media (min-width: 40rem) { .ueber-text .leise { display: block; } .vertrauen { grid-template-columns: 11rem 1fr; } }
+  @media (min-width: 64rem) {
+    .vertrauen { grid-template-columns: 19rem 1fr; }
+    .ueber-text h2 { max-width: 18em; }
+  }
 </style>
