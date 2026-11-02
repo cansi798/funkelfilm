@@ -13,26 +13,18 @@ import Ziele from "../components/Ziele.astro";
 import StimmenBand from "../components/StimmenBand.astro";
 import AblaufLinie from "../components/AblaufLinie.astro";
 import Fragen from "../components/Fragen.astro";
-import Skizze from "../components/Skizze.astro";
-import { VERTRAUEN, VORSCHAU, u } from "../daten";
+import { u } from "../daten";
+import Vertrauen from "../components/Vertrauen.astro";
+import KiVergleich from "../components/KiVergleich.astro";
 ---
 <Basis titel="Unternehmensfilme aus Hamburg & deutschlandweit" vorladen={u("/medien/clips/reel.webp")} beschreibung="Funkelfilm aus Hamburg dreht deutschlandweit: Unternehmensfilme, Recruitingfilme, Kundenstimmen und Eventfilme. Wir erzählen deine Geschichte so, dass Kunden Vertrauen aufbauen, bevor sie Kontakt aufnehmen.">
   <HeroFilm />
 
-  <section class="vertrauen" aria-label="Funkelfilm in Kürze">
-    <ul class="huelle vertrauen-liste">
-      {VERTRAUEN.map((v, i) => (
-        <li class:list={{ offen: !v.belegt && VORSCHAU, umkreist: i === 0 }} hidden={!v.belegt && !VORSCHAU}>
-          {i === 0 && <Skizze form="kreis" breite={240} hoehe={90} seed={22} klasse="v-kreis" />}
-          <span class="v-text">{v.text}</span>
-          {v.hinweis && <span class="v-hinweis">{v.hinweis}</span>}
-        </li>
-      ))}
-    </ul>
-  </section>
+  <Vertrauen />
 
   <Problem />
   <Loesung />
+  <KiVergleich />
   <Referenzen />
   <Mensch />
   <Einsatzgebiet />
@@ -43,16 +35,4 @@ import { VERTRAUEN, VORSCHAU, u } from "../daten";
 </Basis>
 <style>
   :global(.kompakt) { padding-block: clamp(2.25rem, 4.5vw, 3.5rem); }
-  .vertrauen { background: var(--nacht); border-bottom: 1px solid var(--linie-dunkel); }
-  .vertrauen-liste { list-style: none; margin-block: 0; padding: 1.25rem 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem 1.5rem; }
-  @media (min-width: 64rem) { .vertrauen-liste { grid-template-columns: auto auto 1fr; gap: 4rem; padding-block: 2rem; align-items: center; } .vertrauen li.umkreist { margin-left: 1.5rem; } }
-  .vertrauen li { position: relative; display: grid; gap: 0.1rem; font-size: 0.98rem; color: var(--weiss); }
-  .vertrauen li.umkreist { justify-self: start; padding: 0.15rem 0.2rem; }
-  .v-text { position: relative; justify-self: start; }
-  .v-hinweis { font-size: 0.8rem; color: var(--silber); }
-  .vertrauen li.offen { outline: 2px dashed var(--rot-vorschau); outline-offset: 4px; }
-  /* Ellipse um das Rechteck: Achsen ≈ √2 × Breite/Höhe, damit keine Linie den Text schneidet (Jamil 4228) */
-  .vertrauen :global(.v-kreis) { position: absolute; left: calc(-20.7% - 0.6rem); top: calc(-20.7% - 0.35rem); width: calc(141.4% + 1.2rem); height: calc(141.4% + 0.7rem); color: var(--gelb); }
-  @media (max-width: 39.99rem) { .vertrauen li.umkreist { margin-left: 1.6rem; grid-column: 1 / -1; } .vertrauen-liste { padding-block: 1.9rem 1.5rem; row-gap: 1.8rem; } }
-  @media (max-width: 39.99rem) { .vertrauen li:last-child { grid-column: 1 / -1; } }
 </style>

@@ -5,7 +5,7 @@ import rough from "roughjs";
 import type { Options } from "roughjs/bin/core";
 
 const gen = rough.generator();
-export type Form = "unterstrich" | "kreis" | "rahmen" | "pfeil" | "kamera" | "klappe";
+export type Form = "unterstrich" | "kreis" | "rahmen" | "pfeil" | "kamera" | "klappe" | "haken";
 export type Strich = { d: string; fuellung?: boolean };
 
 // Ruhig statt kritzelig (Jamil 4228/4230, Standard redesign/animation.md 5: Rauheit ≤ 0,7, Einzelstrich): geringe Rauheit, kaum Bogen, EIN Strich statt Doppelstrich – handgemacht, aber elegant.
@@ -33,6 +33,9 @@ export function skizze(form: Form, b: number, h: number, seed = 3): Strich[] {
       const spitze = pfade(gen.linearPath([[sx - 11, sy - 8], [sx, sy], [sx - 12, sy + 6]], basis(seed + 1, { roughness: 0.25, bowing: 0 })));
       return [...kurve, ...spitze];
     }
+    case "haken":
+      // ruhiger Haken in einem Zug (KI-Vergleich, Can 4259)
+      return pfade(gen.linearPath([[m, h * 0.55], [b * 0.38, h - m], [b - m, m]], basis(seed, { roughness: 0.35, bowing: 0.2 })));
     case "kamera": {
       // Filmkamera: Gehäuse, zwei Filmrollen, Objektiv, Stativ
       const o = (s: number) => basis(seed + s, { roughness: 0.6 });

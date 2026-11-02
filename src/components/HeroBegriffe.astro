@@ -1,0 +1,37 @@
+---
+// Wechselnde Begriffe über dem Hero-Film (Can Talk 4255: „zwischendurch so Rough.js-Begriffe auftauchen lassen, die einen emotional
+// motivieren“). Nach dem Countdown erscheint ein Begriff nach dem anderen in Gold, darunter zeichnet sich ein kurzer, ruhiger
+// rough.js-Schwung mit Abstand (berührt die Schrift nicht); je ca. 2,6 s sichtbar, dann der nächste. Kein Rahmen, kein „Take 1“
+// (Jamil 4250). Lage: breit oben rechts, am Handy unten links auf dem dunklen Verlauf der Filmfläche – nicht über Gesichtern.
+// Läuft nur, solange der Film läuft (Pause-Knopf hält beides an, WCAG 2.2.2). Reduzierte Bewegung / ohne JS: erster Begriff statisch.
+import { skizze } from "../lib/skizze";
+import { HERO_BEGRIFFE } from "../daten";
+const schwung = skizze("unterstrich", 200, 22, 55);
+---
+<div class="begriffe" aria-hidden="true" data-begriffe>
+  {HERO_BEGRIFFE.map((b, i) => (
+    <p class:list={["begriff", { aktiv: i === 0 }]}>
+      <span>{b}</span>
+      <svg viewBox="0 0 200 22" preserveAspectRatio="none" width="200" height="22">{schwung.map((s) => <path d={s.d} pathLength="1" />)}</svg>
+    </p>
+  ))}
+</div>
+<style>
+  .begriffe { position: absolute; z-index: 1; pointer-events: none; left: var(--rand); bottom: 1.1rem; width: min(70%, 20rem); height: 3.4rem; }
+  .begriff { position: absolute; left: 0; bottom: 0; margin: 0; display: inline-grid; gap: 0.5rem; opacity: 0; transform: translateY(6px);
+    transition: opacity 0.6s ease, transform 0.6s var(--ease); }
+  .begriff span { font: 700 clamp(1.2rem, 4.6vw, 1.5rem)/1 var(--serif); letter-spacing: 0.04em; text-transform: uppercase; color: var(--gelb);
+    text-shadow: 0 1px 12px rgba(5, 5, 5, 0.85); white-space: nowrap; }
+  .begriff svg { display: block; width: 72%; max-width: none; height: 0.7rem; overflow: visible; }
+  .begriff path { fill: none; stroke: var(--gelb); stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+  .begriff.aktiv { opacity: 1; transform: none; }
+  .begriff.aktiv path { stroke-dashoffset: 0; transition: stroke-dashoffset 0.8s cubic-bezier(0.45, 0, 0.25, 1) 0.35s; }
+  /* Ohne JS: erster Begriff fertig gezeichnet */
+  :global(html:not(.js)) .begriff.aktiv path { transition: none; }
+  @media (min-width: 60rem) {
+    .begriffe { left: auto; right: max(var(--rand), calc((100vw - var(--breite)) / 2)); top: clamp(2rem, 7vh, 4rem); bottom: auto; width: 26rem; height: 4.6rem; }
+    .begriff { left: auto; right: 0; bottom: auto; top: 0; justify-items: end; }
+    .begriff span { font-size: clamp(1.6rem, 2.4vw, 2.3rem); }
+  }
+  @media (prefers-reduced-motion: reduce) { .begriff, .begriff path { transition: none !important; } }
+</style>

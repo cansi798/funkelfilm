@@ -1,11 +1,13 @@
 ---
 // „Aus Hamburg. Drehs in ganz Deutschland.“ (Can Talk 4242): handgezeichnete Deutschland-Karte in Gold/Bronze auf Schwarz.
-// Sie zeichnet sich einmal, sobald sie gut im Bild ist: Umriss → Hamburg → Städte → Reisebögen, die genau an den Punkten enden (~2,2 s).
+// Sie zeichnet sich einmal, sobald sie gut im Bild ist: Umriss → Hamburg → Städte → Reisebögen zu allen 12 Städten nacheinander, die genau an den Punkten enden (~3 s; Jamil 4251).
 // Ohne JS und bei reduzierter Bewegung: fertige Karte. SEO ehrlich: Städte als echter Text (SVG-Text im HTML + Satz), Einsatzgebiet im
 // JSON-LD (Basis.astro) – keine Stadt-Unterseiten, keine Keyword-Listen. Breit: Karte links, Text rechts (Mensch davor ist Text links).
 import { deutschlandKarte, KARTE } from "../lib/karte";
 import { EINSATZ, u } from "../daten";
 const k = deutschlandKarte();
+// Beschriftung je Seite: Versatz x, y und Ausrichtung (passend zu den Prüfboxen im Suchskript)
+const lage: Record<string, [number, number, string]> = { r: [8, 5, "start"], l: [-8, 5, "end"], u: [0, 20, "middle"], o: [0, -11, "middle"], ur: [5, -11, "start"], ul: [-5, -11, "end"], dr: [5, 20, "start"], dl: [-5, 20, "end"] };
 const stufe = (i: number) => `o${Math.min(3, Math.floor(i / 3))}`;
 ---
 <section class="abschnitt kompakt einsatz" aria-labelledby="einsatz-titel">
@@ -20,11 +22,11 @@ const stufe = (i: number) => `o${Math.min(3, Math.floor(i / 3))}`;
       <svg viewBox={`0 0 ${KARTE.breite} ${KARTE.hoehe}`} width={KARTE.breite} height={KARTE.hoehe} role="img" aria-labelledby="karte-titel">
         <title id="karte-titel">Skizze: Deutschland-Karte mit Hamburg als Standort und Städten in ganz Deutschland</title>
         {k.umriss.map((d) => <path class="k-umriss" d={d} pathLength="1" />)}
-        {k.boegen.map((b, i) => <path class={`k-bogen b${i}`} d={b.d} pathLength="1" />)}
+        {k.boegen.map((b) => <path class={`k-bogen b${b.nr}`} d={b.d} pathLength="1" />)}
         {k.orte.map((o, i) => (
           <g class={`k-ort ${stufe(i)}`}>
             <circle cx={o.x} cy={o.y} r={k.rOrt} />
-            <text x={o.seite === "r" ? o.x + 8 : o.seite === "l" ? o.x - 8 : o.x} y={o.seite === "u" ? o.y + 20 : o.y + 5} text-anchor={o.seite === "r" ? "start" : o.seite === "l" ? "end" : "middle"}>{o.name}</text>
+            <text x={o.x + lage[o.seite][0]} y={o.y + lage[o.seite][1]} text-anchor={lage[o.seite][2]}>{o.name}</text>
           </g>
         ))}
         <g class="k-heimat">
@@ -54,21 +56,28 @@ const stufe = (i: number) => `o${Math.min(3, Math.floor(i / 3))}`;
   .k-ort circle { fill: var(--weiss); }
   /* dunkler Rand um die Schrift: Umriss/Bögen laufen nie sichtbar durch Text (Jamil 4228) */
   .karte text { paint-order: stroke; stroke: var(--nacht); stroke-width: 6px; stroke-linejoin: round; }
-  .k-ort text { font: 500 16px/1 var(--text); fill: #d9d5cd; }
+  .k-ort text { font: 500 15px/1 var(--text); fill: #d9d5cd; }
   .k-ring { fill: none; stroke: var(--gelb); stroke-width: 1.8; }
   .k-kern { fill: var(--gelb); }
   .k-heimat text { font: 700 19px/1 var(--serif); letter-spacing: 0.06em; text-transform: uppercase; fill: var(--gelb); }
 
-  /* Zeichnen (eine CSS-Uhr): Umriss 0–1 s → Hamburg 0,5 s → Städte 0,7–1,1 s (Text erscheint mit seinem Punkt) → Bögen 1,0–2,2 s */
+  /* Zeichnen (eine CSS-Uhr): Umriss 0–1 s → Hamburg 0,5 s → Städte 0,7–1,1 s (Text erscheint mit seinem Punkt) → Bögen 1,0–2,9 s, kurze zuerst */
   :global(.js) .karte path { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
   :global(.js) .karte .k-ort, :global(.js) .karte .k-heimat { opacity: 0; }
   :global(.js) .karte.an path { stroke-dashoffset: 0; transition: stroke-dashoffset 1s cubic-bezier(0.45, 0, 0.25, 1); }
-  :global(.js) .karte.an .k-bogen { transition-duration: 0.75s; }
-  :global(.js) .karte.an .b0 { transition-delay: 1s; }
+  :global(.js) .karte.an .k-bogen { transition-duration: 0.6s; }
+  :global(.js) .karte.an .b0 { transition-delay: 1.00s; }
   :global(.js) .karte.an .b1 { transition-delay: 1.12s; }
   :global(.js) .karte.an .b2 { transition-delay: 1.24s; }
   :global(.js) .karte.an .b3 { transition-delay: 1.36s; }
   :global(.js) .karte.an .b4 { transition-delay: 1.48s; }
+  :global(.js) .karte.an .b5 { transition-delay: 1.60s; }
+  :global(.js) .karte.an .b6 { transition-delay: 1.72s; }
+  :global(.js) .karte.an .b7 { transition-delay: 1.84s; }
+  :global(.js) .karte.an .b8 { transition-delay: 1.96s; }
+  :global(.js) .karte.an .b9 { transition-delay: 2.08s; }
+  :global(.js) .karte.an .b10 { transition-delay: 2.20s; }
+  :global(.js) .karte.an .b11 { transition-delay: 2.32s; }
   :global(.js) .karte.an .k-ort, :global(.js) .karte.an .k-heimat { opacity: 1; transition: opacity 0.35s ease 0.5s; }
   :global(.js) .karte.an .o0 { transition-delay: 0.7s; }
   :global(.js) .karte.an .o1 { transition-delay: 0.8s; }

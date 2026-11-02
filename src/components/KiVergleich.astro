@@ -1,0 +1,64 @@
+---
+// „Warum ein echter Filmemacher statt KI?“ (Can Talk 4259), angedockt an „Menschen vertrauen Menschen.“ (Jamil 4222).
+// Sachliche Gegenüberstellung ohne KI-Bashing; rough.js dezent: ein goldener Haken zeichnet sich je Funkelfilm-Zeile.
+// Davor „Was dein Film für dich tut.“ – Nutzen als Ergebnis (NUTZEN), ohne Zahlen. Am Handy untereinander.
+import Skizze from "./Skizze.astro";
+import { KI, NUTZEN } from "../daten";
+---
+<section class="abschnitt kompakt ki" aria-labelledby="nutzen-titel">
+  <div class="huelle">
+    <div class="nutzen">
+      <h2 id="nutzen-titel">{NUTZEN.titel}</h2>
+      <ul class="nutzen-liste">
+        {NUTZEN.punkte.map((p) => <li class="reveal">{p}</li>)}
+      </ul>
+    </div>
+    <div class="ki-block">
+      <div class="ki-kopf">
+        <h2 id="ki-titel">{KI.titel}</h2>
+        <p>{KI.intro}</p>
+      </div>
+      <div class="ki-tabelle" role="table" aria-labelledby="ki-titel">
+        <div class="ki-zeile ki-spalten" role="row">
+          <span role="columnheader">{KI.links}</span><span role="columnheader">{KI.rechts}</span>
+        </div>
+        {KI.zeilen.map(([l, r], i) => (
+          <div class="ki-zeile" role="row">
+            <span class="ki-links" role="cell">{l}</span>
+            <span class="ki-rechts" role="cell"><Skizze form="haken" breite={28} hoehe={24} seed={140 + i} klasse="ki-haken" dick /><span class="sr">{KI.rechts}: </span>{r}</span>
+          </div>
+        ))}
+      </div>
+      <p class="ki-hinweis">{KI.hinweis}</p>
+    </div>
+  </div>
+</section>
+<style>
+  .ki { border-top: 1px solid var(--linie-dunkel); }
+  .nutzen { display: grid; gap: 1.25rem clamp(2rem, 6vw, 5rem); margin-bottom: clamp(2.5rem, 6vw, 4.5rem); }
+  @media (min-width: 60rem) { .nutzen { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); align-items: start; } }
+  .nutzen h2 { margin: 0; }
+  .nutzen-liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.2rem 2rem; }
+  @media (min-width: 60rem) { .nutzen-liste { grid-template-columns: 1fr 1fr; } }
+  .nutzen-liste li { position: relative; padding: 0.7rem 0 0.7rem 1.6rem; border-bottom: 1px solid var(--linie-dunkel); color: var(--weiss); font-size: 1.08rem; line-height: 1.45; }
+  .nutzen-liste li::before { content: ""; position: absolute; left: 0; top: 1.35rem; width: 0.85rem; height: 2px; background: var(--gelb); }
+
+  .ki-block { padding: clamp(1.5rem, 4vw, 2.75rem); background: var(--nacht-2); border-radius: 3px; }
+  .ki-kopf h2 { margin-bottom: 0.4rem; }
+  .ki-kopf p { margin: 0 0 1.5rem; font-size: 1.1rem; color: var(--weiss); }
+  .ki-tabelle { display: grid; }
+  .ki-zeile { display: grid; gap: 0.35rem; padding: 0.9rem 0; border-top: 1px solid var(--linie-dunkel); }
+  .ki-spalten { display: none; }
+  .ki-links { color: var(--silber); font-size: 0.95rem; }
+  .ki-links::before { content: "KI-Video: "; color: #9a958c; }
+  .ki-rechts { display: flex; align-items: flex-start; gap: 0.7rem; color: var(--weiss); font-weight: 600; font-size: 1.05rem; line-height: 1.45; }
+  .ki-rechts :global(.ki-haken) { flex: none; width: 1.5rem; height: 1.3rem; margin-top: 0.1rem; color: var(--gelb); }
+  @media (min-width: 48rem) {
+    .ki-zeile { grid-template-columns: 1fr 1.3fr; gap: 2rem; align-items: start; }
+    .ki-spalten { display: grid; padding-top: 0; border-top: 0; font: 700 1rem/1 var(--serif); text-transform: uppercase; letter-spacing: 0.08em; }
+    .ki-spalten span:first-child { color: #9a958c; }
+    .ki-spalten span:last-child { color: var(--gelb); padding-left: 2.2rem; }
+    .ki-links::before { content: none; }
+  }
+  .ki-hinweis { margin: 1.25rem 0 0; font-size: 0.82rem; color: #8f8a82; }
+</style>

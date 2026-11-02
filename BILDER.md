@@ -7,8 +7,7 @@ Alle Dateien stammen von funkelfilm.com (Abruf 01.11.2026) und sind **nur zur Vo
 | logo-weiss-480/960.png | Logo im Kopf der Seite (PNG) | verkleinert |
 | favicon-32.png, apple-touch-icon.png | Favicon (FF-Zeichen) | verkleinert |
 | og.png | Logo auf Nachtgrund | neu zusammengesetzt |
-| bilder/sheeras-* | Startseite „Hi, ich bin Sheeras“ | Zuschnitt 4:5, AVIF/WebP |
-| bilder/sheeras-rund-112/168 | Hero: kleines rundes Porträt | quadratischer Ausschnitt aus sheeras-640, Graustufen |
+| bilder/sheeras-rund-112/168, sheeras-kreis-400/680 | Hero (Mini-Porträt) und „Hinter jedem Film steht ein Mensch“ | quadratischer Ausschnitt aus dem Originalfoto (1280 × 2274), Gesicht mittig und größer (Jamil 4253), Graustufen |
 | bilder/sheeras-pullover-* | Über uns, Porträt | Zuschnitt 4:5 |
 | bilder/gimbal-* | Startseite „Lass uns deine Vision …“ | Zuschnitt 16:10 |
 | bilder/sucher-set-* | Services, Kopfbild | Zuschnitt 16:10 |

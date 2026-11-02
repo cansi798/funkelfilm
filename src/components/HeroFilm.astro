@@ -6,10 +6,11 @@
 // Die rough.js-Regieskizze (Rahmen, Filmklappe, „Take 1“) ist auf Jamils Wunsch wieder entfernt (Talk 4250: „Take 1 und die Umrandung entfernen“):
 // keine Zeichnungen über dem Hero-Film.
 // v1-Reste (Sucher-Ecken, Timecode) und der Weichzeichner auf dem Poster sind entfernt (Retrospektive 02.11.).
-// Breit: Film im Vollbild, Text links. Handy/Tablet: Film oben als eigene Fläche (16:10), Text darunter –
+// Breit: Film im Vollbild, Text links. Über dem Film wechselnde Begriffe (HeroBegriffe.astro, Can 4255). Handy/Tablet: Film oben als eigene Fläche (16:10), Text darunter –
 // so steht nie Text über einem Gesicht im Film. Video lädt erst nach Einstieg + Seitenaufbau; Pause-Knopf; reduzierte Bewegung = Standbild.
 import { HERO, u } from "../daten";
 import Icon from "./Icon.astro";
+import HeroBegriffe from "./HeroBegriffe.astro";
 const poster = u("/medien/clips/reel.webp");
 const posterKlein = u("/medien/clips/reel-640.webp");
 const rund = (ext: string) => `${u(`/medien/bilder/sheeras-rund-112.${ext}`)} 112w, ${u(`/medien/bilder/sheeras-rund-168.${ext}`)} 168w`;
@@ -22,6 +23,7 @@ const [vor, wort, nach] = HERO.titel;
       <video class="sucher-video" muted loop playsinline preload="none" data-src={u("/medien/clips/reel.mp4")} data-tempo="0.85" aria-hidden="true" tabindex="-1" width="960" height="540"></video>
     </div>
     <div class="hero-schleier" aria-hidden="true"></div>
+    <HeroBegriffe />
   </div>
   <div class="huelle hero-inhalt">
     <div class="hero-text">
@@ -85,6 +87,10 @@ const [vor, wort, nach] = HERO.titel;
   .sucher-pause { position: absolute; right: 1.6rem; top: 1.6rem; display: grid; place-items: center; width: 2.75rem; height: 2.75rem;
     border: 1px solid rgba(243, 241, 236, 0.3); border-radius: 2px; background: rgba(10, 10, 10, 0.45); color: var(--weiss); cursor: pointer; }
   @media (min-width: 60rem) { .sucher-pause { top: auto; right: clamp(1.4rem, 3vw, 2.4rem); bottom: clamp(1.4rem, 3vw, 2.4rem); } }
+  /* Can 4255: Knopf ausblenden, sobald der Film läuft – erreichbar bleibt er per Tastatur (Fokus), Maus (über dem Film) und
+     Tippen auf den Film (seite.js setzt dann kurz .steuerung). WCAG 2.2.2: bewegter Inhalt bleibt pausierbar. */
+  .hero.laeuft .sucher-pause { opacity: 0; transition: opacity 0.3s ease; }
+  .hero.laeuft:hover .sucher-pause, .hero.steuerung .sucher-pause, .hero .sucher-pause:focus-visible, .hero.pausiert .sucher-pause { opacity: 1; }
   .sucher-pause[hidden] { display: none; } /* erst sichtbar, wenn der Film läuft (nicht ohne JS / bei reduzierter Bewegung) */
   .sucher-pause:hover { border-color: var(--bronze); }
   .sucher-pause :global(svg) { width: 1.1rem; height: 1.1rem; }

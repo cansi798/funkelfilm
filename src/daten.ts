@@ -298,12 +298,55 @@ export const EINSATZ = {
   anreise: 'Ob Berlin, München, Köln oder Leipzig: Die Anreise planen wir im kostenlosen Erstgespräch gleich mit ein.',
 };
 
-/** Vertrauenszeile. Keine Sterne: Es gibt keine belegte Bewertungsquelle (auch die alte Seite zeigt keine). */
-export const VERTRAUEN = [
-  { text: 'Über 100 Projekte umgesetzt', hinweis: 'Stand 2024', belegt: true },
-  { text: 'Hamburg & deutschlandweit', hinweis: '', belegt: true }, // deutschlandweit bestätigt (Jamil Talk 4231, 02.11.)
-  { text: 'Persönliche Betreuung vom ersten Gespräch bis zur Veröffentlichung', hinweis: '', belegt: true },
-];
+/** Vertrauen (Can Talk 4256: „Mach da die 100 weg … krasser Senior Level“). Die Zahl „Über 100 Projekte (Stand 2024)“ ist auf
+ *  Cans Wunsch raus. Senior-Wirkung NUR aus Belegen: „Seit 2017“ (alte Seite: „seit 2017“, Startseite + Über mich; die Angaben
+ *  „2015 – Der Anfang“ und „über 8 Jahre“ widersprechen sich teils → 2017 ist die sichere, mehrfach genannte Zahl), Leistungen
+ *  und Ablauf der alten Seite (Konzept, Dreh, Schnitt, Farbe, Ton, Veröffentlichung), Einsatzgebiet (Jamil 4231), „direkt mit dem
+ *  Filmemacher“ (Jamils Konzept, OFFENE-INFOS 16), 5 Kundenstimmen der alten Seite. Keine Sterne, keine erfundenen Zahlen/Kunden. */
+export const VERTRAUEN = {
+  ueber: 'Erfahrung, die man sieht',
+  jahr: '2017',
+  vorJahr: 'Seit',
+  jahrText: 'erzähle ich Geschichten von Unternehmen und Menschen in bewegten Bildern.', // nah an der alten Seite („Seit 2017 begleite ich …“)
+  satz: 'Geschichten von Unternehmen und Menschen, in bewegten Bildern erzählt.',
+  fakten: [
+    { titel: 'Unternehmens-, Recruiting- und Eventfilme', text: 'Dazu Kundenstimmen-Videos, die Vertrauen schaffen.' },
+    { titel: 'Alles aus einer Hand', text: 'Konzept, Dreh, Schnitt, Farbe, Ton und Veröffentlichung.' },
+    { titel: 'Direkt mit dem Filmemacher', text: 'Keine Agentur dazwischen. Ein Ansprechpartner für alles.' },
+    { titel: 'Hamburg & deutschlandweit', text: 'Gedreht wird dort, wo deine Geschichte passiert.' },
+  ],
+  stimmen: 'Was Kunden sagen',
+};
+
+/** Nutzen aus Kundensicht (Can Talk 4259: „Pack sehr geile Benefits rein“) – als Ergebnis formuliert, nur durch das Angebot gedeckt,
+ *  keine Zahlen. „Nicht vor die Kamera“ = FAQ; „lange nutzbar“ = alte Seite („Website, Social Media & Co.“, Präsentationen). */
+export const NUTZEN = {
+  titel: 'Was dein Film für dich tut.',
+  punkte: [
+    'Bewerber sehen eure Kultur, bevor sie sich bewerben.',
+    'Ein Film, den du lange nutzt: Website, Social Media, Präsentationen.',
+    'Du musst nicht vor die Kamera, wenn du nicht willst.',
+    'Ein Ansprechpartner von der ersten Idee bis zum fertigen Film.',
+  ],
+};
+
+/** „Warum ein echter Filmemacher statt KI?“ (Can Talk 4259) – sachlich, ohne KI schlechtzumachen; Art. 50 KI-VO nur allgemein. */
+export const KI = {
+  titel: 'Warum ein echter Filmemacher statt KI?',
+  intro: 'KI kann viel. Aber sie war nie bei dir vor Ort.',
+  links: 'KI-Video',
+  rechts: 'Funkelfilm',
+  zeilen: [
+    ['Generierte Menschen und Orte', 'Dein Team, deine Räume, echte Gesichter'],
+    ['Wirkt oft glatt, viele erkennen es sofort', 'Echtheit, der man glaubt'],
+    ['Text rein, Film raus', 'Jemand, der zuhört, vor Ort Regie führt und deine Geschichte findet'],
+    ['Teils kennzeichnungspflichtig', 'Eigene Aufnahmen, Rechte und Freigaben klar geregelt'],
+  ] as [string, string][],
+  hinweis: 'Für bestimmte KI-erzeugte Bilder und Videos sieht die EU-KI-Verordnung (Art. 50) eine Kennzeichnung vor. Das ist ein allgemeiner Hinweis, keine Rechtsberatung.',
+};
+
+/** Begriffe, die im Hero nacheinander über dem Film erscheinen (Can Talk 4255). Emotional, ohne Superlative/Alleinstellung (UWG). */
+export const HERO_BEGRIFFE = ['Echt.', 'Mit Gefühl erzählt.', 'Gänsehaut statt Werbespot.', 'Bild für Bild durchdacht.', 'Direkt vom Filmemacher.'];
 
 export const PROBLEM = {
   titel: 'Kommt dir das bekannt vor?',
