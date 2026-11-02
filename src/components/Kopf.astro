@@ -4,13 +4,13 @@
 import Marke from "./Marke.astro";
 import Icon from "./Icon.astro";
 import Direktkontakt from "./Direktkontakt.astro";
-import { NAV, u } from "../daten";
+import { NAV, u, LOGO_UNTERZEILE } from "../daten";
 const pfad = Astro.url.pathname.replace(/\/?$/, "/");
 const aktiv = (href: string) => pfad === u(href) || (href === "/services/" && /\/(imagefilme|erfahrungsberichte|recruitingfilm|veranstaltungsfilm)\/$/.test(pfad));
 ---
 <header class="kopf">
   <div class="huelle kopf-innen">
-    <a class="marke" href={u("/")} aria-label="Funkelfilm – Unternehmensfilme aus Hamburg – zur Startseite"><Marke /></a>
+    <a class="marke" href={u("/")} aria-label={`Funkelfilm – ${LOGO_UNTERZEILE.join(" ")} – zur Startseite`}><Marke /></a>
     <nav class="nav-breit" aria-label="Hauptnavigation">
       <ul>
         {NAV.map((n) => <li><a href={u(n.href)} aria-current={aktiv(n.href) ? "page" : undefined}>{n.titel}</a></li>)}

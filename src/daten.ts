@@ -14,8 +14,21 @@ export const INHABER = 'Sheeras Iqbal';
 export const VORNAME = 'Sheeras';
 export const ORT = 'Hamburg';
 export const MAIL = 'kontakt@funkelfilm.com';
-/** Feste Unterzeile zum Logo (Can 02.11.2026); als Logo-Bestandteil mit Funkelfilm abstimmen (OFFENE-INFOS 5). */
-export const LOGO_UNTERZEILE = 'Unternehmensfilme aus Hamburg';
+/** Feste Unterzeile zum Logo, zweizeilig; als Logo-Bestandteil mit Funkelfilm abstimmen (OFFENE-INFOS 5).
+ *  Jamil 4321 wollte „Echte Geschichten. / Aus Hamburg erzählt.“, aber keine Doppelung mit der H1 („nein keine Dopplung“).
+ *  Bis zu seiner Entscheidung gilt Variante B. Umstellen = EINE Zeile: VARIANTE (unten); og.png danach neu erzeugen.
+ *  A: Logo „Echte Geschichten. / Aus Hamburg erzählt.“ + H1 „Authentische Filme. / Eindrucksvoll erzählt.“
+ *  B: Logo „Unternehmensfilme / aus Hamburg“ + H1 „Echte Geschichten. / Eindrucksvoll erzählt.“ (aktiv) */
+export const LOGO_UNTERZEILEN = {
+  a: ['Echte Geschichten.', 'Aus Hamburg erzählt.'] as [string, string],
+  b: ['Unternehmensfilme', 'aus Hamburg'] as [string, string],
+};
+export const HERO_TITEL = {
+  a: { vor: 'Authentische ', wort: 'Filme', nach: '.', zeile2: 'Eindrucksvoll erzählt.' },
+  b: { vor: 'Echte ', wort: 'Geschichten', nach: '.', zeile2: 'Eindrucksvoll erzählt.' },
+};
+export const VARIANTE: 'a' | 'b' = 'b';
+export const LOGO_UNTERZEILE = LOGO_UNTERZEILEN[VARIANTE];
 export const CLAIM = 'Echte Geschichten. Authentische Videos.';
 export const UNTERZEILE = 'Teile deine Botschaft in bewegten Bildern – ehrlich & kreativ.';
 export const BESCHREIBUNG =
@@ -279,15 +292,16 @@ export const UEBER = {
 // Fakten-Regel: Was die bisherige Seite nicht belegt, ist Platzhalter (VORSCHAU) und steht in OFFENE-INFOS.md.
 
 export const HERO = {
-  // H1 von Can (02.11.2026, Namens-Einschätzung): das Wort „Film“ steht sofort im Hero. Teile: [davor, Schlüsselwort in Gold, danach].
-  titel: ['', 'Filme', ', die zeigen, wie gut deine Arbeit ist.'] as [string, string, string],
-  // Jamils bisherige Headline (Talk 4222) bleibt wörtlich als Kennzeile über der H1.
-  kennzeile: 'Deine Arbeit verdient mehr Aufmerksamkeit.',
-  // Leistungen laut alter Seite; „deutschlandweit“ bestätigt (Jamil Talk 4231).
-  leistung: 'Unternehmens-, Recruiting- und Eventfilme aus Hamburg – deutschlandweit',
+  // Jamil 4319 (02.11.2026), wörtlich: H1 zweizeilig „Echte Geschichten. / Eindrucksvoll erzählt.“ – ersetzt Cans H1
+  // „Filme, die zeigen, wie gut deine Arbeit ist.“. Gold = „Geschichten“ (Kern der Marke, wie der alte Claim „Echte Geschichten.“).
+  titel: HERO_TITEL[VARIANTE], // Varianten oben bei LOGO_UNTERZEILEN
+  // Subheadline (Jamil 4319, wörtlich) – das Wort „Filme“ steht damit weiter sofort im Hero (Cans Klarheits-Ziel).
+  unter: 'Authentische Filme für Unternehmen, Marken und Menschen.',
+  // Leistungszeile ohne „aus Hamburg“ (steht schon in der Personenzeile); „deutschlandweit“ bestätigt (Jamil 4231).
+  leistung: 'Unternehmens-, Recruiting- und Eventfilme – deutschlandweit',
   // Schreibweise „Sheeras“ wie im Impressum der alten Seite (Frage „Sheeraz?“ offen, OFFENE-INFOS 15).
   person: { name: 'Sheeras Iqbal', rolle: 'Filmemacher & Videograph aus Hamburg' }, // „Videograph“ in Jamils Schreibweise (Talk 4240)
-  // Frühere Subline (Jamil 4222) im Hero entfernt (Can: „Subline knapp halten“); ihr Kernsatz steht weiter in der Seitenbeschreibung (index.astro).
+  // Kennzeile „Deine Arbeit verdient mehr Aufmerksamkeit.“ entfernt (Jamil 4320).
 };
 
 /** Einsatzgebiet (Can Talk 4242, 02.11.2026). „Deutschlandweit“ bestätigt (Jamil Talk 4231). Keine Projektorte behaupten –
@@ -318,18 +332,6 @@ export const VERTRAUEN = {
   stimmen: 'Was Kunden sagen',
 };
 
-/** Nutzen aus Kundensicht (Can Talk 4259: „Pack sehr geile Benefits rein“) – als Ergebnis formuliert, nur durch das Angebot gedeckt,
- *  keine Zahlen. „Nicht vor die Kamera“ = FAQ; „lange nutzbar“ = alte Seite („Website, Social Media & Co.“, Präsentationen). */
-export const NUTZEN = {
-  titel: 'Was dein Film für dich tut.',
-  punkte: [
-    'Bewerber sehen eure Kultur, bevor sie sich bewerben.',
-    'Ein Film, den du lange nutzt: Website, Social Media, Präsentationen.',
-    'Du musst nicht vor die Kamera, wenn du nicht willst.',
-    'Ein Ansprechpartner von der ersten Idee bis zum fertigen Film.',
-  ],
-};
-
 /** „Warum ein echter Filmemacher statt KI?“ (Can Talk 4259) – sachlich, ohne KI schlechtzumachen; Art. 50 KI-VO nur allgemein. */
 export const KI = {
   titel: 'Warum ein echter Filmemacher statt KI?',
@@ -346,9 +348,6 @@ export const KI = {
   hinweis: 'Für bestimmte KI-erzeugte Bilder und Videos sieht die EU-KI-Verordnung (Art. 50) eine Kennzeichnung vor. Das ist ein allgemeiner Hinweis, keine Rechtsberatung.',
 };
 
-/** Begriffe, die im Hero nacheinander über dem Film erscheinen (Can Talk 4255). Emotional, ohne Superlative/Alleinstellung (UWG). */
-export const HERO_BEGRIFFE = ['Echt.', 'Mit Gefühl erzählt.', 'Gänsehaut statt Werbespot.', 'Bild für Bild durchdacht.', 'Direkt vom Filmemacher.'];
-
 export const PROBLEM = {
   titel: 'Kommt dir das bekannt vor?',
   karten: [
@@ -357,13 +356,6 @@ export const PROBLEM = {
     'Neue Mitarbeiter kennen eure Kultur nicht.',
     'Es fehlt Vertrauen, bevor das erste Gespräch stattfindet.',
   ],
-  uebergang: 'Genau hier beginnt die Kraft einer echten Geschichte.',
-};
-
-export const LOESUNG = {
-  titel: 'Menschen vertrauen Menschen.',
-  text: 'Ein guter Film zeigt nicht nur, was du machst. Er zeigt:',
-  punkte: ['wie du arbeitest', 'wer hinter dem Unternehmen steht', 'warum Kunden gerne mit dir arbeiten', 'was dich besonders macht'],
 };
 
 /** Referenzen im Kartenstil. belegt=false → Platzhalter-Karte (kein echtes Projekt auf der alten Seite). */

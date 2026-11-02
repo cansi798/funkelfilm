@@ -1,19 +1,12 @@
 ---
-// Finaler Aufruf auf allen Seiten. Jamil Talk 4233: kein Video mehr, sondern eine ruhige Animation passend zu
-// „Deine Geschichte ist bereits da. Jetzt muss sie nur noch erzählt werden.“ → Projektor-Lichtkegel in Gold:
-// Er öffnet sich langsam, sobald der Abschnitt im Bild ist; Staub schwebt im Licht, das Licht flackert kaum merklich.
-// Reines CSS (Transform/Opacity, kein Video, kein Skript außer dem Start-Signal). Reduzierte Bewegung: Kegel offen, nichts bewegt sich.
+// Finaler Aufruf auf allen Seiten: „Deine Geschichte ist bereits da. Jetzt muss sie nur noch erzählt werden.“
+// Ruhig schwarz mit einem sehr dezenten, festen Goldschimmer oben rechts – keine Animation (Jamil 4309: Projektor-Lichtkegel
+// mit Staub und Lichtpunkt entfernt; davor 4233: kein Video). Unterstrich (rough.js) und Knöpfe bleiben.
 import Skizze from "./Skizze.astro";
 import Direktkontakt from "./Direktkontakt.astro";
 import { SCHLUSS, u } from "../daten";
-const staub = Array.from({ length: 14 }, (_, i) => i + 1);
 ---
 <section class="schluss" aria-labelledby="schluss-titel">
-  <div class="projektor" data-szene aria-hidden="true">
-    <span class="kegel"></span>
-    <span class="linse"></span>
-    {staub.map((n) => <span class={`staub st${n}`}></span>)}
-  </div>
   <div class="huelle schluss-inhalt">
     <h2 id="schluss-titel">{SCHLUSS.titel}</h2>
     <p class="schluss-unter"><span class="erzaehlt">{SCHLUSS.unter}<Skizze form="unterstrich" breite={420} hoehe={26} seed={81} klasse="schluss-strich" /></span></p>
@@ -25,36 +18,6 @@ const staub = Array.from({ length: 14 }, (_, i) => i + 1);
 </section>
 <style>
   .schluss { position: relative; overflow: hidden; isolation: isolate; background: radial-gradient(90% 120% at 100% 0%, #15120c 0%, var(--nacht) 55%); border-top: 1px solid var(--linie-dunkel); }
-  .projektor { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
-  /* Lichtkegel von der Linse oben rechts schräg nach links unten */
-  .kegel { position: absolute; right: 4%; top: 10%; width: 130%; height: 220%; transform-origin: 100% 0%;
-    background: linear-gradient(203deg, rgba(232, 190, 80, 0.32) 0%, rgba(212, 160, 23, 0.14) 28%, rgba(212, 160, 23, 0.04) 55%, rgba(212, 160, 23, 0) 75%);
-    clip-path: polygon(100% 0%, 0% 22%, 0% 62%);
-    transform: rotate(4deg) scaleY(0.25); opacity: 0.2; }
-  .linse { position: absolute; right: calc(4% - 0.9rem); top: calc(10% - 0.9rem); width: 1.8rem; height: 1.8rem; border-radius: 50%;
-    background: radial-gradient(circle, #fff1c2 0%, rgba(212, 160, 23, 0.9) 35%, rgba(212, 160, 23, 0) 72%); opacity: 0.3; transform: scale(0.6); }
-  .staub { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #f1d58a; opacity: 0; }
-  /* Staubkörner verteilt im Kegel (feste Klassen statt style-Attribut wegen CSP) */
-  .st1 { right: 12%; top: 18%; } .st2 { right: 22%; top: 26%; } .st3 { right: 30%; top: 22%; } .st4 { right: 38%; top: 34%; }
-  .st5 { right: 46%; top: 30%; } .st6 { right: 54%; top: 42%; } .st7 { right: 62%; top: 38%; } .st8 { right: 70%; top: 50%; }
-  .st9 { right: 18%; top: 34%; } .st10 { right: 34%; top: 46%; } .st11 { right: 50%; top: 56%; } .st12 { right: 66%; top: 60%; }
-  .st13 { right: 26%; top: 14%; } .st14 { right: 42%; top: 20%; width: 2px; height: 2px; }
-  :global(.js) .projektor.an .kegel { animation: kegel-auf 3.2s cubic-bezier(0.25, 0.8, 0.25, 1) forwards, flackern 7s steps(14) 3.2s infinite; }
-  :global(.js) .projektor.an .linse { animation: linse-an 2.4s ease forwards; }
-  :global(.js) .projektor.an .staub { animation: schweben 11s linear infinite; }
-  .st2, .st7, .st12 { animation-delay: -3s !important; } .st3, .st8, .st13 { animation-delay: -6s !important; } .st4, .st9, .st14 { animation-delay: -8.5s !important; }
-  .st5, .st10 { animation-duration: 14s !important; } .st6, .st11 { animation-duration: 9s !important; }
-  @keyframes kegel-auf { to { transform: rotate(0deg) scaleY(1); opacity: 1; } }
-  @keyframes linse-an { to { opacity: 1; transform: none; } }
-  @keyframes flackern { 0%, 100% { opacity: 1; } 30% { opacity: 0.93; } 55% { opacity: 0.97; } 80% { opacity: 0.9; } }
-  @keyframes schweben { 0% { opacity: 0; transform: translate(0, 0); } 20% { opacity: 0.75; } 80% { opacity: 0.5; } 100% { opacity: 0; transform: translate(-46px, 28px); } }
-  /* ohne JS / reduzierte Bewegung: Kegel offen, Staub still */
-  :global(html:not(.js)) .kegel { transform: none; opacity: 1; }
-  :global(html:not(.js)) .linse { opacity: 1; transform: none; }
-  @media (prefers-reduced-motion: reduce) {
-    .kegel, .linse { transform: none !important; opacity: 1 !important; animation: none !important; }
-    .staub { animation: none !important; opacity: 0.45 !important; }
-  }
   .schluss-inhalt { padding-block: clamp(4.5rem, 11vw, 8rem); }
   .schluss h2 { font-size: clamp(2.4rem, 5.4vw, 4.4rem); max-width: 12em; margin-bottom: 0.6rem; }
   .schluss-unter { margin: 0 0 2rem; font: 600 clamp(1.3rem, 2.4vw, 1.9rem)/1.3 var(--serif); color: #e2ded6; }

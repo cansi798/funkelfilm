@@ -1,13 +1,13 @@
 ---
 import Marke from "./Marke.astro";
 import Icon from "./Icon.astro";
-import { NAV, SOZIAL, MAIL, CLAIM, LEISTUNGEN, u } from "../daten";
+import { NAV, SOZIAL, MAIL, CLAIM, LEISTUNGEN, u, LOGO_UNTERZEILE } from "../daten";
 const jahr = new Date().getFullYear();
 ---
 <footer class="fuss">
   <div class="huelle fuss-raster">
     <div class="fuss-marke">
-      <a href={u("/")} aria-label="Funkelfilm – Unternehmensfilme aus Hamburg – zur Startseite"><Marke klasse="fuss-sperre" /></a>
+      <a href={u("/")} aria-label={`Funkelfilm – ${LOGO_UNTERZEILE.join(" ")} – zur Startseite`}><Marke klasse="fuss-sperre" /></a>
       <p class="leise">{CLAIM}</p>
       <ul class="sozial">
         {SOZIAL.map((s) => (

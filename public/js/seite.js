@@ -120,19 +120,6 @@ document.documentElement.classList.add("js");
         sucher.classList.add("steuerung"); clearTimeout(steuerUhr);
         steuerUhr = setTimeout(function () { sucher.classList.remove("steuerung"); }, 3000);
       });
-      // Wechselnde Begriffe über dem Film (Can 4255): laufen nur, solange der Film läuft; je ~2,6 s sichtbar
-      var begriffe = sucher.querySelectorAll(".begriff");
-      if (video && begriffe.length && !ruhig && !sparen) {
-        begriffe[0].classList.remove("aktiv");
-        var nr = -1, wechsel = null;
-        var naechster = function () {
-          if (nr >= 0) begriffe[nr].classList.remove("aktiv");
-          nr = (nr + 1) % begriffe.length;
-          setTimeout(function () { begriffe[nr].classList.add("aktiv"); }, nr === 0 && !wechsel ? 0 : 800);
-        };
-        video.addEventListener("playing", function () { if (!wechsel) { naechster(); wechsel = setInterval(naechster, 3400); } });
-        video.addEventListener("pause", function () { clearInterval(wechsel); wechsel = null; });
-      }
     }
     // Clips im Kopf der Unterseiten
     document.querySelectorAll("[data-autoclip]").forEach(function (box) {

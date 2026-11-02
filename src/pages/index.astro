@@ -1,11 +1,11 @@
 ---
 // Startseite nach Jamils Konzept „FUNKELFILM 2027“ (Talk 4222, 01.11.2026): Besucher zuerst verstehen, dann Funkelfilm als Lösung zeigen.
-// Hero → Vertrauen → „Kommt dir das bekannt vor?“ → Lösung → Projekte → Mensch → Einsatzgebiet (Can 4242) → Ziele → Stimmen → Ablauf → Fragen → Schluss (im Layout).
+// Reihenfolge (Jamil 4316/4317, 02.11.): Hero → Vertrauen „Seit 2017“ → „Kommt dir das bekannt vor?“ (Filmstreifen) → Warum Filmemacher statt KI
+// → Projekte → Hinter jedem Film steht ein Mensch → So entsteht dein Film → Ziele → Stimmen → Einsatzgebiet → Fragen → Schluss (im Layout).
 // Kompakt gehalten (Can: möglichst wenig Scrollen): am Handy wischbare Reihen und aufklappbare Karten.
 import Basis from "../layouts/Basis.astro";
 import HeroFilm from "../components/HeroFilm.astro";
 import Problem from "../components/Problem.astro";
-import Loesung from "../components/Loesung.astro";
 import Referenzen from "../components/Referenzen.astro";
 import Mensch from "../components/Mensch.astro";
 import Einsatzgebiet from "../components/Einsatzgebiet.astro";
@@ -23,14 +23,13 @@ import KiVergleich from "../components/KiVergleich.astro";
   <Vertrauen />
 
   <Problem />
-  <Loesung />
   <KiVergleich />
   <Referenzen />
   <Mensch />
-  <Einsatzgebiet />
+  <AblaufLinie />
   <Ziele />
   <StimmenBand />
-  <AblaufLinie />
+  <Einsatzgebiet />
   <Fragen />
 </Basis>
 <style>
