@@ -25,7 +25,7 @@ const staub = Array.from({ length: 14 }, (_, i) => i + 1);
   /* Lichtkegel von der Linse oben rechts schräg nach links unten */
   .kegel { position: absolute; right: 4%; top: 10%; width: 130%; height: 220%; transform-origin: 100% 0%;
     background: linear-gradient(203deg, rgba(232, 190, 80, 0.32) 0%, rgba(212, 160, 23, 0.14) 28%, rgba(212, 160, 23, 0.04) 55%, rgba(212, 160, 23, 0) 75%);
-    clip-path: polygon(100% 0%, 0% 22%, 0% 62%); filter: blur(6px);
+    clip-path: polygon(100% 0%, 0% 22%, 0% 62%);
     transform: rotate(4deg) scaleY(0.25); opacity: 0.2; }
   .linse { position: absolute; right: calc(4% - 0.9rem); top: calc(10% - 0.9rem); width: 1.8rem; height: 1.8rem; border-radius: 50%;
     background: radial-gradient(circle, #fff1c2 0%, rgba(212, 160, 23, 0.9) 35%, rgba(212, 160, 23, 0) 72%); opacity: 0.3; transform: scale(0.6); }

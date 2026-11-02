@@ -1,44 +1,67 @@
 ---
-// Einstieg „Schwarzblende mit Lichtfunken“ (Jamils Konzept 4222: ruhig, Netflix-Doku/A24 statt Countdown).
-// Ein goldener Funke gleitet aus dem Dunkel zur Mitte, zieht einen breiten Lichtstreif (wie eine anamorphe Linse),
-// das Logo erscheint im Licht, dann blendet das Schwarz weich in den Hero-Film über. Ca. 2,6 s, reines CSS auf einer Uhr.
-// Regeln: Ebene lässt Klicks durch (pointer-events: none), „Überspringen“, Esc oder Klick beenden sofort; nur beim ersten
-// Seitenaufruf der Sitzung (sessionStorage, seite.js); ohne JS und bei reduzierter Bewegung gar nicht; fest positioniert → kein CLS.
+// Einstieg im Stil eines Streaming-Intros (Jamil Talk 4235): nur das FUNKELFILM-Logo als Hauptdarsteller.
+// 1) Schwarz. 2) Logo erscheint und fährt langsam auf die Kamera zu. 3) Es löst sich in vertikale Lichtbänder auf
+// (Gold, Bronze, Off White statt Rot). 4) Die Bänder schießen nach vorne, die Seite blendet ein. Kein Ton, keine fremden Assets.
+// Regeln: ca. 2,8 s, reines CSS (transform/opacity), Ebene lässt Klicks durch, „Überspringen“/Esc/Klick beenden sofort,
+// nur beim ersten Aufruf der Sitzung (seite.js), ohne JS und bei reduzierter Bewegung gar nicht, fest positioniert → kein CLS.
 import { u } from "../daten";
+const baender = Array.from({ length: 24 });
 ---
 <div class="intro" aria-hidden="true">
-  <span class="intro-streif"></span>
-  <span class="intro-funke"></span>
-  <img class="intro-logo" src={u("/medien/logo-weiss-480.png")} width="480" height="143" alt="" decoding="async" />
+  <div class="intro-buehne">
+    <img class="intro-logo" src={u("/medien/logo-weiss-960.png")} width="960" height="286" alt="" decoding="async" />
+    <div class="intro-baender">{baender.map(() => <span class="intro-band"></span>)}</div>
+  </div>
 </div>
 <button class="intro-skip" type="button" data-intro-skip>Intro überspringen</button>
 <style>
   .intro, .intro-skip { display: none; }
   :global(html.mit-intro) .intro {
-    display: grid; place-items: center; position: fixed; inset: 0; z-index: 200; pointer-events: none; background: #050505;
-    animation: blende 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.85s forwards;
+    display: grid; place-items: center; position: fixed; inset: 0; z-index: 200; pointer-events: none; background: #050505; overflow: hidden;
+    animation: blende 0.6s ease 2.2s forwards;
   }
   :global(html.mit-intro) .intro-skip {
     display: inline-flex; position: fixed; z-index: 201; right: 1rem; bottom: max(1rem, env(safe-area-inset-bottom)); min-height: 2.75rem; align-items: center;
     padding: 0.5rem 1rem; border: 1px solid rgba(243, 241, 236, 0.35); border-radius: 2px; background: rgba(5, 5, 5, 0.6); color: var(--weiss);
-    font: 500 0.9rem/1 var(--titel); cursor: pointer; animation: weg 0.25s linear 2.3s forwards;
+    font: 500 0.9rem/1 var(--titel); cursor: pointer; animation: weg 0.25s linear 2.35s forwards;
   }
-  .intro > * { grid-area: 1 / 1; }
-  .intro-funke { width: 0.9rem; height: 0.9rem; border-radius: 50%; background: #fff3c4;
-    box-shadow: 0 0 12px 4px rgba(212, 160, 23, 0.95), 0 0 46px 14px rgba(212, 160, 23, 0.45);
-    opacity: 0; animation: funke 1.5s cubic-bezier(0.25, 0.8, 0.25, 1) 0.1s forwards; }
-  .intro-streif { width: min(90vw, 60rem); height: 2px; border-radius: 50%;
-    background: radial-gradient(closest-side, rgba(255, 236, 170, 0.95), rgba(212, 160, 23, 0.55) 40%, rgba(212, 160, 23, 0) 100%);
-    opacity: 0; transform: scaleX(0.05); animation: streif 1.3s cubic-bezier(0.2, 0.8, 0.2, 1) 0.75s forwards; }
-  .intro-logo { width: min(64vw, 22rem); height: auto; opacity: 0; animation: logo 0.9s var(--ease) 1.05s forwards; }
-  @keyframes funke {
-    0% { opacity: 0; transform: translate(-22vw, 6vh) scale(0.4); }
-    25% { opacity: 1; }
-    70% { opacity: 1; transform: translate(0, 0) scale(1); }
-    100% { opacity: 0; transform: translate(0, 0) scale(2.2); }
-  }
-  @keyframes streif { 0% { opacity: 0; transform: scaleX(0.05); } 35% { opacity: 1; } 100% { opacity: 0; transform: scaleX(1); } }
-  @keyframes logo { 0% { opacity: 0; filter: blur(8px); transform: scale(0.97); } 100% { opacity: 1; filter: none; transform: none; } }
+  .intro-buehne { position: relative; display: grid; place-items: center; width: min(70vw, 26rem); aspect-ratio: 960 / 286; }
+  .intro-buehne > * { grid-area: 1 / 1; }
+  .intro-logo { width: 100%; height: auto; opacity: 0; will-change: transform, opacity;
+    animation: logo-an 0.4s ease-out 0.15s forwards, logo-zoom 1.4s cubic-bezier(0.45, 0, 0.55, 1) 0.15s forwards, logo-weg 0.3s ease-in 1.5s forwards; }
+  .intro-baender { display: flex; justify-content: center; gap: 0.6%; width: 108%; height: 150%; will-change: transform;
+    animation: nach-vorn 0.95s cubic-bezier(0.55, 0, 0.9, 0.35) 1.72s forwards; }
+  .intro-band { flex: 0 0 4%; height: 100%; opacity: 0; transform: scaleY(0.3); will-change: transform, opacity;
+    animation: band 1.15s cubic-bezier(0.3, 0, 0.6, 1) 1.35s forwards; }
+  .intro-band:nth-child(1) { --tx: -40.1vw; flex-basis: 2%; background: linear-gradient(180deg, transparent, var(--gelb) 22%, var(--bronze) 78%, transparent); animation-delay: 1.43s; }
+  .intro-band:nth-child(2) { --tx: -39.8vw; flex-basis: 4%; background: linear-gradient(180deg, transparent, #f3e2a8 22%, var(--weiss) 78%, transparent); animation-delay: 1.45s; }
+  .intro-band:nth-child(3) { --tx: -30.4vw; flex-basis: 3%; background: linear-gradient(180deg, transparent, var(--bronze) 22%, #e6b53a 78%, transparent); animation-delay: 1.47s; }
+  .intro-band:nth-child(4) { --tx: -33.6vw; flex-basis: 2%; background: linear-gradient(180deg, transparent, var(--weiss) 22%, #b48a4f 78%, transparent); animation-delay: 1.42s; }
+  .intro-band:nth-child(5) { --tx: -27.9vw; flex-basis: 2%; background: linear-gradient(180deg, transparent, #e6b53a 22%, var(--gelb) 78%, transparent); animation-delay: 1.42s; }
+  .intro-band:nth-child(6) { --tx: -17.6vw; flex-basis: 3%; background: linear-gradient(180deg, transparent, #b48a4f 22%, #f3e2a8 78%, transparent); animation-delay: 1.38s; }
+  .intro-band:nth-child(7) { --tx: -16.6vw; flex-basis: 2%; background: linear-gradient(180deg, transparent, var(--gelb) 22%, var(--bronze) 78%, transparent); animation-delay: 1.40s; }
+  .intro-band:nth-child(8) { --tx: -13.9vw; flex-basis: 3%; background: linear-gradient(180deg, transparent, #f3e2a8 22%, var(--weiss) 78%, transparent); animation-delay: 1.38s; }
+  .intro-band:nth-child(9) { --tx: -17.0vw; flex-basis: 4%; background: linear-gradient(180deg, transparent, var(--bronze) 22%, #e6b53a 78%, transparent); animation-delay: 1.41s; }
+  .intro-band:nth-child(10) { --tx: -9.2vw; flex-basis: 6%; background: linear-gradient(180deg, transparent, var(--weiss) 22%, #b48a4f 78%, transparent); animation-delay: 1.37s; }
+  .intro-band:nth-child(11) { --tx: -7.3vw; flex-basis: 3%; background: linear-gradient(180deg, transparent, #e6b53a 22%, var(--gelb) 78%, transparent); animation-delay: 1.38s; }
+  .intro-band:nth-child(12) { --tx: -6.4vw; flex-basis: 3%; background: linear-gradient(180deg, transparent, #b48a4f 22%, #f3e2a8 78%, transparent); animation-delay: 1.35s; }
+  .intro-band:nth-child(13) { --tx: 0.1vw; flex-basis: 2%; background: linear-gradient(180deg, transparent, var(--gelb) 22%, var(--bronze) 78%, transparent); animation-delay: 1.35s; }
+  .intro-band:nth-child(14) { --tx: 5.7vw; flex-basis: 5%; background: linear-gradient(180deg, transparent, #f3e2a8 22%, var(--weiss) 78%, transparent); animation-delay: 1.37s; }
+  .intro-band:nth-child(15) { --tx: 10.4vw; flex-basis: 4%; background: linear-gradient(180deg, transparent, var(--bronze) 22%, #e6b53a 78%, transparent); animation-delay: 1.36s; }
+  .intro-band:nth-child(16) { --tx: 11.2vw; flex-basis: 4%; background: linear-gradient(180deg, transparent, var(--weiss) 22%, #b48a4f 78%, transparent); animation-delay: 1.41s; }
+  .intro-band:nth-child(17) { --tx: 12.5vw; flex-basis: 3%; background: linear-gradient(180deg, transparent, #e6b53a 22%, var(--gelb) 78%, transparent); animation-delay: 1.41s; }
+  .intro-band:nth-child(18) { --tx: 13.2vw; flex-basis: 5%; background: linear-gradient(180deg, transparent, #b48a4f 22%, #f3e2a8 78%, transparent); animation-delay: 1.38s; }
+  .intro-band:nth-child(19) { --tx: 26.0vw; flex-basis: 4%; background: linear-gradient(180deg, transparent, var(--gelb) 22%, var(--bronze) 78%, transparent); animation-delay: 1.43s; }
+  .intro-band:nth-child(20) { --tx: 26.1vw; flex-basis: 6%; background: linear-gradient(180deg, transparent, #f3e2a8 22%, var(--weiss) 78%, transparent); animation-delay: 1.38s; }
+  .intro-band:nth-child(21) { --tx: 27.1vw; flex-basis: 3%; background: linear-gradient(180deg, transparent, var(--bronze) 22%, #e6b53a 78%, transparent); animation-delay: 1.45s; }
+  .intro-band:nth-child(22) { --tx: 36.6vw; flex-basis: 2%; background: linear-gradient(180deg, transparent, var(--weiss) 22%, #b48a4f 78%, transparent); animation-delay: 1.43s; }
+  .intro-band:nth-child(23) { --tx: 37.9vw; flex-basis: 4%; background: linear-gradient(180deg, transparent, #e6b53a 22%, var(--gelb) 78%, transparent); animation-delay: 1.46s; }
+  .intro-band:nth-child(24) { --tx: 36.1vw; flex-basis: 5%; background: linear-gradient(180deg, transparent, #b48a4f 22%, #f3e2a8 78%, transparent); animation-delay: 1.45s; }
+  @keyframes logo-an { to { opacity: 1; } }
+  @keyframes logo-zoom { from { transform: scale(0.92); } to { transform: scale(1.22); } }
+  @keyframes logo-weg { to { opacity: 0; transform: scale(1.3); } }
+  @keyframes band { 0% { opacity: 0; transform: translateX(0) scaleY(0.3); } 25% { opacity: 1; transform: translateX(0) scaleY(1); } 100% { opacity: 0; transform: translateX(var(--tx)) scaleY(1.9); } }
+  @keyframes nach-vorn { to { transform: scale(7); } }
   @keyframes blende { to { opacity: 0; visibility: hidden; } }
   @keyframes weg { to { opacity: 0; visibility: hidden; } }
   :global(html.mit-intro.intro-weg) .intro, :global(html.mit-intro.intro-weg) .intro-skip { animation: weg 0.25s linear forwards; }
