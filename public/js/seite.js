@@ -28,11 +28,18 @@ document.documentElement.classList.add("js");
     var los = function () { (window.requestIdleCallback || function (f) { setTimeout(f, 300); })(fn, { timeout: 2500 }); };
     if (document.readyState === "complete") los(); else window.addEventListener("load", los, { once: true });
   }
-  // WebM (VP9) wo möglich (kleiner, auch in Chromium ohne H.264), sonst MP4 (Safari)
-  var webm = document.createElement("video").canPlayType('video/webm; codecs="vp9"') !== "";
+  // WebM (VP9) wo möglich (kleiner, auch in Chromium ohne H.264), sonst MP4. Apple-Browser (iPhone/iPad/Mac-Safari) immer MP4:
+  // sie melden WebM teils als abspielbar, spielen H.264 aber zuverlässig und mit Hardware (Jamil Talk 4239: „Der Film läuft nicht mehr“).
+  var apple = /Apple/.test(navigator.vendor || "");
+  var webm = !apple && document.createElement("video").canPlayType('video/webm; codecs="vp9"') !== "";
   function laden(video) {
     if (!video.src && video.dataset.src) {
       video.src = webm ? video.dataset.src.replace(/\.mp4$/, ".webm") : video.dataset.src;
+      // Sicherheitsnetz: kann der Browser die WebM nicht abspielen (z. B. Safari), einmal auf MP4 wechseln und neu starten
+      if (webm) video.addEventListener("error", function () {
+        if (video.dataset.mp4) return; video.dataset.mp4 = "1";
+        video.src = video.dataset.src; video.load(); var p = video.play(); if (p && p.catch) p.catch(function () {});
+      }, { once: true });
       if (video.dataset.tempo) {
         var t = parseFloat(video.dataset.tempo);
         var setzen = function () { video.defaultPlaybackRate = t; video.playbackRate = t; };
@@ -59,16 +66,16 @@ document.documentElement.classList.add("js");
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    // 0) Einstieg: endet nach 2,6 s von selbst; Überspringen-Knopf, Esc oder Klick beenden sofort (Klicks gehen trotzdem durch)
+    // 0) Einstieg (Vorspann 3–2–1, Jamil 4246): endet nach 2,65 s von selbst; Überspringen-Knopf, Esc oder Klick beenden sofort (Klicks gehen trotzdem durch)
     if (intro) {
-      var timer = setTimeout(introEnde, 2850);
+      var timer = setTimeout(introEnde, 2650);
       var abbrechen = function () { if (!intro) return; clearTimeout(timer); html.classList.add("intro-weg"); introEnde(); };
       var skip = document.querySelector("[data-intro-skip]");
       if (skip) skip.addEventListener("click", abbrechen);
       document.addEventListener("keydown", function (e) { if (e.key === "Escape") abbrechen(); });
       document.addEventListener("pointerdown", function (e) { if (!skip || !skip.contains(e.target)) abbrechen(); }, { once: true });
       // Hero-Teile schon kurz vor dem Ende freigeben, damit die Blende direkt in die Scharfstellung übergeht
-      setTimeout(function () { var f = introFertig; introFertig = []; f.forEach(function (fn) { fn(); }); }, 2150);
+      setTimeout(function () { var f = introFertig; introFertig = []; f.forEach(function (fn) { fn(); }); }, 1900);
     }
 
     // 5) Hero-Regieskizze: ohne Einstieg kurz nach dem ersten Bild, mit Einstieg genau an dessen Ende
@@ -96,6 +103,7 @@ document.documentElement.classList.add("js");
     var kopf = document.querySelector(".kopf");
     var balken = document.querySelector(".kopf-balken span");
     var oben = document.querySelector(".nach-oben");
+    var leiste = document.querySelector("[data-direkt]"); // Anruf/WhatsApp-Leiste am Handy: erscheint nach dem ersten Bildschirm
     var geplant = false;
     var pruefen = function () {
       geplant = false;
@@ -103,6 +111,7 @@ document.documentElement.classList.add("js");
       if (kopf) kopf.classList.toggle("gescrollt", y > 8);
       if (balken) balken.style.transform = "scaleX(" + (max > 0 ? Math.min(1, y / max) : 0) + ")";
       if (oben) oben.classList.toggle("sichtbar", y > window.innerHeight * 0.9);
+      if (leiste) leiste.classList.toggle("sichtbar", y > window.innerHeight * 0.6);
     };
     window.addEventListener("scroll", function () { if (!geplant) { geplant = true; requestAnimationFrame(pruefen); } }, { passive: true });
     pruefen();

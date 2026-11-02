@@ -3,6 +3,7 @@
 // Menü am Handy ohne JS (<details>).
 import Marke from "./Marke.astro";
 import Icon from "./Icon.astro";
+import Direktkontakt from "./Direktkontakt.astro";
 import { NAV, u } from "../daten";
 const pfad = Astro.url.pathname.replace(/\/?$/, "/");
 const aktiv = (href: string) => pfad === u(href) || (href === "/services/" && /\/(imagefilme|erfahrungsberichte|recruitingfilm|veranstaltungsfilm)\/$/.test(pfad));
@@ -23,6 +24,7 @@ const aktiv = (href: string) => pfad === u(href) || (href === "/services/" && /\
           <li><a href={u("/")} aria-current={pfad === u("/") ? "page" : undefined}>Start</a></li>
           {NAV.map((n) => <li><a href={u(n.href)} aria-current={aktiv(n.href) ? "page" : undefined}>{n.titel}</a></li>)}
           <li><a class="knopf" href={u("/kontakt/")}>Kostenloses Erstgespräch</a></li>
+          <li><Direktkontakt art="menue" /></li>
         </ul>
       </nav>
     </details>

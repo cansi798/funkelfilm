@@ -15,7 +15,8 @@ Stand: 02.11.2026 (nach Jamils Konzept „FUNKELFILM 2027“, Talk 4222; Hero un
 
 6. **Erfahrung:** Die alte Seite nennt „über 8 Jahre Erfahrung“, „seit 2017“ und „2015 – Der Anfang“. Die neue Seite nutzt „Seit 2017“ und „Über 100 Projekte (Stand 2024)“. Stimmt das, und gibt es einen neueren Stand?
 7. **Kundenstimmen:** wörtlich übernommen, inklusive Schreibweisen („Herr Igbal“, „Ihn“, „mit Herr Iqbal“). Korrigieren erlaubt? Sind die Personen mit Namen und Firma auf der Website einverstanden?
-8. **Telefon:** Die Nummer steht auf der alten Seite nur im Impressum. Soll sie auch im Kontaktbereich stehen (Anruf, ggf. WhatsApp)?
+8. **Telefon und WhatsApp:** ~~Nummer offen~~ – **erledigt:** Anruf- und WhatsApp-Knöpfe (Jamil Talk 4244) nutzen die Nummer aus dem Impressum (Jamil 4247: dieselbe Nummer). Kontaktseite, Schluss-Aufruf, Handy-Menü, feste Leiste am Handy. Andere Nummer = eine Zeile `TELEFON` in `src/daten.ts`.
+   - **WhatsApp-Datenschutz:** Der Knopf ist ein einfacher Link (wa.me), erst beim Antippen gehen Daten an WhatsApp (Meta). Hinweis steht am Knopf auf der Kontaktseite und in der Datenschutzerklärung; vor dem Livegang Speicherdauer und ggf. WhatsApp-Business-Nutzung ergänzen.
 9. **Kontaktweg:** Die Anfrage öffnet derzeit das E-Mail-Programm (kein Server, kein Drittanbieter). Gewünscht: echter Formularversand? Soll der Kundenfragebogen (18 Fragen) der alten Seite übernommen werden?
 10. ~~**Einsatzgebiet**~~ – **erledigt:** Hamburg & deutschlandweit (Jamil Talk 4231).
 11. **Social Media:** Footer der alten Seite verlinkt YouTube „@funkelfilm3834“, die Filme laufen aber auf dem Kanal „@funkelfilm_com“. Welcher Kanal ist richtig?

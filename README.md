@@ -8,6 +8,10 @@ Neue Website für Funkelfilm (Videoproduktion, Hamburg). Vorschau: https://cansi
 - **Bilder/Filme:** Herkunft in `BILDER.md`. Hero-Film am 02.11.2026 farblich angeglichen (Blaustich raus, leicht warm).
 - **Hero-Skizze:** rough.js läuft nur beim Build (`src/lib/skizze.ts`, `src/components/HeroSkizze.astro`); im Browser nur SVG + CSS.
 
+## Telefon und WhatsApp
+
+Rufnummer ändern = eine Zeile in `src/daten.ts`: `export const TELEFON = '+49 …';` (derzeit die Impressums-Nummer) (WhatsApp nutzt automatisch dieselbe Nummer, sonst `WHATSAPP` setzen). Danach bauen und veröffentlichen. Leer = Vorschau zeigt „Nummer folgt“, live ausgeblendet.
+
 ## Bauen und veröffentlichen
 
 ```bash

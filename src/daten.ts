@@ -32,6 +32,16 @@ export const IMPRESSUM = {
   ustId: 'DE357550501',
 };
 
+/** Anruf- und WhatsApp-Knöpfe (Jamil Talk 4244). Nummer = die aus dem Impressum der bisherigen Seite (Jamil 4247: „Ja“, dieselbe).
+ *  Ändern = EINE Zeile, z. B. TELEFON = '+49 40 1234567'. Leer = Vorschau zeigt „Nummer folgt“ ohne Link, live ausgeblendet. */
+export const TELEFON = IMPRESSUM.telefon;
+/** WhatsApp-Nummer – standardmäßig dieselbe wie TELEFON; nur ändern, wenn WhatsApp über eine andere Nummer läuft. */
+export const WHATSAPP = TELEFON;
+const nurZiffern = (n: string) => n.replace(/[^\d+]/g, '').replace(/^00/, '+').replace(/^0/, '+49');
+export const TELEFON_LINK = TELEFON ? `tel:${nurZiffern(TELEFON)}` : '';
+export const WHATSAPP_LINK = WHATSAPP ? `https://wa.me/${nurZiffern(WHATSAPP).replace(/^\+/, '')}` : '';
+
+
 export const SOZIAL = [
   { name: 'Instagram', href: 'https://www.instagram.com/funkelfilm/' },
   { name: 'YouTube', href: 'https://www.youtube.com/@funkelfilm3834/videos' },
@@ -276,8 +286,16 @@ export const HERO = {
   // Leistungen laut alter Seite; „deutschlandweit“ bestätigt (Jamil Talk 4231).
   leistung: 'Unternehmens-, Recruiting- und Eventfilme aus Hamburg – deutschlandweit',
   // Schreibweise „Sheeras“ wie im Impressum der alten Seite (Frage „Sheeraz?“ offen, OFFENE-INFOS 15).
-  person: { name: 'Sheeras Iqbal', rolle: 'Filmemacher aus Hamburg' },
+  person: { name: 'Sheeras Iqbal', rolle: 'Filmemacher & Videograph aus Hamburg' }, // „Videograph“ in Jamils Schreibweise (Talk 4240)
   // Frühere Subline (Jamil 4222) im Hero entfernt (Can: „Subline knapp halten“); ihr Kernsatz steht weiter in der Seitenbeschreibung (index.astro).
+};
+
+/** Einsatzgebiet (Can Talk 4242, 02.11.2026). „Deutschlandweit“ bestätigt (Jamil Talk 4231). Keine Projektorte behaupten –
+ *  die Städte auf der Karte zeigen nur, wie weit das Gebiet reicht. */
+export const EINSATZ = {
+  titel: 'Aus Hamburg. Drehs in ganz Deutschland.',
+  text: 'Funkelfilm sitzt in Hamburg und dreht für Unternehmen in ganz Deutschland.',
+  anreise: 'Ob Berlin, München, Köln oder Leipzig: Die Anreise planen wir im kostenlosen Erstgespräch gleich mit ein.',
 };
 
 /** Vertrauenszeile. Keine Sterne: Es gibt keine belegte Bewertungsquelle (auch die alte Seite zeigt keine). */

@@ -11,7 +11,10 @@ import Kopf from "../components/Kopf.astro";
 import Fuss from "../components/Fuss.astro";
 import Aufruf from "../components/Aufruf.astro";
 import NachOben from "../components/NachOben.astro";
+import Direktkontakt from "../components/Direktkontakt.astro";
 import Intro from "../components/Intro.astro";
+import { HEIMAT, ORTE } from "../lib/karte";
+import { TELEFON, TELEFON_LINK, WHATSAPP_LINK } from "../daten";
 import { VORSCHAU, NAME, BESCHREIBUNG, MAIL, ORT, INHABER, SOZIAL, u } from "../daten";
 
 interface Props {
@@ -38,8 +41,11 @@ const firma = {
   email: `mailto:${MAIL}`,
   founder: { "@type": "Person", name: INHABER, jobTitle: "Videograf" },
   address: { "@type": "PostalAddress", addressLocality: ORT, addressCountry: "DE" },
-  areaServed: [{ "@type": "City", name: "Hamburg" }, { "@type": "Country", name: "Deutschland" }], // bestätigt Jamil Talk 4231
+  // Einsatzgebiet: Hamburg + ganz Deutschland (bestätigt Jamil Talk 4231); Städte der Einsatzgebiet-Karte (Can 4242) als Beispiele
+  areaServed: [{ "@type": "Country", name: "Deutschland" }, ...[HEIMAT, ...ORTE].map((o) => ({ "@type": "City", name: o.name, containedInPlace: { "@type": "Country", name: "Deutschland" } }))],
   sameAs: SOZIAL.map((s) => s.href),
+  ...(TELEFON_LINK ? { telephone: TELEFON_LINK.replace("tel:", "") } : {}),
+  ...(WHATSAPP_LINK ? { contactPoint: [{ "@type": "ContactPoint", contactType: "customer service", name: "WhatsApp", url: WHATSAPP_LINK, availableLanguage: ["de"] }] } : {}),
   knowsAbout: ["Imagefilm", "Testimonial-Video", "Recruitingfilm", "Eventfilm", "Videoproduktion"],
 };
 const jsonLd = [
@@ -79,7 +85,7 @@ const ld = (o: unknown) => JSON.stringify(o).replace(/</g, "\\u003c");
     <link rel="sitemap" href={u("/sitemap.xml")} />
     {jsonLd.map((o) => <script type="application/ld+json" set:html={ld(o)} />)}
   </head>
-  <body>
+  <body class:list={{ "mit-leiste": !!TELEFON || VORSCHAU }}>
     <a class="skip" href="#inhalt">Zum Inhalt springen</a>
     <Intro />
     {VORSCHAU && (
@@ -95,6 +101,7 @@ const ld = (o: unknown) => JSON.stringify(o).replace(/</g, "\\u003c");
       {aufruf && <Aufruf />}
     </main>
     <Fuss />
+    <Direktkontakt art="leiste" />
     <NachOben />
     <div class="korn" aria-hidden="true"></div>
   </body>

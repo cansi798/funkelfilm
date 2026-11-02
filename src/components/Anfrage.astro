@@ -4,6 +4,7 @@
 // Ohne JS bleibt der direkte E-Mail-Link.
 import Platzhalter from "./Platzhalter.astro";
 import Icon from "./Icon.astro";
+import Direktkontakt from "./Direktkontakt.astro";
 import { LEISTUNGEN, MAIL } from "../daten";
 const arten = [...LEISTUNGEN.map((l) => l.titel), "Noch offen"];
 ---
@@ -29,9 +30,12 @@ const arten = [...LEISTUNGEN.map((l) => l.titel), "Noch offen"];
     <p class="hinweis">Dein E-Mail-Programm öffnet sich mit einem fertigen Text an {MAIL}. Über diese Seite wird nichts verschickt.</p>
   </form>
   <p class="direkt">Lieber direkt schreiben? <a href={`mailto:${MAIL}?subject=${encodeURIComponent("Anfrage über die Website")}`}>{MAIL}</a></p>
+  <div class="anfrage-direkt"><p>Lieber gleich sprechen?</p><Direktkontakt hinweis /></div>
   <Platzhalter>Auf der bisherigen Seite gab es ein Kontaktformular und einen Kundenfragebogen mit 18 Fragen. Ob ein echter Formularversand (ohne E-Mail-Programm) und der Fragebogen übernommen werden, ist noch offen.</Platzhalter>
 </div>
 <style>
+  .anfrage-direkt { margin: 1.5rem 0; }
+  .anfrage-direkt > p { margin: 0 0 0.6rem; color: var(--weiss); font-weight: 600; }
   .kompass { display: none; }
   :global(.js) .kompass { display: grid; gap: 1.4rem; }
   fieldset { margin: 0; padding: 0; border: 0; }

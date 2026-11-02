@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
-import { NAME, INHABER, ORT, MAIL, BESCHREIBUNG, LEISTUNGEN, ABLAUF } from "../daten";
+import { NAME, INHABER, ORT, MAIL, BESCHREIBUNG, LEISTUNGEN, ABLAUF, EINSATZ } from "../daten";
+import { HEIMAT } from "../lib/karte";
 // Kurzbeschreibung für KI-Assistenten, erzeugt aus derselben Daten-Datei wie die Seite (keine Abweichungen).
 export const GET: APIRoute = ({ site }) => {
   const base = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -11,6 +12,9 @@ export const GET: APIRoute = ({ site }) => {
 - Inhaber: ${INHABER}, Videograf, ${ORT}
 - Kontakt: ${MAIL}
 - Seit 2017 Imagefilme, über 100 Projekte (Stand 2024)
+
+## Einsatzgebiet
+${EINSATZ.text} Standort: ${HEIMAT.name}. Drehs in ganz Deutschland möglich; die Anreise wird im kostenlosen Erstgespräch mitgeplant.
 
 ## Leistungen
 ${LEISTUNGEN.map((l) => `- [${l.titel}](${url(`/${l.slug}/`)}): ${l.kurz}`).join("\n")}
