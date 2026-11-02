@@ -18,6 +18,7 @@ const waTitel = "WhatsApp öffnet sich – dabei gelten die Datenschutzregeln vo
     {WHATSAPP_LINK
       ? <a class="dk-knopf" href={WHATSAPP_LINK} rel="noopener" title={waTitel} aria-label="Funkelfilm per WhatsApp schreiben (WhatsApp öffnet sich)"><Icon name="whatsapp" /><span>WhatsApp</span></a>
       : <span class="dk-knopf" aria-disabled="true"><Icon name="whatsapp" /><span>WhatsApp</span><small>Nummer folgt</small></span>}
+    {art === "leiste" && <a class="dk-knopf dk-hoch" href="#inhalt" aria-label="Nach oben"><Icon name="hoch" /></a>}
     {hinweis && <p class="dk-hinweis">WhatsApp öffnet die App auf deinem Gerät. Dabei gelten die Datenschutzregeln von WhatsApp (Meta).</p>}
   </div>
 )}
@@ -41,6 +42,8 @@ const waTitel = "WhatsApp öffnet sich – dabei gelten die Datenschutzregeln vo
   .dk-leiste .dk-knopf { flex: 1 1 50%; justify-content: center; gap: 0.4rem; min-height: 2.9rem; padding-inline: 0.5rem; border: 0; font-size: 0.92rem; }
   .dk-leiste .dk-knopf small { font-size: 0.68rem; }
   .dk-leiste .dk-knopf + .dk-knopf { border-left: 1px solid var(--linie-dunkel); }
+  /* „Nach oben“ sitzt am Handy in der Leiste statt schwebend über dem Text (Jamil 4267) */
+  .dk-leiste .dk-hoch { flex: 0 0 3.25rem; padding-inline: 0; }
   .dk-leiste.offen .dk-knopf { outline-offset: -3px; }
   :global(.js) .dk-leiste:not(.sichtbar) { transform: translateY(110%); }
   @media (min-width: 48rem) { .dk-leiste { display: none; } }

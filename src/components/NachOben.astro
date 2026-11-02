@@ -15,5 +15,6 @@ import Icon from "./Icon.astro";
   :global(.js) .nach-oben.sichtbar { opacity: 1; transform: none; pointer-events: auto; }
   @media (prefers-reduced-motion: reduce) { .nach-oben { transition: none; } }
   /* Handy mit fester Anruf/WhatsApp-Leiste: Knopf sitzt darüber, keine Überschneidung */
-  @media (max-width: 47.99rem) { :global(body.mit-leiste) .nach-oben { bottom: calc(4.6rem + env(safe-area-inset-bottom)); } }
+  /* Handy mit Anruf/WhatsApp-Leiste: „Nach oben“ ist dort als drittes Feld eingebaut – kein schwebender Knopf über dem Text (Jamil 4267) */
+  @media (max-width: 47.99rem) { :global(body.mit-leiste) .nach-oben { display: none; } }
 </style>
