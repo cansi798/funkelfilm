@@ -336,12 +336,13 @@ export const KI = {
   intro: 'KI kann viel. Aber sie war nie bei dir vor Ort.',
   links: 'KI-Video',
   rechts: 'Funkelfilm',
+  // [KI lang, Funkelfilm lang, KI kurz (Handy), Funkelfilm kurz (Handy)] – am Handy zwei Spalten nebeneinander (Jamil 4271)
   zeilen: [
-    ['Generierte Menschen und Orte', 'Dein Team, deine Räume, echte Gesichter'],
-    ['Wirkt oft glatt, viele erkennen es sofort', 'Echtheit, der man glaubt'],
-    ['Text rein, Film raus', 'Jemand, der zuhört, vor Ort Regie führt und deine Geschichte findet'],
-    ['Teils kennzeichnungspflichtig', 'Eigene Aufnahmen, Rechte und Freigaben klar geregelt'],
-  ] as [string, string][],
+    ['Generierte Menschen und Orte', 'Dein Team, deine Räume, echte Gesichter', 'Generierte Menschen', 'Dein echtes Team'],
+    ['Wirkt oft glatt, viele erkennen es sofort', 'Echtheit, der man glaubt', 'Wirkt oft künstlich', 'Wirkt echt'],
+    ['Text rein, Film raus', 'Jemand, der zuhört, vor Ort Regie führt und deine Geschichte findet', 'Text rein, Film raus', 'Regie vor Ort'],
+    ['Teils kennzeichnungspflichtig', 'Eigene Aufnahmen, Rechte und Freigaben klar geregelt', 'Teils Kennzeichnung nötig', 'Klare Rechte'],
+  ] as [string, string, string, string][],
   hinweis: 'Für bestimmte KI-erzeugte Bilder und Videos sieht die EU-KI-Verordnung (Art. 50) eine Kennzeichnung vor. Das ist ein allgemeiner Hinweis, keine Rechtsberatung.',
 };
 
