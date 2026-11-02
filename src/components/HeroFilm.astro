@@ -1,29 +1,45 @@
 ---
-// Hero nach Jamils Konzept: ein einziger Film im Vollbild, langsame Schnitte, leichtes Filmkorn, Parallax beim Scrollen. Kein Slider.
-// Der Kamerasucher bleibt als feiner Rahmen (Ecken + Timecode), passt zur Ruhe. Das Video lädt erst nach Einstieg + Seitenaufbau;
-// Pause-Knopf; bei reduzierter Bewegung kein Autoplay und kein Parallax (Standbild).
+// Hero nach Jamils Konzept (Talk 4222): ein einziger Film, langsame Schnitte, Parallax, kein Slider.
+// 02.11.2026 (Can): H1 „Filme, die zeigen, wie gut deine Arbeit ist.“ – das Wort Film steht sofort im Hero; Jamils bisherige
+// Headline „Deine Arbeit verdient mehr Aufmerksamkeit.“ bleibt als Kennzeile darüber. Darunter Leistung + Gebiet und die Person
+// (rundes Porträt, „Sheeras Iqbal, Filmemacher aus Hamburg“). Signature: rough.js-Regieskizze (HeroSkizze.astro).
+// v1-Reste (Sucher-Ecken, Timecode) und der Weichzeichner auf dem Poster sind entfernt (Retrospektive 02.11.).
+// Breit: Film im Vollbild, Text links, Skizze rechts. Handy/Tablet: Film oben als eigene Fläche (16:10), Text darunter –
+// so steht nie Text über einem Gesicht im Film. Video lädt erst nach Einstieg + Seitenaufbau; Pause-Knopf; reduzierte Bewegung = Standbild.
 import { HERO, u } from "../daten";
 import Icon from "./Icon.astro";
+import HeroSkizze from "./HeroSkizze.astro";
 const poster = u("/medien/clips/reel.webp");
 const posterKlein = u("/medien/clips/reel-640.webp");
+const rund = (ext: string) => `${u(`/medien/bilder/sheeras-rund-112.${ext}`)} 112w, ${u(`/medien/bilder/sheeras-rund-168.${ext}`)} 168w`;
+const [vor, wort, nach] = HERO.titel;
 ---
 <section class="hero" aria-labelledby="hero-titel" data-sucher>
-  <div class="hero-film" data-parallax>
-    <img class="sucher-poster" src={poster} srcset={`${posterKlein} 640w, ${poster} 1280w`} sizes="100vw" width="1280" height="720" alt="" fetchpriority="high" decoding="async" />
-    <video class="sucher-video" muted loop playsinline preload="none" data-src={u("/medien/clips/reel.mp4")} data-tempo="0.85" aria-hidden="true" tabindex="-1" width="960" height="540"></video>
-  </div>
-  <div class="hero-schleier" aria-hidden="true"></div>
-  <div class="hero-rahmen" aria-hidden="true">
-    <span class="ecke e1"></span><span class="ecke e2"></span><span class="ecke e3"></span><span class="ecke e4"></span>
-    <span class="zeit" data-zeit>00:00:00:00</span>
+  <div class="hero-bild">
+    <div class="hero-film" data-parallax>
+      <img class="sucher-poster" src={poster} srcset={`${posterKlein} 640w, ${poster} 1280w`} sizes="100vw" width="1280" height="720" alt="" fetchpriority="high" decoding="async" />
+      <video class="sucher-video" muted loop playsinline preload="none" data-src={u("/medien/clips/reel.mp4")} data-tempo="0.85" aria-hidden="true" tabindex="-1" width="960" height="540"></video>
+    </div>
+    <div class="hero-schleier" aria-hidden="true"></div>
   </div>
   <div class="huelle hero-inhalt">
-    <h1 id="hero-titel">{HERO.titel}</h1>
-    <div class="hero-unter">{HERO.unter.map((t) => <p>{t}</p>)}</div>
-    <div class="knoepfe">
-      <a class="knopf" href={u("/kontakt/")}>Kostenloses Erstgespräch</a>
-      <a class="knopf rahmen" href="#projekte">Projekte ansehen</a>
+    <div class="hero-text">
+      <p class="hero-kennzeile">{HERO.kennzeile}</p>
+      <h1 id="hero-titel">{vor}<span class="h1-wort">{wort}</span>{nach}</h1>
+      <p class="hero-leistung">{HERO.leistung}</p>
+      <p class="hero-person">
+        <picture>
+          <source type="image/avif" srcset={rund("avif")} sizes="3.25rem" />
+          <img src={u("/medien/bilder/sheeras-rund-112.webp")} srcset={rund("webp")} sizes="3.25rem" width="112" height="112" alt="" decoding="async" />
+        </picture>
+        <span><strong>{HERO.person.name}</strong>, {HERO.person.rolle}</span>
+      </p>
+      <div class="knoepfe">
+        <a class="knopf" href={u("/kontakt/")}>Kostenloses Erstgespräch</a>
+        <a class="knopf rahmen" href="#projekte">Projekte ansehen</a>
+      </div>
     </div>
+    <HeroSkizze />
   </div>
   <button class="sucher-pause" type="button" data-pause hidden aria-pressed="false">
     <span class="p-an"><Icon name="pause" /><span class="sr">Film anhalten</span></span>
@@ -31,39 +47,47 @@ const posterKlein = u("/medien/clips/reel-640.webp");
   </button>
 </section>
 <style>
-  .hero { position: relative; display: grid; align-items: end; min-height: min(calc(100svh - var(--kopf-h)), 54rem); overflow: hidden; background: #050505; isolation: isolate; }
-  @media (max-width: 47.99rem) { .hero { min-height: calc(100svh - var(--kopf-h) - 2.5rem); } }
-  .hero-film { position: absolute; inset: -6% 0 -6% 0; z-index: -2; will-change: transform; }
-  .sucher-poster, .sucher-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .hero { position: relative; overflow: hidden; background: var(--nacht); isolation: isolate; }
+  .hero-bild { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #050505; }
+  .hero-film { position: absolute; inset: -6% 0 -6% 0; will-change: transform; }
+  .sucher-poster, .sucher-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 55% 40%; }
   .sucher-video { opacity: 0; transition: opacity 1.2s ease; }
   .hero.laeuft .sucher-video { opacity: 1; }
-  .hero-schleier { position: absolute; inset: 0; z-index: -1;
-    background: linear-gradient(180deg, rgba(10, 10, 10, 0.35) 0%, rgba(10, 10, 10, 0.15) 35%, rgba(10, 10, 10, 0.78) 78%, #0a0a0a 100%),
-                linear-gradient(90deg, rgba(10, 10, 10, 0.72) 0%, rgba(10, 10, 10, 0) 65%); }
-  .hero-rahmen { position: absolute; inset: clamp(0.9rem, 2.4vw, 1.75rem); pointer-events: none; contain: layout paint; }
-  .ecke { position: absolute; width: clamp(1.1rem, 2.6vw, 1.9rem); height: clamp(1.1rem, 2.6vw, 1.9rem); border: 0 solid rgba(243, 241, 236, 0.55); }
-  .e1 { left: 0; top: 0; border-left-width: 1.5px; border-top-width: 1.5px; }
-  .e2 { right: 0; top: 0; border-right-width: 1.5px; border-top-width: 1.5px; }
-  .e3 { left: 0; bottom: 0; border-left-width: 1.5px; border-bottom-width: 1.5px; }
-  .e4 { right: 0; bottom: 0; border-right-width: 1.5px; border-bottom-width: 1.5px; }
-  .zeit { position: absolute; right: 2.4rem; top: 0.55rem; width: 6.6em; height: 1em; text-align: right; contain: strict;
-    font: 500 0.72rem/1 var(--titel); font-variant-numeric: tabular-nums; letter-spacing: 0.06em; color: rgba(243, 241, 236, 0.7); }
-  .hero-inhalt { padding-block: clamp(3rem, 8vw, 6rem) clamp(3.5rem, 7vw, 5.5rem); }
-  .hero h1 { max-width: 11em; margin-bottom: 1.25rem; }
-  .hero-unter { max-width: 34rem; margin-bottom: 1.75rem; }
-  .hero-unter p { margin: 0 0 0.6rem; font-size: clamp(1.02rem, 1.4vw, 1.18rem); line-height: 1.6; color: #d9d5cd; }
-  /* Ankommen: Schärfe zieht ruhig auf (nach dem Einstieg) */
-  :global(.js) .hero .sucher-poster { filter: blur(8px); transform: scale(1.04); }
-  :global(.js) .hero .ecke { opacity: 0; }
-  :global(.js) .hero.an .sucher-poster { filter: none; transform: none; transition: filter 1.2s var(--ease), transform 1.4s var(--ease); }
-  :global(.js) .hero.an .ecke { opacity: 1; transition: opacity 1s ease 0.4s; }
-  @media (prefers-reduced-motion: reduce) {
-    :global(.js) .hero .sucher-poster, :global(.js) .hero .ecke { filter: none !important; transform: none !important; opacity: 1 !important; transition: none !important; }
+  /* Handy: Film blendet unten weich ins Schwarz über, der Text steht darunter auf ruhigem Grund */
+  .hero-schleier { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 10, 10, 0.25) 0%, rgba(10, 10, 10, 0) 30%, rgba(10, 10, 10, 0) 62%, #0a0a0a 100%); }
+
+  .hero-inhalt { padding-block: 1.1rem 2.75rem; } /* nicht positioniert: die Skizze bezieht sich am Handy auf .hero (Filmfläche oben) */
+  .hero-text { max-width: 40rem; }
+  .hero-kennzeile { display: flex; align-items: center; gap: 0.75rem; margin: 0 0 0.85rem; font: 500 clamp(0.98rem, 1.25vw, 1.12rem)/1.4 var(--text); color: #e4e0d8; }
+  .hero-kennzeile::before { content: ""; flex: none; width: 1.75rem; height: 2px; background: var(--gelb); }
+  .hero h1 { max-width: 9.6em; margin-bottom: 0.9rem; font-size: clamp(2.45rem, 5.6vw, 4.6rem); }
+  .h1-wort { color: var(--gelb); }
+  .hero-leistung { margin: 0 0 1.1rem; max-width: 30rem; font: 600 clamp(1.02rem, 1.35vw, 1.16rem)/1.5 var(--text); color: var(--weiss); }
+  .hero-person { display: flex; align-items: center; gap: 0.8rem; margin: 0 0 1.5rem; font-size: 0.98rem; line-height: 1.4; color: var(--silber); }
+  .hero-person picture { flex: none; }
+  .hero-person img { width: 3.25rem; height: 3.25rem; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 1px rgba(141, 110, 77, 0.8), 0 0 0 4px var(--nacht), 0 0 0 5px rgba(141, 110, 77, 0.35); }
+  .hero-person strong { font-weight: 600; color: var(--weiss); }
+  @media (max-width: 29.99rem) {
+    .hero .knoepfe { gap: 0.6rem; }
+    .hero .knoepfe .knopf { flex: 1 1 100%; }
   }
-  .sucher-pause { position: absolute; right: clamp(1.4rem, 3vw, 2.4rem); bottom: clamp(1.4rem, 3vw, 2.4rem); display: grid; place-items: center; width: 2.75rem; height: 2.75rem;
-    border: 1px solid rgba(243, 241, 236, 0.3); border-radius: 2px; background: rgba(10, 10, 10, 0.4); color: var(--weiss); cursor: pointer; }
+
+  /* Breit: Film im Vollbild hinter dem Text, Skizze in der rechten Spalte */
+  @media (min-width: 60rem) {
+    .hero { display: grid; align-items: end; min-height: min(calc(100svh - var(--kopf-h)), 54rem); background: #050505; }
+    .hero-bild { position: absolute; inset: 0; aspect-ratio: auto; z-index: -1; }
+    .sucher-poster, .sucher-video { object-position: 50% 50%; }
+    .hero-schleier { background: linear-gradient(180deg, rgba(10, 10, 10, 0.35) 0%, rgba(10, 10, 10, 0.1) 35%, rgba(10, 10, 10, 0.72) 80%, #0a0a0a 100%),
+                                 linear-gradient(90deg, rgba(10, 10, 10, 0.78) 0%, rgba(10, 10, 10, 0.35) 45%, rgba(10, 10, 10, 0) 70%); }
+    .hero-inhalt { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr); gap: clamp(2rem, 5vw, 5rem); align-items: end;
+      padding-block: clamp(3rem, 7vw, 5.5rem) clamp(3.5rem, 6vw, 5rem); }
+  }
+
+  .sucher-pause { position: absolute; right: 1.6rem; top: 1.6rem; display: grid; place-items: center; width: 2.75rem; height: 2.75rem;
+    border: 1px solid rgba(243, 241, 236, 0.3); border-radius: 2px; background: rgba(10, 10, 10, 0.45); color: var(--weiss); cursor: pointer; }
+  @media (min-width: 60rem) { .sucher-pause { top: auto; right: clamp(1.4rem, 3vw, 2.4rem); bottom: clamp(1.4rem, 3vw, 2.4rem); } }
+  .sucher-pause[hidden] { display: none; } /* erst sichtbar, wenn der Film läuft (nicht ohne JS / bei reduzierter Bewegung) */
   .sucher-pause:hover { border-color: var(--bronze); }
-  @media (max-width: 47.99rem) { .sucher-pause { top: 2.6rem; bottom: auto; right: 1.6rem; } }
   .sucher-pause :global(svg) { width: 1.1rem; height: 1.1rem; }
   .sucher-pause .p-aus { display: none; }
   .sucher-pause[aria-pressed="true"] .p-an { display: none; }

@@ -1,0 +1,20 @@
+---
+// Logo mit fester Unterzeile (Can 02.11.2026: „Funkelfilm · Unternehmensfilme aus Hamburg“). Das Logo-PNG bleibt unverändert;
+// die Unterzeile steht als Text daneben – Barlow Condensed in Versalien mit Laufweite, wie die Logo-Buchstaben, getrennt durch eine
+// feine Linie. Zweizeilig, damit sie auch am Handy lesbar bleibt (≥ 11 px). Als festen Logo-Bestandteil mit Funkelfilm abstimmen (OFFENE-INFOS 5).
+import Logo from "./Logo.astro";
+import { LOGO_UNTERZEILE } from "../daten";
+interface Props { klasse?: string; }
+const { klasse = "" } = Astro.props;
+const [erste, ...rest] = LOGO_UNTERZEILE.split(" ");
+---
+<span class:list={["marke-sperre", klasse]}>
+  <Logo />
+  <span class="marke-unter">{erste}<br />{rest.join(" ")}</span>
+</span>
+<style>
+  .marke-sperre { display: inline-flex; align-items: center; gap: 0.7rem; }
+  .marke-unter { padding-left: 0.7rem; border-left: 1px solid rgba(243, 241, 236, 0.28);
+    font: 600 0.72rem/1.15 var(--serif); letter-spacing: 0.16em; text-transform: uppercase; color: #cfcac1; white-space: nowrap; }
+  @media (min-width: 40rem) { .marke-unter { font-size: 0.8rem; } }
+</style>

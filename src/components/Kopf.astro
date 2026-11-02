@@ -1,7 +1,7 @@
 ---
 // Kopfzeile: Logo, Navigation, ein Hauptknopf. Beim Scrollen nur Schatten + gelbe Fortschrittsleiste (Höhe bleibt).
 // Menü am Handy ohne JS (<details>).
-import Logo from "./Logo.astro";
+import Marke from "./Marke.astro";
 import Icon from "./Icon.astro";
 import { NAV, u } from "../daten";
 const pfad = Astro.url.pathname.replace(/\/?$/, "/");
@@ -9,7 +9,7 @@ const aktiv = (href: string) => pfad === u(href) || (href === "/services/" && /\
 ---
 <header class="kopf">
   <div class="huelle kopf-innen">
-    <a class="marke" href={u("/")} aria-label="Funkelfilm – zur Startseite"><Logo /></a>
+    <a class="marke" href={u("/")} aria-label="Funkelfilm – Unternehmensfilme aus Hamburg – zur Startseite"><Marke /></a>
     <nav class="nav-breit" aria-label="Hauptnavigation">
       <ul>
         {NAV.map((n) => <li><a href={u(n.href)} aria-current={aktiv(n.href) ? "page" : undefined}>{n.titel}</a></li>)}
@@ -31,16 +31,16 @@ const aktiv = (href: string) => pfad === u(href) || (href === "/services/" && /\
 </header>
 <style>
   .kopf { position: sticky; top: 0; z-index: 50; background: rgba(10, 10, 10, 0.94); border-bottom: 1px solid var(--linie-dunkel); transition: box-shadow 0.3s ease; }
-  @supports (backdrop-filter: blur(8px)) { .kopf { background: rgba(10, 10, 10, 0.82); backdrop-filter: blur(10px); } }
   .kopf.gescrollt { box-shadow: 0 12px 30px -18px rgba(0, 0, 0, 0.9); }
   .kopf-innen { display: flex; align-items: center; gap: 1rem; height: var(--kopf-h); }
   .marke { display: block; margin-right: auto; flex: none; }
-  .marke :global(.logo) { width: 9.25rem; height: auto; }
-  @media (min-width: 64rem) { .marke :global(.logo) { width: 10.5rem; } }
+  .marke :global(.logo) { width: 7.6rem; height: auto; }
+  @media (min-width: 40rem) { .marke :global(.logo) { width: 9rem; } }
+  @media (min-width: 80rem) { .marke :global(.logo) { width: 10.5rem; } }
 
   .nav-breit { display: none; }
   .nav-breit ul { list-style: none; display: flex; margin: 0; padding: 0; }
-  .nav-breit a { position: relative; display: block; padding: 0.6rem 0.85rem; font: 600 0.95rem/1.2 var(--titel); color: var(--silber); transition: color var(--dur-fast) ease; }
+  .nav-breit a { position: relative; display: block; padding: 0.6rem clamp(0.55rem, 0.9vw, 0.85rem); font: 600 0.95rem/1.2 var(--titel); color: var(--silber); transition: color var(--dur-fast) ease; }
   .nav-breit a:hover, .nav-breit a[aria-current="page"] { color: var(--weiss); }
   .nav-breit a[aria-current="page"]::after { content: ""; position: absolute; left: 0.85rem; right: 0.85rem; bottom: 0.2rem; height: 2px; background: var(--gelb); }
   .kopf-cta { display: none; min-height: 2.75rem; padding: 0.55rem 1.1rem; font-size: 0.92rem; }
@@ -57,9 +57,11 @@ const aktiv = (href: string) => pfad === u(href) || (href === "/services/" && /\
   .nav-schmal li a[aria-current="page"]:not(.knopf) { color: var(--gelb); }
   .nav-schmal .knopf { margin-top: 1.25rem; width: 100%; }
 
-  @media (min-width: 60rem) {
+  /* Mit Logo-Unterzeile ist es enger: volle Navigation erst ab 72rem, darunter Menü-Knopf (+ Hauptknopf ab 48rem) */
+  .nav-breit a, .kopf-cta { white-space: nowrap; }
+  @media (min-width: 48rem) { .kopf-cta { display: inline-flex; } }
+  @media (min-width: 72rem) {
     .nav-breit { display: block; }
-    .kopf-cta { display: inline-flex; }
     .nav-schmal { display: none; }
   }
   .kopf-balken { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; overflow: hidden; }

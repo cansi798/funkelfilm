@@ -14,6 +14,8 @@ export const INHABER = 'Sheeras Iqbal';
 export const VORNAME = 'Sheeras';
 export const ORT = 'Hamburg';
 export const MAIL = 'kontakt@funkelfilm.com';
+/** Feste Unterzeile zum Logo (Can 02.11.2026); als Logo-Bestandteil mit Funkelfilm abstimmen (OFFENE-INFOS 5). */
+export const LOGO_UNTERZEILE = 'Unternehmensfilme aus Hamburg';
 export const CLAIM = 'Echte Geschichten. Authentische Videos.';
 export const UNTERZEILE = 'Teile deine Botschaft in bewegten Bildern – ehrlich & kreativ.';
 export const BESCHREIBUNG =
@@ -267,11 +269,15 @@ export const UEBER = {
 // Fakten-Regel: Was die bisherige Seite nicht belegt, ist Platzhalter (VORSCHAU) und steht in OFFENE-INFOS.md.
 
 export const HERO = {
-  titel: 'Deine Arbeit verdient mehr Aufmerksamkeit.',
-  unter: [
-    'Viele Unternehmen leisten hervorragende Arbeit. Doch online sieht man das oft nicht.',
-    'Wir erzählen deine Geschichte so, dass Kunden Vertrauen aufbauen, bevor sie überhaupt Kontakt aufnehmen.',
-  ],
+  // H1 von Can (02.11.2026, Namens-Einschätzung): das Wort „Film“ steht sofort im Hero. Teile: [davor, Schlüsselwort in Gold, danach].
+  titel: ['', 'Filme', ', die zeigen, wie gut deine Arbeit ist.'] as [string, string, string],
+  // Jamils bisherige Headline (Talk 4222) bleibt wörtlich als Kennzeile über der H1.
+  kennzeile: 'Deine Arbeit verdient mehr Aufmerksamkeit.',
+  // Leistungen laut alter Seite; „deutschlandweit“ bestätigt (Jamil Talk 4231).
+  leistung: 'Unternehmens-, Recruiting- und Eventfilme aus Hamburg – deutschlandweit',
+  // Schreibweise „Sheeras“ wie im Impressum der alten Seite (Frage „Sheeraz?“ offen, OFFENE-INFOS 15).
+  person: { name: 'Sheeras Iqbal', rolle: 'Filmemacher aus Hamburg' },
+  // Frühere Subline (Jamil 4222) im Hero entfernt (Can: „Subline knapp halten“); ihr Kernsatz steht weiter in der Seitenbeschreibung (index.astro).
 };
 
 /** Vertrauenszeile. Keine Sterne: Es gibt keine belegte Bewertungsquelle (auch die alte Seite zeigt keine). */

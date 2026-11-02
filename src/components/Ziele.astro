@@ -51,7 +51,9 @@ import { ZIELE, VORSCHAU, u } from "../daten";
   .ziel-bild.spielt video { opacity: 1; }
   .ziel-loesung { margin: 0 0 0.5rem; color: var(--weiss); font-size: 1.08rem; }
   .ziel-extra { margin: 0 0 0.6rem; font-size: 0.95rem; }
-  .ziel-extra a { color: var(--weiss); text-decoration: underline; text-decoration-color: var(--bronze); text-underline-offset: 0.2em; }
+  /* Link ohne Dauer-Unterstreichung (Jamil 3957), erkennbar an Gold + Gewicht; Unterstreichung nur bei Hover/Fokus */
+  .ziel-extra a { color: var(--gelb); font-weight: 600; }
+  .ziel-extra a:is(:hover, :focus-visible) { text-decoration: underline; text-underline-offset: 0.2em; }
   .offen .ziel-karte { outline: 2px dashed var(--rot-vorschau); outline-offset: 2px; }
   /* Breit: vier Karten nebeneinander, alle offen; Vorschau beim Darüberfahren */
   @media (min-width: 64rem) {

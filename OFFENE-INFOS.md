@@ -1,6 +1,6 @@
 # Offene Infos – Funkelfilm
 
-Stand: 02.11.2026 (nach Jamils Konzept „FUNKELFILM 2027“, Talk 4222). Diese Punkte braucht die Seite noch von Funkelfilm (Sheeras Iqbal). In der Vorschau sind die Stellen rot gestrichelt markiert.
+Stand: 02.11.2026 (nach Jamils Konzept „FUNKELFILM 2027“, Talk 4222; Hero und Logo-Unterzeile nach Can, 02.11.). Diese Punkte braucht die Seite noch von Funkelfilm (Sheeras Iqbal). In der Vorschau sind die Stellen rot gestrichelt markiert.
 
 ## Bilder, Filme, Rechte
 
@@ -9,6 +9,7 @@ Stand: 02.11.2026 (nach Jamils Konzept „FUNKELFILM 2027“, Talk 4222). Diese 
 3. **Projekte:** Vier Filme, die auf der alten Seite eingebunden sind (Startseite, Testimonials, Recruiting, Veranstaltung), sind auf YouTube nicht mehr abrufbar. Abrufbar sind nur „Die Goldmalerin | Imagefilm“ und „Nexus Fighter Academy | NEXUS KIDS | Eindrücke“. Bitte eine Projektliste liefern: Titel, Kunde, Art des Films, Link, Freigabe zur Nennung.
 4. **Bildherkunft:** Vier Bilder der alten Seite („Warum Imagefilm/Testimonials/Recruiting/Veranstaltungsfilm“) wirken wie Archiv- oder KI-Bilder. Sie sind nicht übernommen. Falls es eigene Aufnahmen sind: bitte Bescheid geben.
 5. **Logo:** nur als PNG vorhanden. Bitte Vektordatei (SVG/PDF/AI) und ggf. Farbwerte/Schriften aus einem CI-Handbuch.
+   - **Unterzeile als festen Logo-Bestandteil mit Funkelfilm abstimmen; Vektor-Logo nötig.** Die Vorschau zeigt „Unternehmensfilme aus Hamburg“ als Text neben dem Logo (Kopf- und Fußzeile, Can 02.11.2026). Für eine feste Logo-Fassung mit Unterzeile braucht es die Vektordatei.
 
 ## Inhalte und Angaben
 
@@ -36,3 +37,7 @@ Stand: 02.11.2026 (nach Jamils Konzept „FUNKELFILM 2027“, Talk 4222). Diese 
 21. **Leistungen:** „Produkt- und Erklärungsvideos“ und „Dokumentationen“ stehen nicht auf der bisherigen Seite. Bietet Funkelfilm das an?
 22. **Referenzen:** Projektname laut YouTube-Titel „Nexus Fighter Academy | NEXUS KIDS | Eindrücke“; die Beschreibung „Mehr Sichtbarkeit für Nachwuchsarbeit und Vereinsleben“ stammt aus dem Konzept – bitte bestätigen. Für die Recruitingfilm-Karte fehlt ein echtes Projekt (Titel, Kunde, Freigabe); der Vorschau-Ausschnitt stammt aus der Recruiting-Karte der alten Seite.
 23. **„Über 100 Projekte“** stammt von der alten Seite (Stand 2024); das Konzept sagt „Filmprojekte“. Aktuelle Zahl?
+
+## Später (Idee, nicht umgesetzt)
+
+24. **Paket „Funkelfilm Kompakt“:** Can schlägt ein festes Einstiegspaket vor (02.11.2026). Erst Inhalt, Umfang und Preis mit Funkelfilm klären, dann auf der Seite ergänzen.

@@ -1,14 +1,14 @@
 ---
-import Logo from "./Logo.astro";
+import Marke from "./Marke.astro";
 import Icon from "./Icon.astro";
-import { NAV, SOZIAL, MAIL, CLAIM, ORT, LEISTUNGEN, u } from "../daten";
+import { NAV, SOZIAL, MAIL, CLAIM, LEISTUNGEN, u } from "../daten";
 const jahr = new Date().getFullYear();
 ---
 <footer class="fuss">
   <div class="huelle fuss-raster">
     <div class="fuss-marke">
-      <a href={u("/")} aria-label="Funkelfilm – zur Startseite"><Logo /></a>
-      <p class="leise">{CLAIM}<br />Videoproduktion aus {ORT}.</p>
+      <a href={u("/")} aria-label="Funkelfilm – Unternehmensfilme aus Hamburg – zur Startseite"><Marke klasse="fuss-sperre" /></a>
+      <p class="leise">{CLAIM}</p>
       <ul class="sozial">
         {SOZIAL.map((s) => (
           <li><a href={s.href} rel="noopener" aria-label={`Funkelfilm bei ${s.name} (externe Seite)`}><Icon name={s.name.toLowerCase() as "instagram" | "youtube" | "facebook"} /></a></li>
@@ -46,7 +46,8 @@ const jahr = new Date().getFullYear();
   @media (max-width: 39.99rem) { .fuss-nav { display: none; } .fuss { padding-top: 2.5rem; } }
   @media (min-width: 64rem) { .fuss-marke { grid-column: auto; } }
   @media (min-width: 64rem) { .fuss-raster { grid-template-columns: 1.6fr 1fr 1fr 1.2fr; } }
-  .fuss :global(.logo) { width: 10rem; height: auto; margin-bottom: 1rem; }
+  .fuss-marke > a { display: inline-block; margin-bottom: 1rem; }
+  .fuss :global(.logo) { width: 10rem; height: auto; }
   .fuss-titel { font: 600 0.95rem/1.3 var(--titel); letter-spacing: 0; text-transform: none; color: var(--gelb); margin: 0 0 0.8rem; }
   .fuss ul { list-style: none; margin: 0; padding: 0; }
   .fuss li a { display: inline-block; padding: 0.35rem 0; color: var(--silber); }

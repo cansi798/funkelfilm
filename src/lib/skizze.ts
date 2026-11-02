@@ -8,7 +8,7 @@ const gen = rough.generator();
 export type Form = "unterstrich" | "kreis" | "rahmen" | "pfeil" | "kamera" | "klappe";
 export type Strich = { d: string; fuellung?: boolean };
 
-// Ruhig statt kritzelig (Jamil 4228/4230): geringe Rauheit, kaum Bogen, EIN Strich statt Doppelstrich – handgemacht, aber elegant.
+// Ruhig statt kritzelig (Jamil 4228/4230, Standard redesign/animation.md 5: Rauheit ≤ 0,7, Einzelstrich): geringe Rauheit, kaum Bogen, EIN Strich statt Doppelstrich – handgemacht, aber elegant.
 const basis = (seed: number, o: Options = {}): Options => ({
   roughness: 0.7, bowing: 0.5, strokeWidth: 2, seed, disableMultiStroke: true, preserveVertices: false, ...o,
 });
@@ -22,7 +22,7 @@ export function skizze(form: Form, b: number, h: number, seed = 3): Strich[] {
     case "unterstrich":
       return pfade(gen.curve([[m, h * 0.62], [b * 0.3, h * 0.42], [b * 0.62, h * 0.55], [b - m, h * 0.35]], basis(seed, { roughness: 0.6, bowing: 0.8 })));
     case "kreis":
-      return pfade(gen.ellipse(b / 2, h / 2, b - 2 * m, h - 2 * m, basis(seed, { roughness: 0.8, curveStepCount: 18, curveFitting: 0.98 })));
+      return pfade(gen.ellipse(b / 2, h / 2, b - 2 * m, h - 2 * m, basis(seed, { roughness: 0.6, curveStepCount: 18, curveFitting: 0.98 })));
     case "rahmen":
       return pfade(gen.rectangle(m, m, b - 2 * m, h - 2 * m, basis(seed, { roughness: 0.55, bowing: 0.4 })));
     case "pfeil": {
@@ -61,4 +61,51 @@ export function skizze(form: Form, b: number, h: number, seed = 3): Strich[] {
       return striche;
     }
   }
+}
+
+// ---------------------------------------------------------------------------------------------------------------
+// Hero-Regieskizze (Can 02.11.2026: „Hero mit Rough.js wow … hier entstehen Filme“): Storyboard-Rahmen mit
+// Kadrier-Marken um den laufenden Film + kleine Filmklappe, die zuklappt („Take 1“). Ruhig: Einzelstrich, Rauheit ≤ 0,55.
+type Teil = { d: string };
+const ruhig = (seed: number, o: Options = {}): Options => basis(seed, { roughness: 0.5, bowing: 0.35, ...o });
+const nur = (dr: ReturnType<typeof gen.line>): Teil[] => gen.toPaths(dr).filter((p) => p.stroke !== "none").map((p) => ({ d: p.d }));
+
+/** Bildrahmen b × h (viewBox) mit Drittel-Marken an den Kanten und Mittelkreuz. */
+export function storyboard(b: number, h: number, seed = 41) {
+  const m = 3;
+  const rahmen = nur(gen.rectangle(m, m, b - 2 * m, h - 2 * m, ruhig(seed, { roughness: 0.45, bowing: 0.25 })));
+  const t = Math.min(b, h) * 0.06; // Länge der Marken
+  const marken: Teil[] = [];
+  const linie = (x1: number, y1: number, x2: number, y2: number, s: number) => marken.push(...nur(gen.line(x1, y1, x2, y2, ruhig(seed + s, { roughness: 0.3, bowing: 0 }))));
+  [1 / 3, 2 / 3].forEach((f, i) => {
+    linie(b * f, m, b * f, m + t, 10 + i);          // oben
+    linie(b * f, h - m, b * f, h - m - t, 20 + i);  // unten
+    linie(m, h * f, m + t, h * f, 30 + i);          // links
+    linie(b - m, h * f, b - m - t, h * f, 40 + i);  // rechts
+  });
+  const k = t * 0.55;
+  const kreuz = [
+    ...nur(gen.line(b / 2 - k, h / 2, b / 2 + k, h / 2, ruhig(seed + 50, { roughness: 0.25, bowing: 0 }))),
+    ...nur(gen.line(b / 2, h / 2 - k, b / 2, h / 2 + k, ruhig(seed + 51, { roughness: 0.25, bowing: 0 }))),
+  ];
+  return { rahmen, marken, kreuz };
+}
+
+/** Filmklappe im Feld 120 × 104: Tafel (mit Trennlinie), fester Balken und Klappe (dreht um das linke Gelenk). */
+export function filmklappe(seed = 61) {
+  const tafel = [
+    ...nur(gen.rectangle(6, 40, 108, 60, ruhig(seed, { roughness: 0.4 }))),
+    ...nur(gen.line(6, 58, 114, 58, ruhig(seed + 1, { roughness: 0.3, bowing: 0 }))),
+  ];
+  // Fester Balken direkt über der Tafel mit zwei Schrägstreifen
+  const balken = [
+    ...nur(gen.rectangle(6, 28, 108, 12, ruhig(seed + 2, { roughness: 0.35 }))),
+    ...[30, 62, 94].flatMap((x, i) => nur(gen.line(x, 40, x + 12, 28, ruhig(seed + 3 + i, { roughness: 0.25, bowing: 0 })))),
+  ];
+  // Klappe: liegt im geschlossenen Zustand genau auf dem Balken (y 16–28); CSS dreht sie auf und lässt sie zuschnappen
+  const klappe = [
+    ...nur(gen.rectangle(6, 16, 108, 12, ruhig(seed + 7, { roughness: 0.35 }))),
+    ...[18, 50, 82].flatMap((x, i) => nur(gen.line(x, 28, x + 12, 16, ruhig(seed + 8 + i, { roughness: 0.25, bowing: 0 })))),
+  ];
+  return { tafel, balken, klappe };
 }
