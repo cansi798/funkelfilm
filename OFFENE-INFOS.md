@@ -9,7 +9,7 @@ Stand: 02.11.2026 (nach Jamils Konzept „FUNKELFILM 2027“, Talk 4222; Hero un
 3. **Projekte:** Vier Filme, die auf der alten Seite eingebunden sind (Startseite, Testimonials, Recruiting, Veranstaltung), sind auf YouTube nicht mehr abrufbar. Abrufbar sind nur „Die Goldmalerin | Imagefilm“ und „Nexus Fighter Academy | NEXUS KIDS | Eindrücke“. Bitte eine Projektliste liefern: Titel, Kunde, Art des Films, Link, Freigabe zur Nennung.
 4. **Bildherkunft:** Vier Bilder der alten Seite („Warum Imagefilm/Testimonials/Recruiting/Veranstaltungsfilm“) wirken wie Archiv- oder KI-Bilder. Sie sind nicht übernommen. Falls es eigene Aufnahmen sind: bitte Bescheid geben.
 5. **Logo:** nur als PNG vorhanden. Bitte Vektordatei (SVG/PDF/AI) und ggf. Farbwerte/Schriften aus einem CI-Handbuch.
-   - **Unterzeile als festen Logo-Bestandteil mit Funkelfilm abstimmen; Vektor-Logo nötig.** Die Vorschau zeigt „Unternehmensfilme / aus Hamburg“ als Text neben dem Logo (Kopf- und Fußzeile). Jamil wünscht „Echte Geschichten. / Aus Hamburg erzählt.“ (4321), aber ohne Doppelung mit der H1 – Entscheidung zwischen Variante A und B offen (eine Zeile `VARIANTE` in `src/daten.ts`). Für eine feste Logo-Fassung mit Unterzeile braucht es die Vektordatei.
+   - **Unterzeile als festen Logo-Bestandteil mit Funkelfilm abstimmen; Vektor-Logo nötig.** Die Vorschau zeigt „Echte Geschichten. / Aus Hamburg erzählt.“ als Text neben dem Logo (Kopf- und Fußzeile, Jamil 4321/4330, Variante A). Für eine feste Logo-Fassung mit Unterzeile braucht es die Vektordatei.
 
 ## Inhalte und Angaben
 

@@ -6,7 +6,7 @@ Alle Dateien stammen von funkelfilm.com (Abruf 01.11.2026) und sind **nur zur Vo
 |---|---|---|
 | logo-weiss-480/960.png | Logo im Kopf der Seite (PNG) | verkleinert |
 | favicon-32.png, apple-touch-icon.png | Favicon (FF-Zeichen) | verkleinert |
-| og.png | Teilen-Vorschau: Logo + Unterzeile „Unternehmensfilme / aus Hamburg“ (Variante B) + H1 „Echte Geschichten. Eindrucksvoll erzählt.“ (Gold: „Geschichten“) + Subheadline auf Schwarz #0A0A0A, Barlow Condensed (02.11.2026) | neu gesetzt |
+| og.png | Teilen-Vorschau: Logo + Unterzeile „Echte Geschichten. / Aus Hamburg erzählt.“ + H1 „Authentische Filme. Eindrucksvoll erzählt.“ (Gold: „Filme“) + „Für Unternehmen, Marken und Menschen.“ auf Schwarz #0A0A0A, Barlow Condensed (Jamil 4330, 02.11.2026) | neu gesetzt |
 | bilder/sheeras-rund-112/168, sheeras-kreis-400/680 | Hero (Mini-Porträt) und „Hinter jedem Film steht ein Mensch“ | quadratischer Ausschnitt aus dem Originalfoto (1280 × 2274), Gesicht mittig und größer (Jamil 4253), Graustufen |
 | bilder/sheeras-pullover-* | Über uns, Porträt | Zuschnitt 4:5 |
 | bilder/gimbal-* | Startseite „Lass uns deine Vision …“ | Zuschnitt 16:10 |

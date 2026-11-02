@@ -16,9 +16,9 @@ export const ORT = 'Hamburg';
 export const MAIL = 'kontakt@funkelfilm.com';
 /** Feste Unterzeile zum Logo, zweizeilig; als Logo-Bestandteil mit Funkelfilm abstimmen (OFFENE-INFOS 5).
  *  Jamil 4321 wollte „Echte Geschichten. / Aus Hamburg erzählt.“, aber keine Doppelung mit der H1 („nein keine Dopplung“).
- *  Bis zu seiner Entscheidung gilt Variante B. Umstellen = EINE Zeile: VARIANTE (unten); og.png danach neu erzeugen.
- *  A: Logo „Echte Geschichten. / Aus Hamburg erzählt.“ + H1 „Authentische Filme. / Eindrucksvoll erzählt.“
- *  B: Logo „Unternehmensfilme / aus Hamburg“ + H1 „Echte Geschichten. / Eindrucksvoll erzählt.“ (aktiv) */
+ *  Jamil 4330 hat Variante A gewählt. Umstellen = EINE Zeile: VARIANTE (unten); og.png danach neu erzeugen.
+ *  A: Logo „Echte Geschichten. / Aus Hamburg erzählt.“ + H1 „Authentische Filme. / Eindrucksvoll erzählt.“ (aktiv)
+ *  B: Logo „Unternehmensfilme / aus Hamburg“ + H1 „Echte Geschichten. / Eindrucksvoll erzählt.“ */
 export const LOGO_UNTERZEILEN = {
   a: ['Echte Geschichten.', 'Aus Hamburg erzählt.'] as [string, string],
   b: ['Unternehmensfilme', 'aus Hamburg'] as [string, string],
@@ -27,7 +27,7 @@ export const HERO_TITEL = {
   a: { vor: 'Authentische ', wort: 'Filme', nach: '.', zeile2: 'Eindrucksvoll erzählt.' },
   b: { vor: 'Echte ', wort: 'Geschichten', nach: '.', zeile2: 'Eindrucksvoll erzählt.' },
 };
-export const VARIANTE: 'a' | 'b' = 'b';
+export const VARIANTE: 'a' | 'b' = 'a'; // Jamil 4330: Variante A gewählt
 export const LOGO_UNTERZEILE = LOGO_UNTERZEILEN[VARIANTE];
 export const CLAIM = 'Echte Geschichten. Authentische Videos.';
 export const UNTERZEILE = 'Teile deine Botschaft in bewegten Bildern – ehrlich & kreativ.';
@@ -292,11 +292,12 @@ export const UEBER = {
 // Fakten-Regel: Was die bisherige Seite nicht belegt, ist Platzhalter (VORSCHAU) und steht in OFFENE-INFOS.md.
 
 export const HERO = {
-  // Jamil 4319 (02.11.2026), wörtlich: H1 zweizeilig „Echte Geschichten. / Eindrucksvoll erzählt.“ – ersetzt Cans H1
-  // „Filme, die zeigen, wie gut deine Arbeit ist.“. Gold = „Geschichten“ (Kern der Marke, wie der alte Claim „Echte Geschichten.“).
+  // H1 zweizeilig nach Jamil (4319, Variante A gewählt 4330): „Authentische Filme. / Eindrucksvoll erzählt.“ – ersetzt Cans H1
+  // „Filme, die zeigen, wie gut deine Arbeit ist.“. Gold = „Filme“ (das Wort Film sofort im Hero, Cans Klarheits-Ziel).
   titel: HERO_TITEL[VARIANTE], // Varianten oben bei LOGO_UNTERZEILEN
-  // Subheadline (Jamil 4319, wörtlich) – das Wort „Filme“ steht damit weiter sofort im Hero (Cans Klarheits-Ziel).
-  unter: 'Authentische Filme für Unternehmen, Marken und Menschen.',
+  // Subheadline (Jamil 4319).
+  // Bei Variante A ohne „Authentische Filme“ (steht schon in der H1) – Jamils Inhalt sonst unverändert.
+  unter: VARIANTE === 'a' ? 'Für Unternehmen, Marken und Menschen.' : 'Authentische Filme für Unternehmen, Marken und Menschen.',
   // Leistungszeile ohne „aus Hamburg“ (steht schon in der Personenzeile); „deutschlandweit“ bestätigt (Jamil 4231).
   leistung: 'Unternehmens-, Recruiting- und Eventfilme – deutschlandweit',
   // Schreibweise „Sheeras“ wie im Impressum der alten Seite (Frage „Sheeraz?“ offen, OFFENE-INFOS 15).
