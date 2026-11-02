@@ -3,7 +3,7 @@
 // 2) Reveal + Zeitleiste: einmal starten, sobald gut ein Drittel im Bild ist.
 // 3) Kopfzeile: nur Schatten + gelbe Fortschrittsleiste; „Nach oben“ nach ca. einem Bildschirm.
 // 4) Sucher im Hero und Clips der Unterseiten: Video lädt erst nach dem Seitenaufbau, mit Pause-Knopf; Timecode läuft mit dem Film.
-// 5) Karten: stummer Ausschnitt beim Darüberfahren/Fokus. 6) YouTube erst nach Klick (youtube-nocookie). 7) Anfrage → fertige E-Mail.
+
 document.documentElement.classList.add("js");
 (function () {
   var html = document.documentElement;
@@ -163,12 +163,6 @@ document.documentElement.classList.add("js");
       var halt = !band.classList.contains("halt"); band.classList.toggle("halt", halt); bandKnopf.setAttribute("aria-pressed", halt ? "true" : "false");
     });
 
-    // Vergleich ohne/mit Film: Regler + an die Scrollposition gekoppelt (bis der Besucher selbst schiebt)
-    var vergleich = document.querySelector("[data-vergleich]"), regler = vergleich && vergleich.querySelector("[data-regler]");
-    var selbst = false;
-    var teilSetzen = function (prozent) { vergleich.style.setProperty("--teil", prozent + "%"); if (regler) regler.value = String(Math.round(prozent)); };
-    if (regler) regler.addEventListener("input", function () { selbst = true; teilSetzen(+regler.value); });
-
     // Ablauf: goldene Linie folgt der Scrollposition
     var linie = document.querySelector("[data-linie]"), schritte = linie ? linie.querySelectorAll("[data-schritt]") : [];
 
@@ -179,19 +173,15 @@ document.documentElement.classList.add("js");
         var r0 = parallax.parentNode.getBoundingClientRect();
         if (r0.bottom > 0) parallax.style.transform = "translate3d(0," + Math.round(-r0.top * 0.12) + "px,0)";
       }
-      if (vergleich && !selbst && !ruhig) {
-        var r = vergleich.getBoundingClientRect();
-        if (r.bottom > 0 && r.top < h) {
-          var p = Math.min(1, Math.max(0, (h - r.top) / (h + r.height * 0.4)));
-          teilSetzen(88 - p * 76);
-        }
-      }
       if (linie && !ruhig) {
         var r2 = linie.getBoundingClientRect();
         if (r2.bottom > 0 && r2.top < h) {
           var f = Math.min(1, Math.max(0, (h * 0.75 - r2.top) / (r2.height * 0.8)));
-          linie.style.setProperty("--fort", f.toFixed(3));
-          schritte.forEach(function (sch, i) { sch.classList.toggle("erreicht", f >= i / Math.max(1, schritte.length - 1) - 0.02); });
+          var n = Math.max(1, schritte.length - 1), pos = f * n;
+          schritte.forEach(function (sch, i) {
+            sch.style.setProperty("--seg", Math.min(1, Math.max(0, pos - i)).toFixed(3));
+            sch.classList.toggle("erreicht", pos >= i - 0.02);
+          });
         }
       }
     }
