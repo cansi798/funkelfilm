@@ -39,7 +39,6 @@ const stufe = (i: number) => `o${Math.min(3, Math.floor(i / 3))}`;
   </div>
 </section>
 <style>
-  .einsatz { border-top: 1px solid var(--linie-dunkel); }
   .einsatz-raster { display: grid; gap: 1.75rem; justify-items: center; }
   .einsatz-text { width: 100%; max-width: 36rem; }
   .einsatz-text h2 { margin-bottom: 0.9rem; }
@@ -55,7 +54,7 @@ const stufe = (i: number) => `o${Math.min(3, Math.floor(i / 3))}`;
   .k-bogen { fill: none; stroke: var(--bronze); stroke-width: 1.8; stroke-linecap: round; }
   .k-ort circle { fill: var(--weiss); }
   /* dunkler Rand um die Schrift: Umriss/Bögen laufen nie sichtbar durch Text (Jamil 4228) */
-  .karte text { paint-order: stroke; stroke: var(--nacht); stroke-width: 6px; stroke-linejoin: round; }
+  .karte text { paint-order: stroke; stroke: var(--grund); stroke-width: 6px; stroke-linejoin: round; }
   .k-ort text { font: 500 15px/1 var(--text); fill: #d9d5cd; }
   .k-ring { fill: none; stroke: var(--gelb); stroke-width: 1.8; }
   .k-kern { fill: var(--gelb); }

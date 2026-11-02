@@ -6,6 +6,9 @@
 :root {
   --nacht: #0a0a0a;       /* Tiefschwarz: Hintergrund */
   --nacht-2: #161616;     /* Anthrazit: Karten, Container */
+  --grau: #171717;        /* Abschnitts-Grau im Wechsel mit Tiefschwarz (Jamil 4341) */
+  --grund: var(--nacht);  /* Grund des aktuellen Abschnitts (für Schrift-Ränder, Ringe) */
+  --karte: var(--nacht-2);/* Kartenfarbe passend zum Abschnitt */
   --nacht-3: #222120;
   --schwarz: #050505;
   --weiss: #f3f1ec;       /* Off White: Überschriften */
@@ -130,3 +133,10 @@ h3 { font-family: var(--titel); font-weight: 600; font-size: clamp(1.08rem, 1.5v
 
 /* Handy: Platz für die feste Anruf/WhatsApp-Leiste, damit am Seitenende nichts verdeckt bleibt (Jamil 4267) */
 @media (max-width: 47.99rem) { body.mit-leiste { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); } }
+
+/* Abschnitte im Wechsel Tiefschwarz / Anthrazit (Jamil 4341, wie Hauptseite 4210). Hero und Schluss bleiben schwarz.
+   In grauen Abschnitten liegen Karten eine Stufe dunkler (#0F0F0F), damit sie sich abheben. Trennlinien entfallen, der Farbwechsel trennt.
+   Kontraste: warmes Grau #A8A39B auf #171717 = 7,0:1, Off White 15,6:1, Gold 7,6:1. */
+main > section:nth-of-type(odd):not(.hero):not(.schluss) { background: var(--nacht); --grund: var(--nacht); --karte: var(--nacht-2); }
+main > section:nth-of-type(even):not(.hero):not(.schluss) { background: var(--grau); --grund: var(--grau); --karte: #0f0f0f; }
+

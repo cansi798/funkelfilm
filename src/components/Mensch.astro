@@ -19,7 +19,7 @@ import { MENSCH, u } from "../daten";
 <style>
   .mensch-raster { display: grid; gap: 1.75rem; justify-items: center; }
   .mensch-bild { order: -1; width: min(13rem, 60vw); aspect-ratio: 1; border-radius: 50%; overflow: hidden; background: var(--nacht-2);
-    box-shadow: 0 0 0 1px rgba(141, 110, 77, 0.7), 0 0 0 10px var(--nacht), 0 0 0 11px rgba(141, 110, 77, 0.35); }
+    box-shadow: 0 0 0 1px rgba(141, 110, 77, 0.7), 0 0 0 10px var(--grund), 0 0 0 11px rgba(141, 110, 77, 0.35); }
   .mensch-bild :global(picture), .mensch-bild :global(img) { display: block; width: 100%; height: 100%; }
   /* Quadratischer Zuschnitt aus dem Original (Jamil 4253): Gesicht ca. 60–65 % des Kreises, mittig, Augen leicht über der Mitte */
   .mensch-bild :global(img) { object-fit: cover; object-position: 50% 50%; }
