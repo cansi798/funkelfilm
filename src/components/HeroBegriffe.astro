@@ -18,11 +18,12 @@ const schwung = skizze("unterstrich", 200, 22, 55);
 </div>
 <style>
   .begriffe { position: absolute; z-index: 1; pointer-events: none; left: var(--rand); bottom: 1.1rem; width: min(70%, 20rem); height: 3.4rem; }
-  .begriff { position: absolute; left: 0; bottom: 0; margin: 0; display: inline-grid; gap: 0.5rem; opacity: 0; transform: translateY(6px);
+  .begriff { position: absolute; left: 0; bottom: 0.9rem; margin: 0; display: inline-block; opacity: 0; transform: translateY(6px);
     transition: opacity 0.6s ease, transform 0.6s var(--ease); }
-  .begriff span { font: 700 clamp(1.2rem, 4.6vw, 1.5rem)/1 var(--serif); letter-spacing: 0.04em; text-transform: uppercase; color: var(--gelb);
+  .begriff span { display: block; font: 700 clamp(1.2rem, 4.6vw, 1.5rem)/1 var(--serif); letter-spacing: 0.04em; text-transform: uppercase; color: var(--gelb);
     text-shadow: 0 1px 12px rgba(5, 5, 5, 0.85); white-space: nowrap; }
-  .begriff svg { display: block; width: 72%; max-width: none; height: 0.7rem; overflow: visible; }
+  /* Schwung absolut unter dem Wort (8 px Abstand), Breite folgt dem Wort – nicht der SVG-Eigengröße (WebKit) */
+  .begriff svg { position: absolute; left: 0; top: calc(100% + 0.5rem); display: block; width: 72%; max-width: none; height: 0.7rem; overflow: visible; }
   .begriff path { fill: none; stroke: var(--gelb); stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 1 1; stroke-dashoffset: 1; }
   .begriff.aktiv { opacity: 1; transform: none; }
   .begriff.aktiv path { stroke-dashoffset: 0; transition: stroke-dashoffset 0.8s cubic-bezier(0.45, 0, 0.25, 1) 0.35s; }
@@ -30,7 +31,8 @@ const schwung = skizze("unterstrich", 200, 22, 55);
   :global(html:not(.js)) .begriff.aktiv path { transition: none; }
   @media (min-width: 60rem) {
     .begriffe { left: auto; right: max(var(--rand), calc((100vw - var(--breite)) / 2)); top: clamp(2rem, 7vh, 4rem); bottom: auto; width: 26rem; height: 4.6rem; }
-    .begriff { left: auto; right: 0; bottom: auto; top: 0; justify-items: end; }
+    .begriff { left: auto; right: 0; bottom: auto; top: 0; }
+    .begriff svg { left: auto; right: 0; }
     .begriff span { font-size: clamp(1.6rem, 2.4vw, 2.3rem); }
   }
   @media (prefers-reduced-motion: reduce) { .begriff, .begriff path { transition: none !important; } }

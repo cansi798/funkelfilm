@@ -37,8 +37,11 @@ Stand: 02.11.2026 (nach Jamils Konzept „FUNKELFILM 2027“, Talk 4222; Hero un
 20. **FAQ-Antworten** („Muss ich vor die Kamera? Nein …“, „Wie lange dauert die Produktion?“) bitte bestätigen.
 21. **Leistungen:** „Produkt- und Erklärungsvideos“ und „Dokumentationen“ stehen nicht auf der bisherigen Seite. Bietet Funkelfilm das an?
 22. **Referenzen:** Projektname laut YouTube-Titel „Nexus Fighter Academy | NEXUS KIDS | Eindrücke“; die Beschreibung „Mehr Sichtbarkeit für Nachwuchsarbeit und Vereinsleben“ stammt aus dem Konzept – bitte bestätigen. Für die Recruitingfilm-Karte fehlt ein echtes Projekt (Titel, Kunde, Freigabe); der Vorschau-Ausschnitt stammt aus der Recruiting-Karte der alten Seite.
-23. **„Über 100 Projekte“** stammt von der alten Seite (Stand 2024); das Konzept sagt „Filmprojekte“. Aktuelle Zahl?
+23. **„Über 100 Projekte“** stammt von der alten Seite (Stand 2024). **Auf Cans Wunsch (Talk 4256) von der Startseite entfernt** – „100 ist zu wenig“. Die Seite zeigt Erfahrung jetzt über „Seit 2017“ und belegte Fakten. **Fragen an Funkelfilm:** Gibt es eine größere, belegbare Projektzahl? Bekannte Kunden, die genannt werden dürfen (mit Freigabe)? Auszeichnungen, Festivals, Presse?
 
 ## Später (Idee, nicht umgesetzt)
 
 24. **Paket „Funkelfilm Kompakt“:** Can schlägt ein festes Einstiegspaket vor (02.11.2026). Erst Inhalt, Umfang und Preis mit Funkelfilm klären, dann auf der Seite ergänzen.
+25. **Erfahrung:** Die alte Seite nennt „2015 – Der Anfang“, „seit 2017“ und „über 8 Jahre Erfahrung“. Die Startseite nutzt nur „Seit 2017“ (mehrfach belegt). Bitte bestätigen.
+26. **Neue Texte (Can 4255/4259) bitte von Sheeras freigeben:** Begriffe im Hero („Echt.“, „Mit Gefühl erzählt.“, „Gänsehaut statt Werbespot.“, „Bild für Bild durchdacht.“, „Direkt vom Filmemacher.“), „Was dein Film für dich tut.“ und der Abschnitt „Warum ein echter Filmemacher statt KI?“ (allgemeiner Hinweis auf Art. 50 KI-Verordnung, keine Rechtsberatung).
+
