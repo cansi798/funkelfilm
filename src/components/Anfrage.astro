@@ -5,8 +5,8 @@
 import Platzhalter from "./Platzhalter.astro";
 import Icon from "./Icon.astro";
 import Direktkontakt from "./Direktkontakt.astro";
-import { LEISTUNGEN, MAIL } from "../daten";
-const arten = [...LEISTUNGEN.map((l) => l.titel), "Noch offen"];
+import { LEISTUNGEN, MAIL, REELS } from "../daten";
+const arten = [...LEISTUNGEN.map((l) => l.titel), REELS.titel, "Noch offen"];
 ---
 <div class="anfrage">
   <form class="kompass" data-kompass data-mail={MAIL} novalidate>

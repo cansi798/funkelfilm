@@ -9,7 +9,7 @@ Stand: 02.11.2026 (nach Jamils Konzept „FUNKELFILM 2027“, Talk 4222; Hero un
 3. **Projekte:** Vier Filme, die auf der alten Seite eingebunden sind (Startseite, Testimonials, Recruiting, Veranstaltung), sind auf YouTube nicht mehr abrufbar. Abrufbar sind nur „Die Goldmalerin | Imagefilm“ und „Nexus Fighter Academy | NEXUS KIDS | Eindrücke“. Bitte eine Projektliste liefern: Titel, Kunde, Art des Films, Link, Freigabe zur Nennung.
 4. **Bildherkunft:** Vier Bilder der alten Seite („Warum Imagefilm/Testimonials/Recruiting/Veranstaltungsfilm“) wirken wie Archiv- oder KI-Bilder. Sie sind nicht übernommen. Falls es eigene Aufnahmen sind: bitte Bescheid geben.
 5. **Logo:** nur als PNG vorhanden. Bitte Vektordatei (SVG/PDF/AI) und ggf. Farbwerte/Schriften aus einem CI-Handbuch.
-   - **Unterzeile als festen Logo-Bestandteil mit Funkelfilm abstimmen; Vektor-Logo nötig.** Die Vorschau zeigt „Echte Geschichten. / Aus Hamburg erzählt.“ als Text neben dem Logo (Kopf- und Fußzeile, Jamil 4321/4330, Variante A). Für eine feste Logo-Fassung mit Unterzeile braucht es die Vektordatei.
+   - **Unterzeile als festen Logo-Bestandteil mit Funkelfilm abstimmen; Vektor-Logo nötig.** Die Vorschau zeigt „Echte Geschichten.“ als Text neben dem Logo (Kopf- und Fußzeile, Jamil 4321/4330/4345). Für eine feste Logo-Fassung mit Unterzeile braucht es die Vektordatei.
 
 ## Inhalte und Angaben
 
@@ -44,4 +44,5 @@ Stand: 02.11.2026 (nach Jamils Konzept „FUNKELFILM 2027“, Talk 4222; Hero un
 24. **Paket „Funkelfilm Kompakt“:** Can schlägt ein festes Einstiegspaket vor (02.11.2026). Erst Inhalt, Umfang und Preis mit Funkelfilm klären, dann auf der Seite ergänzen.
 25. **Erfahrung:** Die alte Seite nennt „2015 – Der Anfang“, „seit 2017“ und „über 8 Jahre Erfahrung“. Die Startseite nutzt nur „Seit 2017“ (mehrfach belegt). Bitte bestätigen.
 26. **Neuer Text bitte von Sheeras freigeben:** der Abschnitt „Warum ein echter Filmemacher statt KI?“ (allgemeiner Hinweis auf Art. 50 KI-Verordnung, keine Rechtsberatung). Die Hero-Begriffe und „Was dein Film für dich tut.“ sind wieder entfernt (Jamil 4306/4307).
+27. **Reel-Beispiele liefern:** Die neue Leistung „Reels für Social Media“ (Jamil 4346) steht auf Startseite, Leistungsseite und im Fuß. Bild und Ausschnitt stammen vorerst aus dem Showreel. Bitte 2–3 echte Reels (Hochformat) mit Freigabe schicken; dann bekommt die Leistung ggf. eine eigene Unterseite.
 

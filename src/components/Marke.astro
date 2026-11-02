@@ -1,16 +1,15 @@
 ---
-// Logo mit fester Unterzeile (Can 02.11.2026; Text seit Jamil 4321: „Echte Geschichten. / Aus Hamburg erzählt.“). Das Logo-PNG bleibt unverändert;
+// Logo mit fester Unterzeile (Can 02.11.2026; Text seit Jamil 4345: „Echte Geschichten.“, einzeilig). Das Logo-PNG bleibt unverändert;
 // die Unterzeile steht als Text daneben – Barlow Condensed in Versalien mit Laufweite, wie die Logo-Buchstaben, getrennt durch eine
-// feine Linie. Zweizeilig, damit sie auch am Handy lesbar bleibt (≥ 11 px). Als festen Logo-Bestandteil mit Funkelfilm abstimmen (OFFENE-INFOS 5).
+// feine Linie. Ein- oder zweizeilig je nach Text, am Handy lesbar (≥ 11 px). Als festen Logo-Bestandteil mit Funkelfilm abstimmen (OFFENE-INFOS 5).
 import Logo from "./Logo.astro";
 import { LOGO_UNTERZEILE } from "../daten";
 interface Props { klasse?: string; }
 const { klasse = "" } = Astro.props;
-const [erste, zweite] = LOGO_UNTERZEILE;
 ---
 <span class:list={["marke-sperre", klasse]}>
   <Logo />
-  <span class="marke-unter">{erste}<br />{zweite}</span>
+  <span class="marke-unter">{LOGO_UNTERZEILE.map((z, i) => <>{i > 0 && <br />}{z}</>)}</span>
 </span>
 <style>
   .marke-sperre { display: inline-flex; align-items: center; gap: 0.7rem; }

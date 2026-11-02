@@ -17,11 +17,11 @@ export const MAIL = 'kontakt@funkelfilm.com';
 /** Feste Unterzeile zum Logo, zweizeilig; als Logo-Bestandteil mit Funkelfilm abstimmen (OFFENE-INFOS 5).
  *  Jamil 4321 wollte „Echte Geschichten. / Aus Hamburg erzählt.“, aber keine Doppelung mit der H1 („nein keine Dopplung“).
  *  Jamil 4330 hat Variante A gewählt. Umstellen = EINE Zeile: VARIANTE (unten); og.png danach neu erzeugen.
- *  A: Logo „Echte Geschichten. / Aus Hamburg erzählt.“ + H1 „Authentische Filme. / Eindrucksvoll erzählt.“ (aktiv)
+ *  A: Logo „Echte Geschichten.“ (einzeilig, Jamil 4345) + H1 „Authentische Filme. / Eindrucksvoll erzählt.“ (aktiv)
  *  B: Logo „Unternehmensfilme / aus Hamburg“ + H1 „Echte Geschichten. / Eindrucksvoll erzählt.“ */
 export const LOGO_UNTERZEILEN = {
-  a: ['Echte Geschichten.', 'Aus Hamburg erzählt.'] as [string, string],
-  b: ['Unternehmensfilme', 'aus Hamburg'] as [string, string],
+  a: ['Echte Geschichten.'] as string[], // Jamil 4345: „aus Hamburg erzählt entfernen“ → einzeilig
+  b: ['Unternehmensfilme', 'aus Hamburg'] as string[],
 };
 export const HERO_TITEL = {
   a: { vor: 'Authentische ', wort: 'Filme', nach: '.', zeile2: 'Eindrucksvoll erzählt.' },
@@ -291,6 +291,14 @@ export const UEBER = {
 // Startseite nach Jamils Konzept „FUNKELFILM 2027“ (Talk 4222, 01.11.2026). Texte wörtlich, humanizer nur leicht.
 // Fakten-Regel: Was die bisherige Seite nicht belegt, ist Platzhalter (VORSCHAU) und steht in OFFENE-INFOS.md.
 
+/** Neue Leistung (Jamil 4346, für Funkelfilm bestätigt). Ohne eigene Unterseite, bis es Beispiele gibt (OFFENE-INFOS 27). */
+export const REELS = {
+  titel: 'Reels für Social Media',
+  ueberschrift: 'Reels für deine Social-Media-Kanäle',
+  text: 'Kurze Filme im Hochformat für Instagram und andere Kanäle – gedreht und geschnitten im Stil deiner Marke.',
+  knopf: 'Reels anfragen',
+};
+
 export const HERO = {
   // H1 zweizeilig nach Jamil (4319, Variante A gewählt 4330): „Authentische Filme. / Eindrucksvoll erzählt.“ – ersetzt Cans H1
   // „Filme, die zeigen, wie gut deine Arbeit ist.“. Gold = „Filme“ (das Wort Film sofort im Hero, Cans Klarheits-Ziel).
@@ -299,7 +307,7 @@ export const HERO = {
   // Bei Variante A ohne „Authentische Filme“ (steht schon in der H1) – Jamils Inhalt sonst unverändert.
   unter: VARIANTE === 'a' ? 'Für Unternehmen, Marken und Menschen.' : 'Authentische Filme für Unternehmen, Marken und Menschen.',
   // Leistungszeile ohne „aus Hamburg“ (steht schon in der Personenzeile); „deutschlandweit“ bestätigt (Jamil 4231).
-  leistung: 'Unternehmens-, Recruiting- und Eventfilme – deutschlandweit',
+  leistung: 'Unternehmens-, Recruiting-, Eventfilme und Social-Media-Reels – deutschlandweit', // Reels: Jamil 4346
   // Schreibweise „Sheeras“ wie im Impressum der alten Seite (Frage „Sheeraz?“ offen, OFFENE-INFOS 15).
   person: { name: 'Sheeras Iqbal', rolle: 'Filmemacher & Videograph aus Hamburg' }, // „Videograph“ in Jamils Schreibweise (Talk 4240)
   // Kennzeile „Deine Arbeit verdient mehr Aufmerksamkeit.“ entfernt (Jamil 4320).
@@ -405,6 +413,7 @@ export const ZIELE = [
   { ziel: 'Ich möchte Mitarbeiter finden', loesung: 'Recruitingfilme.', href: '/recruitingfilm/', clip: '/medien/clips/recruiting.mp4', poster: '/medien/clips/recruiting.webp', belegt: true },
   { ziel: 'Ich möchte mein Angebot erklären', loesung: 'Produkt- und Erklärungsvideos.', href: '/kontakt/', clip: '/medien/clips/kundenstimmen.mp4', poster: '/medien/clips/kundenstimmen.webp', belegt: false },
   { ziel: 'Ich möchte ein Event festhalten', loesung: 'Eventfilme.', href: '/veranstaltungsfilm/', clip: '/medien/clips/event.mp4', poster: '/medien/clips/event.webp', belegt: true, platzhalter: '„und Dokumentationen“ (Konzept) bitte bestätigen.' },
+  { ziel: 'Ich möchte auf Social Media sichtbar sein', loesung: 'Reels für Social Media.', href: '/services/#reels', clip: '/medien/clips/reel.mp4', poster: '/medien/clips/reel.webp', belegt: true, platzhalter: 'Reel-Beispiele folgen – das Vorschaubild stammt vorerst aus dem Showreel.' }, // Jamil 4346
 ];
 
 /** Ablauf nach Jamils Konzept (Kurzfassung), Langfassung aus der bisherigen Seite (ABLAUF). */

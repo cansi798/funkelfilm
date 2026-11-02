@@ -1,9 +1,10 @@
 ---
 import Basis from "../layouts/Basis.astro";
 import SeitenKopf from "../components/SeitenKopf.astro";
-import { LEISTUNGEN, u } from "../daten";
+import { LEISTUNGEN, REELS, u } from "../daten";
+import Platzhalter from "../components/Platzhalter.astro";
 ---
-<Basis titel="Leistungen: Imagefilm, Kundenstimmen, Recruiting- und Eventfilm" beschreibung="Imagefilme, Testimonial-Videos, Recruitingfilme und Eventfilme von Funkelfilm aus Hamburg – authentisch, emotional und ohne große Show.">
+<Basis titel="Leistungen: Imagefilm, Kundenstimmen, Recruiting-, Eventfilm und Reels" beschreibung="Imagefilme, Testimonial-Videos, Recruitingfilme, Eventfilme und Reels für Social Media von Funkelfilm aus Hamburg – authentisch, emotional und ohne große Show.">
   <SeitenKopf ueber="Leistungen" titel="Mit Videos begeistern – einfach, echt und wirkungsvoll." intro="Jede Marke hat ihre eigene Geschichte. Ich helfe dir, sie so zu erzählen, dass sie Menschen wirklich erreicht – in Bildern, die berühren und hängen bleiben." />
   <section class="abschnitt" aria-label="Filmarten">
     <div class="huelle zeilen">
@@ -24,6 +25,19 @@ import { LEISTUNGEN, u } from "../daten";
           </div>
         </article>
       ))}
+      <article class:list={["zeile", "reveal", { gedreht: LEISTUNGEN.length % 2 === 1 }]} id="reels" aria-labelledby="l-reels">
+        <div class="zeile-bild" data-vorschau>
+          <img src={u("/medien/clips/reel.webp")} width="1280" height="720" alt="" loading="lazy" decoding="async" />
+          <video muted loop playsinline preload="none" data-src={u("/medien/clips/reel.mp4")} aria-hidden="true" tabindex="-1"></video>
+        </div>
+        <div class="zeile-text">
+          <p class="art">{REELS.titel}</p>
+          <h2 id="l-reels">{REELS.ueberschrift}</h2>
+          <p class="leise">{REELS.text}</p>
+          <div class="knoepfe"><a class="knopf" href={u("/kontakt/")}>{REELS.knopf}</a></div>
+          <Platzhalter>Reel-Beispiele folgen – Bild und Ausschnitt stammen vorerst aus dem Showreel.</Platzhalter>
+        </div>
+      </article>
     </div>
   </section>
 </Basis>

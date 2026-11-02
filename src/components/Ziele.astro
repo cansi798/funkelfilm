@@ -1,5 +1,5 @@
 ---
-// Leistungen nach Kundenzielen (Jamils Konzept): vier Karten, die sich beim Darüberfahren/Fokus leicht öffnen und eine kurze Vorschau zeigen.
+// Leistungen nach Kundenzielen (Jamils Konzept): fünf Karten (Reels seit Jamil 4346), die sich beim Darüberfahren/Fokus leicht öffnen und eine kurze Vorschau zeigen.
 // Am Handy als aufklappbare Liste (<details>), damit die Seite kurz bleibt. Nicht belegte Leistungen sind als Platzhalter markiert.
 import Platzhalter from "./Platzhalter.astro";
 import { ZIELE, VORSCHAU, u } from "../daten";
@@ -57,7 +57,7 @@ import { ZIELE, VORSCHAU, u } from "../daten";
   .offen .ziel-karte { outline: 2px dashed var(--rot-vorschau); outline-offset: 2px; }
   /* Breit: vier Karten nebeneinander, alle offen; Vorschau beim Darüberfahren */
   @media (min-width: 64rem) {
-    .ziel-liste { grid-template-columns: repeat(4, 1fr); align-items: start; gap: 1rem; }
+    .ziel-liste { grid-template-columns: repeat(3, 1fr); align-items: start; gap: 1rem; }
     .ziel-karte { height: 100%; }
     summary { padding-bottom: 0.7rem; min-height: 4.8rem; align-items: flex-start; }
     .ziel-plus { display: none; }
@@ -66,4 +66,6 @@ import { ZIELE, VORSCHAU, u } from "../daten";
     .ziel:hover .ziel-bild, .ziel:focus-within .ziel-bild { height: 8.5rem; opacity: 1; margin-bottom: 0.9rem; }
   }
   @media (prefers-reduced-motion: reduce) { .ziel-bild { transition: none !important; } }
+  /* fünf Ziele seit den Reels (Jamil 4346): breit alle in einer Reihe */
+  @media (min-width: 80rem) { .ziel-liste { grid-template-columns: repeat(5, 1fr); } }
 </style>

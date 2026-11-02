@@ -46,7 +46,7 @@ const firma = {
   sameAs: SOZIAL.map((s) => s.href),
   ...(TELEFON_LINK ? { telephone: TELEFON_LINK.replace("tel:", "") } : {}),
   ...(WHATSAPP_LINK ? { contactPoint: [{ "@type": "ContactPoint", contactType: "customer service", name: "WhatsApp", url: WHATSAPP_LINK, availableLanguage: ["de"] }] } : {}),
-  knowsAbout: ["Imagefilm", "Testimonial-Video", "Recruitingfilm", "Eventfilm", "Videoproduktion"],
+  knowsAbout: ["Imagefilm", "Testimonial-Video", "Recruitingfilm", "Eventfilm", "Reels für Social Media", "Videoproduktion"],
 };
 const jsonLd = [
   firma,

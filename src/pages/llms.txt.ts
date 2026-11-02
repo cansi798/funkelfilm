@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { NAME, INHABER, ORT, MAIL, BESCHREIBUNG, LEISTUNGEN, ABLAUF, EINSATZ } from "../daten";
+import { NAME, INHABER, ORT, MAIL, BESCHREIBUNG, LEISTUNGEN, ABLAUF, EINSATZ, REELS } from "../daten";
 import { HEIMAT } from "../lib/karte";
 // Kurzbeschreibung für KI-Assistenten, erzeugt aus derselben Daten-Datei wie die Seite (keine Abweichungen).
 export const GET: APIRoute = ({ site }) => {
@@ -18,6 +18,7 @@ ${EINSATZ.text} Standort: ${HEIMAT.name}. Drehs in ganz Deutschland möglich; di
 
 ## Leistungen
 ${LEISTUNGEN.map((l) => `- [${l.titel}](${url(`/${l.slug}/`)}): ${l.kurz}`).join("\n")}
+- [${REELS.titel}](${url("/services/#reels")}): ${REELS.text}
 
 ## Ablauf
 ${ABLAUF.map((a, i) => `${i + 1}. ${a.titel}: ${a.kurz}`).join("\n")}
