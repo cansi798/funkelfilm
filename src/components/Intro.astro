@@ -1,8 +1,8 @@
 ---
 // Einstieg: Film-Vorspann 3–2–1 (Jamil Talk 4246, 02.11.2026: „Verwende wieder die erste Animation mit dem Countdown 3, 2, 1“).
 // Fassung aus v1 (Commit 77566a1), jetzt in den Farben von „FUNKELFILM 2027“: Schwarz, Gold, Off White, Bronze – kein Blau/Signalgelb –
-// und mit Barlow Condensed für die Ziffern. Ablauf: Vorspann-Kreis mit goldenem Zeiger zählt 3–2–1 → goldener Funke → Logo →
-// Blende öffnet sich von der Mitte in die Seite (ca. 2,6 s). Danach startet der Hero-Film (seite.js).
+// und mit Barlow Condensed für die Ziffern. Ablauf: Vorspann-Kreis mit goldenem Zeiger zählt 3–2–1 → Logo →
+// Blende öffnet sich von der Mitte in die Seite (ca. 2,4 s). Ohne Funken/Stern (Jamil Talk 4264: „Startanimation ohne Stern“). Danach startet der Hero-Film (seite.js).
 // Regeln: reines CSS auf einer Uhr, Ebene lässt Klicks durch, „Überspringen“/Esc/Klick beenden sofort, einmal je Sitzung,
 // ohne JS und bei reduzierter Bewegung gar nicht, fest positioniert → kein Layout-Sprung. Ohne drop-shadow/blur (Leistung).
 import { u } from "../daten";
@@ -16,8 +16,6 @@ import { u } from "../daten";
     <span class="intro-sweep"></span>
     <span class="intro-zahl z3">3</span><span class="intro-zahl z2">2</span><span class="intro-zahl z1">1</span>
   </div>
-  <span class="intro-schein"></span>
-  <svg class="intro-funke" viewBox="0 0 100 100" width="100" height="100"><path d="M50 0 C54 38 62 46 100 50 C62 54 54 62 50 100 C46 62 38 54 0 50 C38 46 46 38 50 0Z" /></svg>
   <img class="intro-logo" src={u("/medien/logo-weiss-480.png")} width="480" height="143" alt="" decoding="async" />
 </div>
 <button class="intro-skip" type="button" data-intro-skip>Intro überspringen</button>
@@ -28,12 +26,12 @@ import { u } from "../daten";
     display: grid; place-items: center; position: fixed; inset: 0; z-index: 200; pointer-events: none; background: #050505;
     -webkit-mask: radial-gradient(circle at 50% 50%, transparent var(--loch), #000 calc(var(--loch) + 1px));
             mask: radial-gradient(circle at 50% 50%, transparent var(--loch), #000 calc(var(--loch) + 1px));
-    animation: iris 0.75s cubic-bezier(0.7, 0, 0.25, 1) 1.85s forwards, weg 0.2s linear 2.55s forwards;
+    animation: iris 0.75s cubic-bezier(0.7, 0, 0.25, 1) 1.6s forwards, weg 0.2s linear 2.3s forwards;
   }
   :global(html.mit-intro) .intro-skip {
     display: inline-flex; position: fixed; z-index: 201; right: 1rem; bottom: max(1rem, env(safe-area-inset-bottom)); min-height: 2.75rem; align-items: center;
     padding: 0.5rem 1rem; border: 1px solid rgba(243, 241, 236, 0.35); border-radius: 2px; background: rgba(5, 5, 5, 0.6); color: var(--weiss);
-    font: 500 0.9rem/1 var(--titel); cursor: pointer; animation: weg 0.2s linear 2.3s forwards;
+    font: 500 0.9rem/1 var(--titel); cursor: pointer; animation: weg 0.2s linear 2.05s forwards;
   }
   .intro > * { grid-area: 1 / 1; }
   .intro-leader { position: relative; width: min(46vmin, 15rem); aspect-ratio: 1; animation: weg 0.25s ease 1.05s forwards; }
@@ -47,14 +45,9 @@ import { u } from "../daten";
   .z3 { animation: zahl 0.35s steps(1) 0s; }
   .z2 { animation: zahl 0.35s steps(1) 0.35s; }
   .z1 { animation: zahl 0.35s steps(1) 0.7s; }
-  .intro-schein { width: min(56vmin, 18rem); aspect-ratio: 1; border-radius: 50%; opacity: 0;
-    background: radial-gradient(circle, rgba(232, 190, 80, 0.55) 0%, rgba(212, 160, 23, 0.18) 35%, rgba(212, 160, 23, 0) 65%);
-    animation: funke 0.9s cubic-bezier(0.2, 0.9, 0.3, 1) 1.05s forwards; }
-  .intro-funke { width: min(30vmin, 9rem); height: auto; fill: var(--gelb); opacity: 0; animation: funke 0.9s cubic-bezier(0.2, 0.9, 0.3, 1) 1.05s forwards; }
-  .intro-logo { width: min(70vw, 26rem); height: auto; opacity: 0; animation: logo 0.8s var(--ease) 1.25s forwards; }
+  .intro-logo { width: min(70vw, 26rem); height: auto; opacity: 0; animation: logo 0.6s var(--ease) 1.05s forwards; }
   @keyframes drehen { to { transform: rotate(360deg); } }
   @keyframes zahl { 0%, 100% { opacity: 1; } }
-  @keyframes funke { 0% { opacity: 0; transform: scale(0.1) rotate(-45deg); } 35% { opacity: 1; transform: scale(1.25) rotate(0deg); } 100% { opacity: 0; transform: scale(2.4) rotate(20deg); } }
   @keyframes logo { 0% { opacity: 0; transform: scale(0.92); } 100% { opacity: 1; transform: none; } }
   @keyframes iris { to { --loch: 150vmax; } }
   @keyframes weg { to { opacity: 0; visibility: hidden; } }
