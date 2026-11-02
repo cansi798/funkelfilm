@@ -2,7 +2,8 @@
 // 1) <html class="js">, damit Animationen erst im Bild starten (ohne JS ist alles sichtbar).
 // 2) Reveal + Zeitleiste: einmal starten, sobald gut ein Drittel im Bild ist.
 // 3) Kopfzeile: nur Schatten + gelbe Fortschrittsleiste; „Nach oben“ nach ca. einem Bildschirm.
-// 4) Sucher im Hero und Clips der Unterseiten: Video lädt erst nach dem Seitenaufbau, mit Pause-Knopf; Timecode läuft mit dem Film.
+// 4) Hero-Film und Clips der Unterseiten: Video lädt erst nach dem Seitenaufbau, mit Pause-Knopf.
+// 5) Hero-Regieskizze (rough.js, beim Build erzeugt): zeichnet sich direkt nach dem Einstieg bzw. sofort, wenn es keinen gibt.
 
 document.documentElement.classList.add("js");
 (function () {
@@ -12,11 +13,13 @@ document.documentElement.classList.add("js");
   var intro = false;
   try { if (!ruhig && !sessionStorage.getItem("ff-intro")) { intro = true; sessionStorage.setItem("ff-intro", "1"); } } catch (e) { intro = false; }
   if (intro) html.classList.add("mit-intro");
-  var introFertig = [];
+  var introFertig = [], introVorbei = [];
   function nachIntro(fn) { if (!intro) fn(); else introFertig.push(fn); }
+  // erst, wenn der Einstieg wirklich weg ist (Ende oder Überspringen) – nicht schon beim vorgezogenen Freigeben der Hero-Teile
+  function nachEinstieg(fn) { if (!intro) fn(); else introVorbei.push(fn); }
   function introEnde() {
     if (!intro) return; intro = false;
-    var f = introFertig; introFertig = []; f.forEach(function (fn) { fn(); });
+    var f = introFertig.concat(introVorbei); introFertig = []; introVorbei = []; f.forEach(function (fn) { fn(); });
     setTimeout(function () { html.classList.remove("mit-intro", "intro-weg"); }, 260);
   }
   var sparen = navigator.connection && navigator.connection.saveData;
@@ -39,7 +42,7 @@ document.documentElement.classList.add("js");
   }
 
   // Video mit Pause-Knopf, pausiert außerhalb des Bildes (spart Akku), respektiert die Wahl des Besuchers
-  function steuern(box, video, klasse, beiZeit) {
+  function steuern(box, video, klasse) {
     var knopf = box.querySelector("[data-pause]");
     var angehalten = false, imBild = true;
     var spielen = function () { if (!angehalten && imBild) { var p = video.play(); if (p && p.catch) p.catch(function () {}); } };
@@ -52,16 +55,8 @@ document.documentElement.classList.add("js");
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (e) { imBild = e[0].isIntersecting; if (imBild) spielen(); else video.pause(); }, { threshold: 0.15 }).observe(box);
     }
-    if (beiZeit) {
-      // Timecode 10× pro Sekunde, nur solange der Film läuft (statt jedes Bild: spart Rechenzeit)
-      var uhr = null;
-      video.addEventListener("playing", function () { if (!uhr) uhr = setInterval(function () { beiZeit(video.currentTime); }, 100); });
-      video.addEventListener("pause", function () { clearInterval(uhr); uhr = null; });
-    }
     laden(video); spielen();
   }
-
-  function zweistellig(n) { return (n < 10 ? "0" : "") + n; }
 
   document.addEventListener("DOMContentLoaded", function () {
     // 0) Einstieg: endet nach 2,6 s von selbst; Überspringen-Knopf, Esc oder Klick beenden sofort (Klicks gehen trotzdem durch)
@@ -75,6 +70,10 @@ document.documentElement.classList.add("js");
       // Hero-Teile schon kurz vor dem Ende freigeben, damit die Blende direkt in die Scharfstellung übergeht
       setTimeout(function () { var f = introFertig; introFertig = []; f.forEach(function (fn) { fn(); }); }, 2150);
     }
+
+    // 5) Hero-Regieskizze: ohne Einstieg kurz nach dem ersten Bild, mit Einstieg genau an dessen Ende
+    var regie = document.querySelector('[data-skizze="hero"]');
+    if (regie) { var mitEinstieg = intro; nachEinstieg(function () { setTimeout(function () { regie.classList.add("an"); }, mitEinstieg ? 80 : 250); }); }
 
     // 2) Reveal, Szenen und Skizzen: starten erst im Bild und laufen dann ganz durch (springen nie ans Ende)
     document.querySelectorAll('[data-skizze="nach-intro"]').forEach(function (el) {
@@ -108,19 +107,11 @@ document.documentElement.classList.add("js");
     window.addEventListener("scroll", function () { if (!geplant) { geplant = true; requestAnimationFrame(pruefen); } }, { passive: true });
     pruefen();
 
-    // 4) Sucher (Hero)
+    // 4) Hero-Film
     var sucher = document.querySelector("[data-sucher]");
     if (sucher) {
-      nachIntro(function () { requestAnimationFrame(function () { requestAnimationFrame(function () { sucher.classList.add("an"); }); }); });
-      var zeit = sucher.querySelector("[data-zeit]");
       var video = sucher.querySelector("video");
-      if (video && !ruhig && !sparen) nachIntro(function () { nachLaden(function () {
-        steuern(sucher, video, "laeuft", function (t) {
-          if (!zeit) return;
-          var s = Math.floor(t), f = Math.floor((t - s) * 25);
-          zeit.textContent = "00:" + zweistellig(Math.floor(s / 60)) + ":" + zweistellig(s % 60) + ":" + zweistellig(f);
-        });
-      }); });
+      if (video && !ruhig && !sparen) nachIntro(function () { nachLaden(function () { steuern(sucher, video, "laeuft"); }); });
     }
     // Clips im Kopf der Unterseiten
     document.querySelectorAll("[data-autoclip]").forEach(function (box) {
@@ -167,11 +158,14 @@ document.documentElement.classList.add("js");
     var linie = document.querySelector("[data-linie]"), schritte = linie ? linie.querySelectorAll("[data-schritt]") : [];
 
     var parallax = document.querySelector("[data-parallax]");
+    // nur breit: am Handy ist der Film eine eigene Fläche über dem Text, dort kein Versatz
+    if (parallax && !(window.matchMedia && window.matchMedia("(min-width: 60rem)").matches)) parallax = null;
     function scrollSzenen() {
       var h = window.innerHeight;
       if (parallax && !ruhig) {
         var r0 = parallax.parentNode.getBoundingClientRect();
-        if (r0.bottom > 0) parallax.style.transform = "translate3d(0," + Math.round(-r0.top * 0.12) + "px,0)";
+        // Versatz nur aus der Scrollstrecke: beim Laden 0 (vorher hing er von der Lage des Heros beim ersten Aufruf ab)
+        if (r0.bottom > 0) parallax.style.transform = "translate3d(0," + Math.round(Math.min(window.scrollY, h) * 0.12) + "px,0)";
       }
       if (linie && !ruhig) {
         var r2 = linie.getBoundingClientRect();
