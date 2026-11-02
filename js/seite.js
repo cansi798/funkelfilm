@@ -66,14 +66,14 @@ document.documentElement.classList.add("js");
   document.addEventListener("DOMContentLoaded", function () {
     // 0) Einstieg: endet nach 2,6 s von selbst; Überspringen-Knopf, Esc oder Klick beenden sofort (Klicks gehen trotzdem durch)
     if (intro) {
-      var timer = setTimeout(introEnde, 2650);
+      var timer = setTimeout(introEnde, 2850);
       var abbrechen = function () { if (!intro) return; clearTimeout(timer); html.classList.add("intro-weg"); introEnde(); };
       var skip = document.querySelector("[data-intro-skip]");
       if (skip) skip.addEventListener("click", abbrechen);
       document.addEventListener("keydown", function (e) { if (e.key === "Escape") abbrechen(); });
       document.addEventListener("pointerdown", function (e) { if (!skip || !skip.contains(e.target)) abbrechen(); }, { once: true });
       // Hero-Teile schon kurz vor dem Ende freigeben, damit die Blende direkt in die Scharfstellung übergeht
-      setTimeout(function () { var f = introFertig; introFertig = []; f.forEach(function (fn) { fn(); }); }, 1900);
+      setTimeout(function () { var f = introFertig; introFertig = []; f.forEach(function (fn) { fn(); }); }, 2150);
     }
 
     // 2) Reveal, Szenen und Skizzen: starten erst im Bild und laufen dann ganz durch (springen nie ans Ende)
