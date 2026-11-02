@@ -6,7 +6,7 @@ Neue Website für Funkelfilm (Videoproduktion, Hamburg). Vorschau: https://cansi
 - **Branches:** `quelle` = Quellcode, `main` = gebaute Seite für GitHub Pages.
 - **Inhalte:** eine Quelle der Wahrheit in `src/daten.ts`. Alles stammt von der bisherigen Seite funkelfilm.com; Fehlendes steht in `OFFENE-INFOS.md` und ist in der Vorschau rot gestrichelt markiert.
 - **Bilder/Filme:** Herkunft in `BILDER.md`. Hero-Film am 02.11.2026 farblich angeglichen (Blaustich raus, leicht warm).
-- **Hero-Skizze:** rough.js läuft nur beim Build (`src/lib/skizze.ts`, `src/components/HeroSkizze.astro`); im Browser nur SVG + CSS.
+- **rough.js-Zeichnungen** (Problem-Karten, Vertrauenszeile, Einsatzgebiet-Karte) entstehen nur beim Build (`src/lib/skizze.ts`, `src/lib/karte.ts`); im Browser nur SVG + CSS. Im Hero bewusst keine Zeichnung (Jamil Talk 4250).
 
 ## Telefon und WhatsApp
 

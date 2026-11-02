@@ -2,13 +2,14 @@
 // Hero nach Jamils Konzept (Talk 4222): ein einziger Film, langsame Schnitte, Parallax, kein Slider.
 // 02.11.2026 (Can): H1 „Filme, die zeigen, wie gut deine Arbeit ist.“ – das Wort Film steht sofort im Hero; Jamils bisherige
 // Headline „Deine Arbeit verdient mehr Aufmerksamkeit.“ bleibt als Kennzeile darüber. Darunter Leistung + Gebiet und die Person
-// (rundes Porträt, „Sheeras Iqbal, Filmemacher aus Hamburg“). Signature: rough.js-Regieskizze (HeroSkizze.astro).
+// (rundes Porträt, „Sheeras Iqbal, Filmemacher & Videograph aus Hamburg“). Signature ist der Film selbst + der Vorspann 3-2-1.
+// Die rough.js-Regieskizze (Rahmen, Filmklappe, „Take 1“) ist auf Jamils Wunsch wieder entfernt (Talk 4250: „Take 1 und die Umrandung entfernen“):
+// keine Zeichnungen über dem Hero-Film.
 // v1-Reste (Sucher-Ecken, Timecode) und der Weichzeichner auf dem Poster sind entfernt (Retrospektive 02.11.).
-// Breit: Film im Vollbild, Text links, Skizze rechts. Handy/Tablet: Film oben als eigene Fläche (16:10), Text darunter –
+// Breit: Film im Vollbild, Text links. Handy/Tablet: Film oben als eigene Fläche (16:10), Text darunter –
 // so steht nie Text über einem Gesicht im Film. Video lädt erst nach Einstieg + Seitenaufbau; Pause-Knopf; reduzierte Bewegung = Standbild.
 import { HERO, u } from "../daten";
 import Icon from "./Icon.astro";
-import HeroSkizze from "./HeroSkizze.astro";
 const poster = u("/medien/clips/reel.webp");
 const posterKlein = u("/medien/clips/reel-640.webp");
 const rund = (ext: string) => `${u(`/medien/bilder/sheeras-rund-112.${ext}`)} 112w, ${u(`/medien/bilder/sheeras-rund-168.${ext}`)} 168w`;
@@ -39,7 +40,6 @@ const [vor, wort, nach] = HERO.titel;
         <a class="knopf rahmen" href="#projekte">Projekte ansehen</a>
       </div>
     </div>
-    <HeroSkizze />
   </div>
   <button class="sucher-pause" type="button" data-pause hidden aria-pressed="false">
     <span class="p-an"><Icon name="pause" /><span class="sr">Film anhalten</span></span>
@@ -56,7 +56,7 @@ const [vor, wort, nach] = HERO.titel;
   /* Handy: Film blendet unten weich ins Schwarz über, der Text steht darunter auf ruhigem Grund */
   .hero-schleier { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 10, 10, 0.25) 0%, rgba(10, 10, 10, 0) 30%, rgba(10, 10, 10, 0) 62%, #0a0a0a 100%); }
 
-  .hero-inhalt { padding-block: 1.1rem 2.75rem; } /* nicht positioniert: die Skizze bezieht sich am Handy auf .hero (Filmfläche oben) */
+  .hero-inhalt { padding-block: 1.1rem 2.75rem; }
   .hero-text { max-width: 40rem; }
   .hero-kennzeile { display: flex; align-items: center; gap: 0.75rem; margin: 0 0 0.85rem; font: 500 clamp(0.98rem, 1.25vw, 1.12rem)/1.4 var(--text); color: #e4e0d8; }
   .hero-kennzeile::before { content: ""; flex: none; width: 1.75rem; height: 2px; background: var(--gelb); }
@@ -72,15 +72,14 @@ const [vor, wort, nach] = HERO.titel;
     .hero .knoepfe .knopf { flex: 1 1 100%; }
   }
 
-  /* Breit: Film im Vollbild hinter dem Text, Skizze in der rechten Spalte */
+  /* Breit: Film im Vollbild hinter dem Text */
   @media (min-width: 60rem) {
     .hero { display: grid; align-items: end; min-height: min(calc(100svh - var(--kopf-h)), 54rem); background: #050505; }
     .hero-bild { position: absolute; inset: 0; aspect-ratio: auto; z-index: -1; }
     .sucher-poster, .sucher-video { object-position: 50% 50%; }
     .hero-schleier { background: linear-gradient(180deg, rgba(10, 10, 10, 0.35) 0%, rgba(10, 10, 10, 0.1) 35%, rgba(10, 10, 10, 0.72) 80%, #0a0a0a 100%),
                                  linear-gradient(90deg, rgba(10, 10, 10, 0.78) 0%, rgba(10, 10, 10, 0.35) 45%, rgba(10, 10, 10, 0) 70%); }
-    .hero-inhalt { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr); gap: clamp(2rem, 5vw, 5rem); align-items: end;
-      padding-block: clamp(3rem, 7vw, 5.5rem) clamp(3.5rem, 6vw, 5rem); }
+    .hero-inhalt { padding-block: clamp(3rem, 7vw, 5.5rem) clamp(3.5rem, 6vw, 5rem); }
   }
 
   .sucher-pause { position: absolute; right: 1.6rem; top: 1.6rem; display: grid; place-items: center; width: 2.75rem; height: 2.75rem;
