@@ -16,8 +16,8 @@ const stufen = 6; // Verzögerungs-Klassen s0…s5 (CSP: keine style-Attribute)
 </svg>
 <style>
   .skizze { display: block; max-width: none; overflow: visible; pointer-events: none; color: var(--gelb); }
-  .skizze path { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-  .skizze.dick path { stroke-width: 3.2; }
+  .skizze path { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .skizze.dick path { stroke-width: 2.6; }
   :global(.js) .skizze path { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
   :global(.js) .skizze.an path { stroke-dashoffset: 0; transition: stroke-dashoffset 0.55s cubic-bezier(0.45, 0, 0.25, 1); }
   :global(.js) .skizze.an .s1 { transition-delay: 0.15s; }

@@ -1,97 +1,26 @@
 ---
-// „Menschen vertrauen Menschen.“ – Split-Screen: links dieselbe Website statisch, rechts mit Unternehmensfilm.
-// Beim Scrollen fährt die Trennlinie durch beide Varianten (an die Scrollposition gekoppelt, springt nie);
-// zusätzlich per Regler bedienbar (Tastatur, Touch). Ohne JS: Hälfte/Hälfte. Bei reduzierter Bewegung: kein Mitlaufen, Regler bleibt.
-import Icon from "./Icon.astro";
-import { LOESUNG, u } from "../daten";
+// „Menschen vertrauen Menschen.“ – Überschrift und vier Punkte (Jamil 4227: Vergleich ohne/mit Film entfernt).
+import { LOESUNG } from "../daten";
 ---
 <section class="abschnitt kompakt loesung" aria-labelledby="loesung-titel">
   <div class="huelle loesung-raster">
     <div class="loesung-text">
       <h2 id="loesung-titel">{LOESUNG.titel}</h2>
       <p>{LOESUNG.text}</p>
-      <ul class="haken">
-        {LOESUNG.punkte.map((p) => <li><span class="haken-icon" aria-hidden="true"></span>{p}</li>)}
-      </ul>
     </div>
-    <figure class="vergleich" data-vergleich>
-      <div class="browser">
-        <div class="browser-leiste" aria-hidden="true"><i></i><i></i><i></i><span>deine-website.de</span></div>
-        <div class="buehne" data-autoclip data-spaet>
-          <div class="seite statisch" aria-hidden="true">
-            <div class="mock-kopf"><b></b><s></s><s></s><s></s></div>
-            <div class="mock-hero"><img src={u("/medien/clips/unternehmen.webp")} width="800" height="450" alt="" loading="lazy" decoding="async" /></div>
-            <div class="mock-zeilen"><s></s><s></s><s></s></div>
-          </div>
-          <div class="seite mitfilm" aria-hidden="true">
-            <div class="mock-kopf"><b></b><s></s><s></s><s></s></div>
-            <div class="mock-hero">
-              <img src={u("/medien/clips/unternehmen.webp")} width="800" height="450" alt="" loading="lazy" decoding="async" />
-              <video muted loop playsinline preload="none" data-src={u("/medien/clips/unternehmen.mp4")} tabindex="-1"></video>
-              <span class="mock-play"><Icon name="play" /></span>
-            </div>
-            <div class="mock-zeilen"><s></s><s></s><s></s></div>
-          </div>
-          <div class="griff" aria-hidden="true"><span></span></div>
-          <button class="clip-pause" type="button" data-pause hidden aria-pressed="false">
-            <span class="p-an"><Icon name="pause" /><span class="sr">Film anhalten</span></span>
-            <span class="p-aus"><Icon name="play" /><span class="sr">Film abspielen</span></span>
-          </button>
-        </div>
-      </div>
-      <label class="regler-label">
-        <span class="sr">Vergleich verschieben: links ohne Film, rechts mit Film</span>
-        <input class="regler" type="range" min="0" max="100" value="50" data-regler />
-      </label>
-      <figcaption><span>Ohne Film</span><span>Mit Film</span></figcaption>
-    </figure>
+    <ul class="haken">
+      {LOESUNG.punkte.map((p) => <li class="reveal"><span class="haken-icon" aria-hidden="true"></span>{p}</li>)}
+    </ul>
   </div>
 </section>
 <style>
-  .loesung-raster { display: grid; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+  .loesung-raster { display: grid; gap: 1.25rem clamp(2rem, 6vw, 5rem); align-items: center; }
   @media (min-width: 60rem) { .loesung-raster { grid-template-columns: 1fr 1fr; } }
-  .loesung-text p { font-size: 1.1rem; }
-  .haken { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.7rem; }
-  .haken li { display: flex; align-items: center; gap: 0.8rem; color: var(--weiss); font-size: 1.1rem; }
+  .loesung-text h2 { margin-bottom: 0.7rem; }
+  .loesung-text p { margin: 0; font-size: 1.1rem; }
+  .haken { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.75rem; }
+  @media (min-width: 40rem) and (max-width: 59.99rem) { .haken { grid-template-columns: 1fr 1fr; } }
+  .haken li { display: flex; align-items: center; gap: 0.85rem; padding: 0.95rem 1.1rem; background: var(--nacht-2); border-radius: 3px; color: var(--weiss); font-size: 1.08rem; }
   .haken-icon { flex: none; width: 1.5rem; height: 1.5rem; border: 1.5px solid var(--gelb); border-radius: 50%; position: relative; }
   .haken-icon::after { content: ""; position: absolute; left: 0.45rem; top: 0.22rem; width: 0.38rem; height: 0.7rem; border: solid var(--gelb); border-width: 0 2px 2px 0; transform: rotate(45deg); }
-
-  .vergleich { margin: 0; --teil: 50%; }
-  .browser { background: var(--nacht-2); border: 1px solid var(--linie-dunkel); border-radius: 6px; overflow: hidden; box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.9); }
-  .browser-leiste { display: flex; align-items: center; gap: 0.4rem; padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--linie-dunkel); }
-  .browser-leiste i { width: 0.55rem; height: 0.55rem; border-radius: 50%; background: #3a3836; }
-  .browser-leiste span { margin-left: 0.8rem; font-size: 0.75rem; color: var(--silber); }
-  .buehne { position: relative; aspect-ratio: 16 / 9.5; overflow: hidden; }
-  .seite { position: absolute; inset: 0; padding: 4% 5%; display: grid; grid-template-rows: auto 1fr auto; gap: 4%; background: #f3f1ec; }
-  .mitfilm { clip-path: inset(0 0 0 var(--teil)); }
-  .mock-kopf { display: flex; align-items: center; gap: 4%; }
-  .mock-kopf b { width: 18%; height: 0.7rem; background: #2a2826; border-radius: 2px; }
-  .mock-kopf s { width: 9%; height: 0.45rem; background: #c9c4bb; border-radius: 2px; }
-  .mock-kopf s:first-of-type { margin-left: auto; }
-  .mock-hero { position: relative; overflow: hidden; border-radius: 3px; background: #d8d3ca; }
-  .mock-hero img, .mock-hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .statisch .mock-hero img { filter: grayscale(1) contrast(0.85) brightness(1.08); opacity: 0.55; }
-  .mitfilm .mock-hero video { opacity: 0; transition: opacity 0.6s ease; }
-  .buehne.spielt .mitfilm .mock-hero video { opacity: 1; }
-  .mock-play { position: absolute; left: 4%; bottom: 7%; display: grid; place-items: center; width: 2.2rem; height: 2.2rem; border-radius: 50%; background: var(--gelb); color: #0a0a0a; }
-  .mock-play :global(svg) { width: 0.9rem; height: 0.9rem; translate: 1px 0; }
-  .mock-zeilen { display: grid; gap: 0.45rem; }
-  .mock-zeilen s { height: 0.45rem; background: #cfcac1; border-radius: 2px; }
-  .mock-zeilen s:nth-child(1) { width: 62%; height: 0.75rem; background: #3a3836; }
-  .mock-zeilen s:nth-child(2) { width: 88%; }
-  .mock-zeilen s:nth-child(3) { width: 74%; }
-  .griff { position: absolute; top: 0; bottom: 0; left: var(--teil); width: 2px; translate: -1px 0; background: var(--gelb); }
-  .griff span { position: absolute; top: 50%; left: 50%; width: 2.2rem; height: 2.2rem; translate: -50% -50%; border-radius: 50%; background: var(--gelb);
-    box-shadow: 0 0 0 4px rgba(212, 160, 23, 0.25); }
-  .griff span::before, .griff span::after { content: ""; position: absolute; top: 50%; width: 0.4rem; height: 0.4rem; border: solid #0a0a0a; border-width: 0 2px 2px 0; }
-  .griff span::before { left: 0.45rem; transform: translateY(-50%) rotate(135deg); }
-  .griff span::after { right: 0.45rem; transform: translateY(-50%) rotate(-45deg); }
-  .clip-pause { position: absolute; z-index: 3; right: 0.6rem; top: 0.6rem; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 0; border-radius: 2px; background: rgba(10, 10, 10, 0.75); color: var(--weiss); cursor: pointer; }
-  .clip-pause :global(svg) { width: 1.05rem; height: 1.05rem; }
-  .clip-pause .p-aus { display: none; }
-  .clip-pause[aria-pressed="true"] .p-an { display: none; }
-  .clip-pause[aria-pressed="true"] .p-aus { display: grid; }
-  .regler-label { display: block; margin-top: 0.75rem; }
-  .regler { width: 100%; accent-color: var(--gelb); height: 2rem; cursor: ew-resize; }
-  figcaption { display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--silber); }
 </style>

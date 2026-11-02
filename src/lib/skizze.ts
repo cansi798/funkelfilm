@@ -8,8 +8,9 @@ const gen = rough.generator();
 export type Form = "unterstrich" | "kreis" | "rahmen" | "pfeil" | "kamera" | "klappe";
 export type Strich = { d: string; fuellung?: boolean };
 
+// Ruhig statt kritzelig (Jamil 4228/4230): geringe Rauheit, kaum Bogen, EIN Strich statt Doppelstrich – handgemacht, aber elegant.
 const basis = (seed: number, o: Options = {}): Options => ({
-  roughness: 1.4, bowing: 1.6, strokeWidth: 2, seed, disableMultiStroke: false, preserveVertices: false, ...o,
+  roughness: 0.7, bowing: 0.5, strokeWidth: 2, seed, disableMultiStroke: true, preserveVertices: false, ...o,
 });
 const pfade = (dr: ReturnType<typeof gen.line>): Strich[] =>
   gen.toPaths(dr).map((p) => ({ d: p.d, fuellung: p.fill !== "none" && !!p.fill }));
@@ -19,21 +20,22 @@ export function skizze(form: Form, b: number, h: number, seed = 3): Strich[] {
   const m = 4; // Rand, damit nichts abgeschnitten wird
   switch (form) {
     case "unterstrich":
-      return pfade(gen.curve([[m, h * 0.62], [b * 0.3, h * 0.42], [b * 0.62, h * 0.55], [b - m, h * 0.35]], basis(seed, { roughness: 1.1, bowing: 2 })));
+      return pfade(gen.curve([[m, h * 0.62], [b * 0.3, h * 0.42], [b * 0.62, h * 0.55], [b - m, h * 0.35]], basis(seed, { roughness: 0.6, bowing: 0.8 })));
     case "kreis":
-      return pfade(gen.ellipse(b / 2, h / 2, b - 2 * m, h - 2 * m, basis(seed, { roughness: 1.6, curveStepCount: 11 })));
+      return pfade(gen.ellipse(b / 2, h / 2, b - 2 * m, h - 2 * m, basis(seed, { roughness: 0.8, curveStepCount: 18, curveFitting: 0.98 })));
     case "rahmen":
-      return pfade(gen.rectangle(m, m, b - 2 * m, h - 2 * m, basis(seed, { roughness: 1.2, bowing: 1 })));
+      return pfade(gen.rectangle(m, m, b - 2 * m, h - 2 * m, basis(seed, { roughness: 0.55, bowing: 0.4 })));
     case "pfeil": {
       // geschwungener Pfeil von links nach rechts
-      const kurve = pfade(gen.curve([[m, h * 0.7], [b * 0.35, h * 0.2], [b * 0.7, h * 0.25], [b - m - 2, h * 0.55]], basis(seed, { roughness: 1 })));
-      const sx = b - m - 2, sy = h * 0.55;
-      const spitze = pfade(gen.linearPath([[sx - 13, sy - 9], [sx, sy], [sx - 15, sy + 5]], basis(seed + 1, { roughness: 0.8 })));
+      // sanfter Bogen, saubere symmetrische Spitze entlang der Endrichtung
+      const kurve = pfade(gen.curve([[m, h * 0.65], [b * 0.4, h * 0.3], [b * 0.72, h * 0.32], [b - m - 2, h * 0.5]], basis(seed, { roughness: 0.5, bowing: 0.3 })));
+      const sx = b - m - 2, sy = h * 0.5;
+      const spitze = pfade(gen.linearPath([[sx - 11, sy - 8], [sx, sy], [sx - 12, sy + 6]], basis(seed + 1, { roughness: 0.25, bowing: 0 })));
       return [...kurve, ...spitze];
     }
     case "kamera": {
       // Filmkamera: Gehäuse, zwei Filmrollen, Objektiv, Stativ
-      const o = (s: number) => basis(seed + s, { roughness: 1.2 });
+      const o = (s: number) => basis(seed + s, { roughness: 0.6 });
       return [
         ...pfade(gen.rectangle(b * 0.18, h * 0.42, b * 0.5, h * 0.28, o(0))),
         ...pfade(gen.circle(b * 0.3, h * 0.27, h * 0.26, o(1))),
@@ -46,7 +48,7 @@ export function skizze(form: Form, b: number, h: number, seed = 3): Strich[] {
     }
     case "klappe": {
       // Filmklappe: Tafel + schräg geöffnete Klappe mit Streifen
-      const o = (s: number) => basis(seed + s, { roughness: 1.1 });
+      const o = (s: number) => basis(seed + s, { roughness: 0.6 });
       const striche: Strich[] = [
         ...pfade(gen.rectangle(b * 0.12, h * 0.42, b * 0.76, h * 0.5, o(0))),
         ...pfade(gen.line(b * 0.12, h * 0.6, b * 0.88, h * 0.6, o(1))),

@@ -1,9 +1,10 @@
 ---
-// Schriften selbst gehostet (fontsource): Instrument Serif für Überschriften (filmisch, ruhig), Archivo für Text und Bedienung.
-// Jamils Konzept „FUNKELFILM 2027“ (Talk 4222): Netflix-Doku/Leica/A24 statt Agentur – Poppins/Mulish wirkten zu sehr nach Agentur.
-import "@fontsource/instrument-serif/latin-400.css";
+// Schriften selbst gehostet (fontsource): Barlow Condensed für Überschriften – kräftig, schmal, gerade Enden wie das Logo
+// (Jamil Talk 4231: „Schriftart vom Stil zum Logo passen“; Vergleich Oswald/Bebas/Antonio/Barlow/Anton in Nextcloud), Archivo für Text.
+import "@fontsource/barlow-condensed/latin-600.css";
+import "@fontsource/barlow-condensed/latin-700.css";
 import "@fontsource-variable/archivo/wght.css";
-import serifUrl from "@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2?url";
+import serifUrl from "@fontsource/barlow-condensed/files/barlow-condensed-latin-700-normal.woff2?url";
 import archivoUrl from "@fontsource-variable/archivo/files/archivo-latin-wght-normal.woff2?url";
 import "../styles/global.css";
 import Kopf from "../components/Kopf.astro";
@@ -37,6 +38,7 @@ const firma = {
   email: `mailto:${MAIL}`,
   founder: { "@type": "Person", name: INHABER, jobTitle: "Videograf" },
   address: { "@type": "PostalAddress", addressLocality: ORT, addressCountry: "DE" },
+  areaServed: [{ "@type": "City", name: "Hamburg" }, { "@type": "Country", name: "Deutschland" }], // bestätigt Jamil Talk 4231
   sameAs: SOZIAL.map((s) => s.href),
   knowsAbout: ["Imagefilm", "Testimonial-Video", "Recruitingfilm", "Eventfilm", "Videoproduktion"],
 };

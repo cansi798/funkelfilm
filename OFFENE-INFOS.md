@@ -16,7 +16,7 @@ Stand: 02.11.2026 (nach Jamils Konzept „FUNKELFILM 2027“, Talk 4222). Diese 
 7. **Kundenstimmen:** wörtlich übernommen, inklusive Schreibweisen („Herr Igbal“, „Ihn“, „mit Herr Iqbal“). Korrigieren erlaubt? Sind die Personen mit Namen und Firma auf der Website einverstanden?
 8. **Telefon:** Die Nummer steht auf der alten Seite nur im Impressum. Soll sie auch im Kontaktbereich stehen (Anruf, ggf. WhatsApp)?
 9. **Kontaktweg:** Die Anfrage öffnet derzeit das E-Mail-Programm (kein Server, kein Drittanbieter). Gewünscht: echter Formularversand? Soll der Kundenfragebogen (18 Fragen) der alten Seite übernommen werden?
-10. **Einsatzgebiet:** Nur Hamburg, oder auch Umgebung/bundesweit?
+10. ~~**Einsatzgebiet**~~ – **erledigt:** Hamburg & deutschlandweit (Jamil Talk 4231).
 11. **Social Media:** Footer der alten Seite verlinkt YouTube „@funkelfilm3834“, die Filme laufen aber auf dem Kanal „@funkelfilm_com“. Welcher Kanal ist richtig?
 
 ## Recht
@@ -31,7 +31,7 @@ Stand: 02.11.2026 (nach Jamils Konzept „FUNKELFILM 2027“, Talk 4222). Diese 
 16. **Ich-Aussage freigeben:** „Ich glaube nicht an gestellte Werbespots. Ich glaube daran, echte Menschen und echte Geschichten sichtbar zu machen.“ und „direkt mit dem Filmemacher, ohne große Agentur“ – bitte von Sheeras freigeben lassen.
 17. **Sterne:** Keine Sterne auf der Seite, weil es keine belegte Bewertungsquelle gibt (auch die alte Seite zeigt keine). Gibt es Google-Bewertungen o. Ä. mit Link? Dann können Sterne mit Quelle rein.
 18. **Beispielzitate aus dem Konzept** („Professionell, unkompliziert und auf den Punkt.“, „Wir nutzen den Film bis heute …“) kommen in keiner echten Kundenstimme vor und sind nicht übernommen. Gibt es dazu echte Stimmen mit Namen und Freigabe?
-19. **„Deutschlandweit“** (Vertrauenszeile, FAQ): steht nicht auf der bisherigen Seite. Bitte bestätigen.
+19. ~~**„Deutschlandweit“** (Vertrauenszeile, FAQ)~~ – **erledigt:** von Jamil bestätigt (Talk 4231, 02.11.2026); Platzhalter entfernt, im JSON-LD als Einsatzgebiet.
 20. **FAQ-Antworten** („Muss ich vor die Kamera? Nein …“, „Wie lange dauert die Produktion?“) bitte bestätigen.
 21. **Leistungen:** „Produkt- und Erklärungsvideos“ und „Dokumentationen“ stehen nicht auf der bisherigen Seite. Bietet Funkelfilm das an?
 22. **Referenzen:** Projektname laut YouTube-Titel „Nexus Fighter Academy | NEXUS KIDS | Eindrücke“; die Beschreibung „Mehr Sichtbarkeit für Nachwuchsarbeit und Vereinsleben“ stammt aus dem Konzept – bitte bestätigen. Für die Recruitingfilm-Karte fehlt ein echtes Projekt (Titel, Kunde, Freigabe); der Vorschau-Ausschnitt stammt aus der Recruiting-Karte der alten Seite.

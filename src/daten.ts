@@ -277,8 +277,7 @@ export const HERO = {
 /** Vertrauenszeile. Keine Sterne: Es gibt keine belegte Bewertungsquelle (auch die alte Seite zeigt keine). */
 export const VERTRAUEN = [
   { text: 'Über 100 Projekte umgesetzt', hinweis: 'Stand 2024', belegt: true },
-  { text: 'Aus Hamburg', hinweis: '', belegt: true },
-  { text: 'Deutschlandweit', hinweis: 'Platzhalter, bitte bestätigen', belegt: false },
+  { text: 'Hamburg & deutschlandweit', hinweis: '', belegt: true }, // deutschlandweit bestätigt (Jamil Talk 4231, 02.11.)
   { text: 'Persönliche Betreuung vom ersten Gespräch bis zur Veröffentlichung', hinweis: '', belegt: true },
 ];
 
@@ -361,7 +360,7 @@ export const FAQ = [
   { frage: 'Was kostet ein Film?', antwort: 'Jedes Projekt ist individuell. Im Erstgespräch erhältst du eine realistische Einschätzung.', belegt: true },
   { frage: 'Muss ich vor die Kamera?', antwort: 'Nein. Gemeinsam finden wir die passende Lösung.', belegt: true },
   { frage: 'Wie lange dauert die Produktion?', antwort: 'Abhängig vom Umfang des Projekts.', belegt: true },
-  { frage: 'Arbeitet Funkelfilm nur in Hamburg?', antwort: 'Nein. Produktionen sind deutschlandweit möglich.', belegt: false },
+  { frage: 'Arbeitet Funkelfilm nur in Hamburg?', antwort: 'Nein. Produktionen sind deutschlandweit möglich.', belegt: true },
 ];
 
 export const SCHLUSS = { titel: 'Deine Geschichte ist bereits da.', unter: 'Jetzt muss sie nur noch erzählt werden.', knopf: 'Kostenloses Erstgespräch vereinbaren' };

@@ -1,6 +1,6 @@
 /* Funkelfilm – Design „FUNKELFILM 2027“ (Jamils Konzept, Talk 4222, 01.11.2026)
    Kein Blau. Tiefschwarz, Anthrazit, Cinematic Gold, Off White, warmes Grau, Bronze. Stimmung: Netflix-Doku, Leica, A24 – nicht Agentur.
-   Schrift: Instrument Serif (Überschriften, filmisch-ruhig) + Archivo (Text und Bedienung), beide selbst gehostet.
+   Schrift: Barlow Condensed (Überschriften in Versalien, passend zum Logo, Jamil 4231) + Archivo (Text und Bedienung), selbst gehostet.
    Kontraste auf #0A0A0A: Off White 17,4:1 · warmes Grau 7,9:1 · Gold 8,6:1 · Bronze 4,1:1 (nur Linien/Hover, nie Text). */
 
 :root {
@@ -20,7 +20,7 @@
   --linie-hell: rgba(243, 241, 236, 0.14);
   --rot-vorschau: #b3261e;
 
-  --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --serif: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;  /* Name bleibt, Wert = Logo-nahe Grotesk */
   --titel: "Archivo Variable", "Helvetica Neue", Arial, sans-serif;
   --text: "Archivo Variable", "Helvetica Neue", Arial, sans-serif;
 
@@ -50,11 +50,11 @@ p { margin: 0 0 1.2rem; }
 ul, ol { margin: 0 0 1.2rem; }
 
 h1, h2 {
-  font-family: var(--serif); font-weight: 400; line-height: 1.04; letter-spacing: -0.01em; color: var(--weiss);
+  font-family: var(--serif); font-weight: 700; line-height: 1.02; letter-spacing: 0.01em; text-transform: uppercase; color: var(--weiss);
   margin: 0 0 1.1rem; text-wrap: balance;
 }
-h1 { font-size: clamp(2.6rem, 6.4vw, 5.4rem); line-height: 1; }
-h2 { font-size: clamp(2.1rem, 4.2vw, 3.6rem); }
+h1 { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 0.98; }
+h2 { font-size: clamp(2rem, 3.8vw, 3.2rem); }
 h3 { font-family: var(--titel); font-weight: 600; font-size: clamp(1.08rem, 1.5vw, 1.25rem); line-height: 1.35; letter-spacing: -0.005em; margin: 0 0 0.6rem; color: var(--weiss); }
 @media (max-width: 30rem) { h1, h2 { overflow-wrap: break-word; } }
 

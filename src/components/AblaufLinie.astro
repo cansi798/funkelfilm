@@ -13,7 +13,6 @@ const { titel = "So entsteht dein Film.", id = "ablauf" } = Astro.props;
       <p>Fünf Schritte, ein Ansprechpartner.</p>
     </div>
     <div class="ablauf-spur" data-linie>
-      <span class="ablauf-schiene" aria-hidden="true"><span class="ablauf-gold"></span></span>
       <ol>
         {ABLAUF_KURZ.map((s, i) => (
           <li data-schritt>
@@ -35,10 +34,16 @@ const { titel = "So entsteht dein Film.", id = "ablauf" } = Astro.props;
 <style>
   .ablauf-raster { display: grid; gap: 2rem clamp(2rem, 6vw, 5rem); }
   @media (min-width: 60rem) { .ablauf-raster { grid-template-columns: 0.8fr 1.2fr; } .ablauf-kopf { position: sticky; top: calc(var(--kopf-h) + 2rem); align-self: start; } }
-  .ablauf-spur { position: relative; --fort: 1; }
-  :global(.js) .ablauf-spur { --fort: 0; }
-  .ablauf-schiene { position: absolute; left: 1.15rem; top: 1.2rem; bottom: 4.2rem; width: 2px; background: rgba(141, 110, 77, 0.35); }
-  .ablauf-gold { position: absolute; inset: 0; background: var(--gelb); transform-origin: top; transform: scaleY(var(--fort)); }
+  /* Linie aus Teilstücken zwischen den Knoten: sie endet exakt am Knoten von Schritt 5 (Jamil 4225).
+     --seg je Schritt (0…1) setzt seite.js beim Scrollen; ohne JS bzw. reduzierte Bewegung = ganz gezeichnet. */
+  .ablauf-spur { position: relative; }
+  .ablauf-spur > ol > li { position: relative; --seg: 1; }
+  :global(.js) .ablauf-spur > ol > li { --seg: 0; }
+  .ablauf-spur > ol > li:not(:last-child)::before, .ablauf-spur > ol > li:not(:last-child)::after {
+    content: ""; position: absolute; left: calc(1.15rem - 1px); top: 1.15rem; width: 2px; height: calc(100% + clamp(0.8rem, 2vw, 1.25rem));
+  }
+  .ablauf-spur > ol > li:not(:last-child)::before { background: rgba(141, 110, 77, 0.35); }
+  .ablauf-spur > ol > li:not(:last-child)::after { background: var(--gelb); transform-origin: top; transform: scaleY(var(--seg)); }
   .ablauf-spur ol { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(0.8rem, 2vw, 1.25rem); }
   .ablauf-spur > ol > li { display: grid; grid-template-columns: 2.3rem 1fr; gap: 1.1rem; align-items: start; }
   .ablauf-punkt { position: relative; z-index: 1; display: grid; place-items: center; width: 2.3rem; height: 2.3rem; border-radius: 50%; background: var(--nacht); border: 1.5px solid var(--bronze);
@@ -51,5 +56,5 @@ const { titel = "So entsteht dein Film.", id = "ablauf" } = Astro.props;
   .ablauf-mehr ol { margin-top: 0.9rem; gap: 0.6rem; padding-left: 1.1rem; list-style: decimal; display: block; }
   .ablauf-mehr li { margin-bottom: 0.6rem; }
   .ablauf-mehr strong { color: var(--weiss); }
-  @media (prefers-reduced-motion: reduce) { :global(.js) .ablauf-spur { --fort: 1; } [data-schritt] .ablauf-punkt { border-color: var(--gelb); color: #0a0a0a; background: var(--gelb); } }
+  @media (prefers-reduced-motion: reduce) { :global(.js) .ablauf-spur > ol > li { --seg: 1; } [data-schritt] .ablauf-punkt { border-color: var(--gelb); color: #0a0a0a; background: var(--gelb); } }
 </style>
