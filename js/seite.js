@@ -3,7 +3,6 @@
 // 2) Reveal + Zeitleiste: einmal starten, sobald gut ein Drittel im Bild ist.
 // 3) Kopfzeile: nur Schatten + gelbe Fortschrittsleiste; „Nach oben“ nach ca. einem Bildschirm.
 // 4) Hero-Film und Clips der Unterseiten: Video lädt erst nach dem Seitenaufbau, mit Pause-Knopf.
-// 5) Hero-Regieskizze (rough.js, beim Build erzeugt): zeichnet sich direkt nach dem Einstieg bzw. sofort, wenn es keinen gibt.
 
 document.documentElement.classList.add("js");
 (function () {
@@ -13,13 +12,11 @@ document.documentElement.classList.add("js");
   var intro = false;
   try { if (!ruhig && !sessionStorage.getItem("ff-intro")) { intro = true; sessionStorage.setItem("ff-intro", "1"); } } catch (e) { intro = false; }
   if (intro) html.classList.add("mit-intro");
-  var introFertig = [], introVorbei = [];
+  var introFertig = [];
   function nachIntro(fn) { if (!intro) fn(); else introFertig.push(fn); }
-  // erst, wenn der Einstieg wirklich weg ist (Ende oder Überspringen) – nicht schon beim vorgezogenen Freigeben der Hero-Teile
-  function nachEinstieg(fn) { if (!intro) fn(); else introVorbei.push(fn); }
   function introEnde() {
     if (!intro) return; intro = false;
-    var f = introFertig.concat(introVorbei); introFertig = []; introVorbei = []; f.forEach(function (fn) { fn(); });
+    var f = introFertig; introFertig = []; f.forEach(function (fn) { fn(); });
     setTimeout(function () { html.classList.remove("mit-intro", "intro-weg"); }, 260);
   }
   var sparen = navigator.connection && navigator.connection.saveData;
@@ -77,10 +74,6 @@ document.documentElement.classList.add("js");
       // Hero-Teile schon kurz vor dem Ende freigeben, damit die Blende direkt in die Scharfstellung übergeht
       setTimeout(function () { var f = introFertig; introFertig = []; f.forEach(function (fn) { fn(); }); }, 1900);
     }
-
-    // 5) Hero-Regieskizze: ohne Einstieg kurz nach dem ersten Bild, mit Einstieg genau an dessen Ende
-    var regie = document.querySelector('[data-skizze="hero"]');
-    if (regie) { var mitEinstieg = intro; nachEinstieg(function () { setTimeout(function () { regie.classList.add("an"); }, mitEinstieg ? 80 : 250); }); }
 
     // 2) Reveal, Szenen und Skizzen: starten erst im Bild und laufen dann ganz durch (springen nie ans Ende)
     document.querySelectorAll('[data-skizze="nach-intro"]').forEach(function (el) {
