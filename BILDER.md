@@ -18,6 +18,8 @@ Alle Dateien stammen von funkelfilm.com (Abruf 01.11.2026) und sind **nur zur Vo
 | clips/reel.* | Zusammenschnitt aus den Animationen „Imagefilme“, „Kundengeschichten“, „Eventvideos“, „Unternehmensfilme“, „2024 – Über 100 Projekte“ | 10 → 25 fps (Bildmischung), MP4 + WebM, ohne Ton |
 | clips/unternehmen.*, kundenstimmen.*, recruiting.*, event.* | Animationen der Leistungskarten (Startseite/Services) | MP4 + WebM, Standbild als WebP |
 
+Karte „Einsatzgebiet“ (Startseite): Umriss Deutschlands aus Natural Earth 1:50m „Admin 0 – Countries“ (gemeinfrei, naturalearthdata.com), beim Bauen vereinfacht (`src/lib/deutschland-umriss.ts`); Zeichnung mit rough.js beim Build.
+
 Farbabgleich 02.11.2026: Hero-Film `clips/reel.*` neu kodiert (gleiche Datenrate), Blaustich raus – Blau/Cyan entsättigt, Mitten/Lichter leicht warm (ffmpeg `huesaturation=colors=c+b:saturation=-0.8` + `colorbalance`); Hauttöne und Schwarz unverändert. Die übrigen Ausschnitte bleiben original: Sie haben keinen Blaustich, und der Filter hätte die Farben gezeigter Kunstwerke verändert.
 
 Nicht übernommen: die vier „Warum …“-Bilder der Unterseiten (Herkunft unklar, wirken wie Archiv-/KI-Bilder) und das Fernseher-Mockup „Die Projekte sprechen für sich“.
