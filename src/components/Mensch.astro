@@ -19,7 +19,7 @@ import { MENSCH, u } from "../daten";
 <style>
   .mensch-raster { display: grid; gap: 1.75rem; justify-items: center; }
   .mensch-bild { order: -1; width: min(13rem, 60vw); aspect-ratio: 1; border-radius: 50%; overflow: hidden; background: var(--nacht-2);
-    box-shadow: 0 0 0 1px rgba(141, 110, 77, 0.7), 0 0 0 10px var(--grund), 0 0 0 11px rgba(141, 110, 77, 0.35); }
+    box-shadow: 0 0 0 1px var(--linie-mittel), 0 0 0 10px var(--grund), 0 0 0 13px var(--gelb); }
   .mensch-bild :global(picture), .mensch-bild :global(img) { display: block; width: 100%; height: 100%; }
   /* Quadratischer Zuschnitt aus dem Original (Jamil 4253): Gesicht ca. 60–65 % des Kreises, mittig, Augen leicht über der Mitte */
   .mensch-bild :global(img) { object-fit: cover; object-position: 50% 50%; }
@@ -27,7 +27,7 @@ import { MENSCH, u } from "../daten";
   .mensch-text { width: 100%; max-width: 32rem; margin-inline: auto; text-align: center; }
   .mensch-text h2 { margin-bottom: 0.9rem; }
   .mensch-text p { margin-bottom: 0.8rem; }
-  .mensch-text .gross { font: 600 clamp(1.4rem, 2.2vw, 1.8rem)/1.25 var(--serif); color: var(--weiss); }
+  .mensch-text .gross { font: 600 clamp(1.4rem, 2.2vw, 1.8rem)/1.25 var(--serif); color: var(--tinte); }
   @media (min-width: 60rem) {
     .mensch-raster { grid-template-columns: minmax(0, 36rem) auto; justify-content: center; align-items: center; justify-items: start; gap: clamp(3rem, 7vw, 6rem); }
     .mensch-bild { order: 0; width: 21rem; }

@@ -45,10 +45,10 @@ import Platzhalter from "../components/Platzhalter.astro";
   .zeilen { display: grid; gap: clamp(3.5rem, 8vw, 6rem); }
   .zeile { display: grid; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
   @media (min-width: 60rem) { .zeile { grid-template-columns: 1.1fr 1fr; } .zeile.gedreht .zeile-bild { order: 2; } }
-  .zeile-bild { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--schwarz); }
+  .zeile-bild { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--nacht); }
   .zeile-bild img, .zeile-bild video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .zeile-bild video { opacity: 0; transition: opacity 0.4s ease; }
   .zeile-bild.spielt video { opacity: 1; }
-  .art { margin: 0 0 0.5rem; font: 600 1rem/1.3 var(--titel); color: var(--gelb); }
+  .art { margin: 0 0 0.5rem; font: 600 1rem/1.3 var(--titel); color: var(--akzent-text); text-decoration: underline 0.16em var(--akzent-strich); text-underline-offset: 0.32em; }
   .zeile h2 { font-size: clamp(1.6rem, 3vw, 2.3rem); }
 </style>

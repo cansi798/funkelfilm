@@ -301,7 +301,7 @@ export const REELS = {
 
 export const HERO = {
   // H1 zweizeilig nach Jamil (4319, Variante A gewählt 4330): „Authentische Filme. / Eindrucksvoll erzählt.“ – ersetzt Cans H1
-  // „Filme, die zeigen, wie gut deine Arbeit ist.“. Gold = „Filme“ (das Wort Film sofort im Hero, Cans Klarheits-Ziel).
+  // „Filme, die zeigen, wie gut deine Arbeit ist.“. Akzent (seit 07.11. Gelb #FFCC00) = „Filme“ (das Wort Film sofort im Hero, Cans Klarheits-Ziel).
   titel: HERO_TITEL[VARIANTE], // Varianten oben bei LOGO_UNTERZEILEN
   // Subheadline (Jamil 4319).
   // Bei Variante A ohne „Authentische Filme“ (steht schon in der H1) – Jamils Inhalt sonst unverändert.

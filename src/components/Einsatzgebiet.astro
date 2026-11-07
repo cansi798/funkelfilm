@@ -1,5 +1,5 @@
 ---
-// „Aus Hamburg. Drehs in ganz Deutschland.“ (Can Talk 4242): handgezeichnete Deutschland-Karte in Gold/Bronze auf Schwarz.
+// „Aus Hamburg. Drehs in ganz Deutschland.“ (Can Talk 4242): handgezeichnete Deutschland-Karte seit 07.11. in Gelb auf Anthrazit (davor Gold/Bronze auf Schwarz).
 // Sie zeichnet sich einmal, sobald sie gut im Bild ist: Umriss → Hamburg → Städte → Reisebögen zu allen 12 Städten nacheinander, die genau an den Punkten enden (~3 s; Jamil 4251).
 // Ohne JS und bei reduzierter Bewegung: fertige Karte. SEO ehrlich: Städte als echter Text (SVG-Text im HTML + Satz), Einsatzgebiet im
 // JSON-LD (Basis.astro) – keine Stadt-Unterseiten, keine Keyword-Listen. Breit: Karte links, Text rechts (Mensch davor ist Text links).
@@ -10,7 +10,7 @@ const k = deutschlandKarte();
 const lage: Record<string, [number, number, string]> = { r: [8, 5, "start"], l: [-8, 5, "end"], u: [0, 20, "middle"], o: [0, -11, "middle"], ur: [5, -11, "start"], ul: [-5, -11, "end"], dr: [5, 20, "start"], dl: [-5, 20, "end"] };
 const stufe = (i: number) => `o${Math.min(3, Math.floor(i / 3))}`;
 ---
-<section class="abschnitt kompakt einsatz" aria-labelledby="einsatz-titel">
+<section class="abschnitt kompakt einsatz dunkel" aria-labelledby="einsatz-titel">
   <div class="huelle einsatz-raster">
     <div class="einsatz-text">
       <h2 id="einsatz-titel">{EINSATZ.titel}</h2>
@@ -43,22 +43,22 @@ const stufe = (i: number) => `o${Math.min(3, Math.floor(i / 3))}`;
   .einsatz-text { width: 100%; max-width: 36rem; }
   .einsatz-text h2 { margin-bottom: 0.9rem; }
   .einsatz-text p { margin-bottom: 0.8rem; }
-  .einsatz-text .gross { font: 600 clamp(1.25rem, 2vw, 1.6rem)/1.3 var(--serif); color: var(--weiss); }
+  .einsatz-text .gross { font: 600 clamp(1.25rem, 2vw, 1.6rem)/1.3 var(--serif); color: var(--tinte); }
   .karte { width: min(21rem, 88vw); }
   .karte svg { width: 100%; height: auto; overflow: visible; }
   @media (min-width: 60rem) {
     .einsatz-raster { grid-template-columns: auto minmax(0, 34rem); justify-content: center; align-items: center; gap: clamp(3rem, 7vw, 6rem); }
     .karte { order: -1; width: 23rem; }
   }
-  .k-umriss { fill: none; stroke: var(--gelb); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
-  .k-bogen { fill: none; stroke: var(--bronze); stroke-width: 1.8; stroke-linecap: round; }
-  .k-ort circle { fill: var(--weiss); }
+  .k-umriss { fill: none; stroke: var(--akzent-linie); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  .k-bogen { fill: none; stroke: rgba(255, 204, 0, 0.45); stroke-width: 1.8; stroke-linecap: round; }
+  .k-ort circle { fill: var(--tinte); }
   /* dunkler Rand um die Schrift: Umriss/Bögen laufen nie sichtbar durch Text (Jamil 4228) */
   .karte text { paint-order: stroke; stroke: var(--grund); stroke-width: 6px; stroke-linejoin: round; }
-  .k-ort text { font: 500 15px/1 var(--text); fill: #d9d5cd; }
-  .k-ring { fill: none; stroke: var(--gelb); stroke-width: 1.8; }
-  .k-kern { fill: var(--gelb); }
-  .k-heimat text { font: 700 19px/1 var(--serif); letter-spacing: 0.06em; text-transform: uppercase; fill: var(--gelb); }
+  .k-ort text { font: 500 15px/1 var(--text); fill: var(--tinte); }
+  .k-ring { fill: none; stroke: var(--akzent-linie); stroke-width: 1.8; }
+  .k-kern { fill: var(--akzent-linie); }
+  .k-heimat text { font: 700 19px/1 var(--serif); letter-spacing: 0.06em; text-transform: uppercase; fill: var(--akzent-text); }
 
   /* Zeichnen (eine CSS-Uhr): Umriss 0–1 s → Hamburg 0,5 s → Städte 0,7–1,1 s (Text erscheint mit seinem Punkt) → Bögen 1,0–2,9 s, kurze zuerst */
   :global(.js) .karte path { stroke-dasharray: 1 1; stroke-dashoffset: 1; }

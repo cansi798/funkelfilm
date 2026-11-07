@@ -11,7 +11,7 @@ const zeigen = !!TELEFON || VORSCHAU;
 const waTitel = "WhatsApp öffnet sich – dabei gelten die Datenschutzregeln von WhatsApp (Meta)";
 ---
 {zeigen && (
-  <div class:list={["dk", `dk-${art}`, { offen: !TELEFON }]} data-direkt={art === "leiste" ? "" : undefined}>
+  <div class:list={["dk", `dk-${art}`, { offen: !TELEFON, dunkel: art === "leiste" }]} data-direkt={art === "leiste" ? "" : undefined}>
     {TELEFON_LINK
       ? <a class="dk-knopf" href={TELEFON_LINK} aria-label={`Funkelfilm anrufen: ${TELEFON}`}><Icon name="telefon" /><span>Anrufen</span></a>
       : <span class="dk-knopf" aria-disabled="true"><Icon name="telefon" /><span>Anrufen</span><small>Nummer folgt</small></span>}
@@ -24,13 +24,13 @@ const waTitel = "WhatsApp öffnet sich – dabei gelten die Datenschutzregeln vo
 )}
 <style>
   .dk { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-  .dk-knopf { display: inline-flex; align-items: center; gap: 0.55rem; min-height: 3rem; padding: 0.65rem 1.15rem; border: 1px solid rgba(243, 241, 236, 0.4);
-    border-radius: 2px; color: var(--weiss); font: 600 0.98rem/1.2 var(--titel); background: transparent; }
-  a.dk-knopf:hover { border-color: var(--gelb); color: var(--gelb); }
-  .dk-knopf :global(svg) { width: 1.2rem; height: 1.2rem; color: var(--gelb); flex: none; }
-  .dk-knopf small { font: 500 0.75rem/1 var(--text); color: #e9a29c; white-space: nowrap; }
+  .dk-knopf { display: inline-flex; align-items: center; gap: 0.55rem; min-height: 3rem; padding: 0.65rem 1.15rem; border: 1px solid var(--rahmen);
+    border-radius: 2px; color: var(--tinte); font: 600 0.98rem/1.2 var(--titel); background: transparent; }
+  a.dk-knopf:hover { border-color: var(--tinte); background: rgba(255, 204, 0, 0.16); }
+  .dk-knopf :global(svg) { width: 1.2rem; height: 1.2rem; color: var(--akzent-linie); flex: none; }
+  .dk-knopf small { font: 500 0.75rem/1 var(--text); color: var(--rot-klein); white-space: nowrap; }
   .dk.offen .dk-knopf { outline: 2px dashed var(--rot-vorschau); outline-offset: 2px; cursor: default; }
-  .dk-hinweis { flex-basis: 100%; margin: 0; font-size: 0.85rem; color: var(--silber); }
+  .dk-hinweis { flex-basis: 100%; margin: 0; font-size: 0.85rem; color: var(--tinte-leise); }
 
   .dk-menue { margin-top: 0.9rem; }
   .dk-menue .dk-knopf { flex: 1 1 8rem; justify-content: center; }
@@ -38,7 +38,7 @@ const waTitel = "WhatsApp öffnet sich – dabei gelten die Datenschutzregeln vo
   /* Feste Leiste am Handy: zwei gleich breite Felder unten, über dem Seiteninhalt; „Nach oben“ rückt darüber (NachOben.astro) */
   .dk-leiste { position: fixed; left: 0; right: 0; bottom: 0; z-index: 45; gap: 0; flex-wrap: nowrap;
     padding: 0.5rem max(0.75rem, env(safe-area-inset-right)) max(0.5rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
-    background: rgba(10, 10, 10, 0.96); border-top: 1px solid var(--linie-dunkel); transition: transform 0.3s var(--ease); }
+    background: rgba(43, 45, 49, 0.97); border-top: 1px solid var(--linie-dunkel); transition: transform 0.3s var(--ease); }
   .dk-leiste .dk-knopf { flex: 1 1 50%; justify-content: center; gap: 0.4rem; min-height: 2.9rem; padding-inline: 0.5rem; border: 0; font-size: 0.92rem; }
   .dk-leiste .dk-knopf small { font-size: 0.68rem; }
   .dk-leiste .dk-knopf + .dk-knopf { border-left: 1px solid var(--linie-dunkel); }

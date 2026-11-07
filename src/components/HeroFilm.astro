@@ -14,7 +14,7 @@ const poster = u("/medien/clips/reel.webp");
 const posterKlein = u("/medien/clips/reel-640.webp");
 const rund = (ext: string) => `${u(`/medien/bilder/sheeras-rund-112.${ext}`)} 112w, ${u(`/medien/bilder/sheeras-rund-168.${ext}`)} 168w`;
 ---
-<section class="hero" aria-labelledby="hero-titel" data-sucher>
+<section class="hero dunkel-breit" aria-labelledby="hero-titel" data-sucher>
   <div class="hero-bild">
     <div class="hero-film" data-parallax>
       <img class="sucher-poster" src={poster} srcset={`${posterKlein} 640w, ${poster} 1280w`} sizes="100vw" width="1280" height="720" alt="" fetchpriority="high" decoding="async" />
@@ -46,28 +46,29 @@ const rund = (ext: string) => `${u(`/medien/bilder/sheeras-rund-112.${ext}`)} 11
   </button>
 </section>
 <style>
-  .hero { position: relative; overflow: hidden; background: var(--nacht); isolation: isolate; }
-  .hero-bild { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #050505; }
+  .hero { position: relative; overflow: hidden; background: var(--papier); isolation: isolate; }
+  .hero-bild { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--nacht); }
   .hero-film { position: absolute; inset: -6% 0 -6% 0; will-change: transform; }
   .sucher-poster, .sucher-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 55% 40%; }
   .sucher-video { opacity: 0; transition: opacity 1.2s ease; }
   .hero.laeuft .sucher-video { opacity: 1; }
-  /* Handy: Film blendet unten weich ins Schwarz über, der Text steht darunter auf ruhigem Grund */
-  .hero-schleier { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 10, 10, 0.25) 0%, rgba(10, 10, 10, 0) 30%, rgba(10, 10, 10, 0) 62%, #0a0a0a 100%); }
+  /* Handy (seit 07.11. hell): Film als eigene Fläche, oben leicht abgedunkelt für den Pause-Knopf; der Text steht darunter auf Weiß */
+  .hero-schleier { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(43, 45, 49, 0.3) 0%, rgba(43, 45, 49, 0) 30%); }
 
   .hero-inhalt { padding-block: 1.1rem 2.75rem; }
   .hero-text { max-width: 52rem; }
-  .hero-unterzeile { margin: 0 0 0.7rem; max-width: 30rem; font: 600 clamp(1.2rem, 1.9vw, 1.55rem)/1.3 var(--serif); color: var(--weiss); }
+  .hero-unterzeile { margin: 0 0 0.7rem; max-width: 30rem; font: 600 clamp(1.2rem, 1.9vw, 1.55rem)/1.3 var(--serif); color: var(--tinte); }
   /* Zeilenhöhe 1,06: Umlautpunkte (ERZÄHLT) stoßen sonst an den Punkt der Zeile darüber */
   /* Genau zwei Zeilen (Jamil 4319): jede Zeile bleibt ganz, die Schrift passt sich der Breite an (längste Zeile ≈ 9,4 em) */
   .hero h1 { max-width: none; margin-bottom: 0.9rem; line-height: 1.06; font-size: min(clamp(2.45rem, 5.6vw, 4.6rem), calc((100vw - 2 * var(--rand)) / 9.8)); }
   .h1-zeile { display: block; white-space: nowrap; }
-  .h1-wort { color: var(--gelb); }
-  .hero-leistung { margin: 0 0 1.1rem; max-width: 36rem; font: 500 clamp(0.98rem, 1.25vw, 1.08rem)/1.5 var(--text); color: #d9d5cd; }
-  .hero-person { display: flex; align-items: center; gap: 0.8rem; margin: 0 0 1.5rem; font-size: 0.98rem; line-height: 1.4; color: var(--silber); }
+  /* „Filme“: über dem Film gelb; hell (Handy) dunkel mit gelber Markierung dahinter, weil Gelb auf Weiß nicht lesbar ist */
+  .h1-wort { color: var(--akzent-text); background: linear-gradient(transparent 58%, var(--akzent-mark) 58%, var(--akzent-mark) 90%, transparent 90%); padding-inline: 0.04em; }
+  .hero-leistung { margin: 0 0 1.1rem; max-width: 36rem; font: 500 clamp(0.98rem, 1.25vw, 1.08rem)/1.5 var(--text); color: var(--tinte); }
+  .hero-person { display: flex; align-items: center; gap: 0.8rem; margin: 0 0 1.5rem; font-size: 0.98rem; line-height: 1.4; color: var(--tinte-leise); }
   .hero-person picture { flex: none; }
-  .hero-person img { width: 3.25rem; height: 3.25rem; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 1px rgba(141, 110, 77, 0.8), 0 0 0 4px var(--nacht), 0 0 0 5px rgba(141, 110, 77, 0.35); }
-  .hero-person strong { font-weight: 600; color: var(--weiss); }
+  .hero-person img { width: 3.25rem; height: 3.25rem; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 1px var(--linie-mittel), 0 0 0 4px var(--grund), 0 0 0 5px rgba(138, 140, 146, 0.45); }
+  .hero-person strong { font-weight: 600; color: var(--tinte); }
   @media (max-width: 29.99rem) {
     .hero .knoepfe { gap: 0.6rem; }
     .hero .knoepfe .knopf { flex: 1 1 100%; }
@@ -75,23 +76,24 @@ const rund = (ext: string) => `${u(`/medien/bilder/sheeras-rund-112.${ext}`)} 11
 
   /* Breit: Film im Vollbild hinter dem Text */
   @media (min-width: 60rem) {
-    .hero { display: grid; align-items: end; min-height: min(calc(100svh - var(--kopf-h)), 54rem); background: #050505; }
+    .hero { display: grid; align-items: end; min-height: min(calc(100svh - var(--kopf-h)), 54rem); background: var(--nacht); }
     .hero-bild { position: absolute; inset: 0; aspect-ratio: auto; z-index: -1; }
     .sucher-poster, .sucher-video { object-position: 50% 50%; }
-    .hero-schleier { background: linear-gradient(180deg, rgba(10, 10, 10, 0.35) 0%, rgba(10, 10, 10, 0.1) 35%, rgba(10, 10, 10, 0.72) 80%, #0a0a0a 100%),
-                                 linear-gradient(90deg, rgba(10, 10, 10, 0.78) 0%, rgba(10, 10, 10, 0.35) 45%, rgba(10, 10, 10, 0) 70%); }
+    /* Dunkelgrauer Schleier (Anthrazit statt Schwarz), etwas kräftiger als zuvor, damit die helle Schrift über dem Film sicher lesbar bleibt */
+    .hero-schleier { background: linear-gradient(180deg, rgba(43, 45, 49, 0.4) 0%, rgba(43, 45, 49, 0.15) 32%, rgba(43, 45, 49, 0.84) 72%, #2b2d31 100%),
+                                 linear-gradient(90deg, rgba(43, 45, 49, 0.9) 0%, rgba(43, 45, 49, 0.66) 45%, rgba(43, 45, 49, 0) 75%); }
     .hero-inhalt { padding-block: clamp(3rem, 7vw, 5.5rem) clamp(3.5rem, 6vw, 5rem); }
   }
 
   .sucher-pause { position: absolute; right: 1.6rem; top: 1.6rem; display: grid; place-items: center; width: 2.75rem; height: 2.75rem;
-    border: 1px solid rgba(243, 241, 236, 0.3); border-radius: 2px; background: rgba(10, 10, 10, 0.45); color: var(--weiss); cursor: pointer; }
+    border: 1px solid rgba(243, 241, 236, 0.35); border-radius: 2px; background: rgba(43, 45, 49, 0.6); color: var(--weiss); cursor: pointer; }
   @media (min-width: 60rem) { .sucher-pause { top: auto; right: clamp(1.4rem, 3vw, 2.4rem); bottom: clamp(1.4rem, 3vw, 2.4rem); } }
   /* Can 4255: Knopf ausblenden, sobald der Film läuft – erreichbar bleibt er per Tastatur (Fokus), Maus (über dem Film) und
      Tippen auf den Film (seite.js setzt dann kurz .steuerung). WCAG 2.2.2: bewegter Inhalt bleibt pausierbar. */
   .hero.laeuft .sucher-pause { opacity: 0; transition: opacity 0.3s ease; }
   .hero.laeuft:hover .sucher-pause, .hero.steuerung .sucher-pause, .hero .sucher-pause:focus-visible, .hero.pausiert .sucher-pause { opacity: 1; }
   .sucher-pause[hidden] { display: none; } /* erst sichtbar, wenn der Film läuft (nicht ohne JS / bei reduzierter Bewegung) */
-  .sucher-pause:hover { border-color: var(--bronze); }
+  .sucher-pause:hover { border-color: var(--gelb); }
   .sucher-pause :global(svg) { width: 1.1rem; height: 1.1rem; }
   .sucher-pause .p-aus { display: none; }
   .sucher-pause[aria-pressed="true"] .p-an { display: none; }

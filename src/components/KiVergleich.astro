@@ -1,6 +1,6 @@
 ---
 // „Warum ein echter Filmemacher statt KI?“ (Can Talk 4259), angedockt an „Menschen vertrauen Menschen.“ (Jamil 4222).
-// Sachliche Gegenüberstellung ohne KI-Bashing; rough.js dezent: ein goldener Haken zeichnet sich je Funkelfilm-Zeile.
+// Sachliche Gegenüberstellung ohne KI-Bashing; rough.js dezent: ein Haken (hell Anthrazit, seit 07.11.) zeichnet sich je Funkelfilm-Zeile.
 // „Was dein Film für dich tut.“ entfernt (Jamil 4307). Am Handy zwei Spalten (Jamil 4271).
 import Skizze from "./Skizze.astro";
 import { KI } from "../daten";
@@ -30,22 +30,22 @@ import { KI } from "../daten";
 <style>
   .ki-block { padding: clamp(1.5rem, 4vw, 2.75rem); background: var(--karte); border-radius: 3px; }
   .ki-kopf h2 { margin-bottom: 0.4rem; }
-  .ki-kopf p { margin: 0 0 1.5rem; font-size: 1.1rem; color: var(--weiss); }
+  .ki-kopf p { margin: 0 0 1.5rem; font-size: 1.1rem; color: var(--tinte); }
   .ki-tabelle { display: grid; }
-  /* Handy (Jamil 4271): echter Vergleich auf einen Blick – zwei Spalten nebeneinander, KI gedämpft mit ✕, Funkelfilm in Gold mit Haken */
+  /* Handy (Jamil 4271): echter Vergleich auf einen Blick – zwei Spalten nebeneinander, KI gedämpft mit ✕, Funkelfilm hervorgehoben mit Haken (seit 07.11. gelb markiert) */
   .ki-zeile { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0; border-top: 1px solid var(--linie-dunkel); }
   .ki-zeile > span { padding: 0.8rem 0.7rem; }
   .ki-spalten { font: 700 0.95rem/1.1 var(--serif); text-transform: uppercase; letter-spacing: 0.08em; border-top: 0; }
-  .ki-spalten > span:first-child { color: #9a958c; }
-  .ki-spalten > span:last-child { color: var(--gelb); }
+  .ki-spalten > span:first-child { color: var(--tinte-leise); }
+  .ki-spalten > span:last-child { color: var(--akzent-text); text-decoration: underline 0.16em var(--akzent-strich); text-underline-offset: 0.3em; }
   .ki-spalten > span { display: flex; align-items: center; gap: 0.4rem; }
   .ki-x, .ki-ok { font-size: 1rem; font-variant-emoji: text; }
-  .ki-x { color: #9a958c; }
-  .ki-ok { color: var(--gelb); }
-  .ki-links { color: #9a958c; font-size: 0.95rem; line-height: 1.35; background: rgba(255, 255, 255, 0.02); }
-  .ki-rechts { display: flex; align-items: flex-start; gap: 0.45rem; color: var(--weiss); font-weight: 600; font-size: 0.98rem; line-height: 1.35;
-    border-left: 2px solid var(--gelb); background: rgba(212, 160, 23, 0.07); }
-  .ki-rechts :global(.ki-haken) { flex: none; width: 1.2rem; height: 1.05rem; margin-top: 0.1rem; color: var(--gelb); }
+  .ki-x { color: var(--tinte-leise); }
+  .ki-ok { color: var(--akzent-linie); }
+  .ki-links { color: var(--tinte-leise); font-size: 0.95rem; line-height: 1.35; background: rgba(30, 31, 34, 0.03); }
+  .ki-rechts { display: flex; align-items: flex-start; gap: 0.45rem; color: var(--tinte); font-weight: 600; font-size: 0.98rem; line-height: 1.35;
+    border-left: 3px solid var(--gelb); background: rgba(255, 204, 0, 0.14); }
+  .ki-rechts :global(.ki-haken) { flex: none; width: 1.2rem; height: 1.05rem; margin-top: 0.1rem; color: var(--akzent-linie); }
   .lang { display: none; }
   @media (min-width: 48rem) {
     .lang { display: inline; } .kurz { display: none; }
@@ -53,12 +53,11 @@ import { KI } from "../daten";
     .ki-zeile { grid-template-columns: 1fr 1.3fr; gap: 2rem; align-items: start; padding: 0.9rem 0; }
     .ki-zeile > span { padding: 0; }
     .ki-spalten { padding-top: 0; font-size: 1rem; line-height: 1; }
-    .ki-spalten > span:first-child { color: #9a958c; }
-    .ki-spalten > span:last-child { color: var(--gelb); padding-left: 2.2rem; }
+    .ki-spalten > span:last-child { padding-left: 2.2rem; }
     .ki-links { font-size: 0.95rem; background: none; }
     .ki-rechts { gap: 0.7rem; font-size: 1.05rem; line-height: 1.45; border-left: 0; background: none; }
     .ki-rechts :global(.ki-haken) { width: 1.5rem; height: 1.3rem; }
   }
-  .ki-hinweis { margin: 1.25rem 0 0; font-size: 0.82rem; color: #8f8a82; }
+  .ki-hinweis { margin: 1.25rem 0 0; font-size: 0.82rem; color: var(--tinte-leise); }
   .ki { padding-bottom: clamp(3rem, 6vw, 3.5rem); }
 </style>

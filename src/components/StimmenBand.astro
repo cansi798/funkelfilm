@@ -30,8 +30,8 @@ const liste = STIMMEN;
 <style>
   .kopfzeile-zeile h2 { margin: 0; }
   .band-steuer { display: flex; align-items: center; gap: 1rem; }
-  .band-pause { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 1px solid var(--linie-dunkel); border-radius: 2px; background: transparent; color: var(--weiss); cursor: pointer; }
-  .band-pause:hover { border-color: var(--bronze); }
+  .band-pause { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 1px solid var(--linie-dunkel); border-radius: 2px; background: transparent; color: var(--tinte); cursor: pointer; }
+  .band-pause:hover { border-color: var(--tinte); }
   .band-pause :global(svg) { width: 1rem; height: 1rem; }
   .band-pause .p-aus { display: none; }
   .band-pause[aria-pressed="true"] .p-an { display: none; }
@@ -40,11 +40,11 @@ const liste = STIMMEN;
   .band-spur { list-style: none; margin: 0; padding: 0.25rem 0; display: flex; gap: 1.25rem; width: max-content; animation: lauf 80s linear infinite; }
   .band-fenster:hover .band-spur, .band-fenster:focus-within .band-spur, .band-fenster.halt .band-spur { animation-play-state: paused; }
   @keyframes lauf { to { transform: translateX(calc(-50% - 0.625rem)); } }
-  .band-stimme { flex: none; width: min(78vw, 24rem); padding: 1.2rem 1.35rem; background: var(--karte); border-left: 2px solid var(--gelb); border-radius: 2px; display: flex; flex-direction: column; justify-content: space-between; }
+  .band-stimme { flex: none; width: min(78vw, 24rem); padding: 1.2rem 1.35rem; background: var(--karte); border-left: 4px solid var(--gelb); border-radius: 2px; display: flex; flex-direction: column; justify-content: space-between; }
   blockquote { margin: 0 0 1rem; }
-  blockquote p { margin: 0; font: 600 clamp(1.2rem, 1.6vw, 1.4rem)/1.3 var(--serif); color: var(--weiss); }
+  blockquote p { margin: 0; font: 600 clamp(1.2rem, 1.6vw, 1.4rem)/1.3 var(--serif); color: var(--tinte); }
   .wer { margin: 0; font-size: 0.92rem; display: grid; }
-  .wer strong { color: var(--weiss); font-weight: 600; }
+  .wer strong { color: var(--tinte); font-weight: 600; }
   @media (prefers-reduced-motion: reduce) {
     .band-spur { animation: none; }
     .band-fenster { overflow-x: auto; scroll-snap-type: x mandatory; }

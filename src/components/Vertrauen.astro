@@ -1,6 +1,6 @@
 ---
 // Vertrauens-Abschnitt (Can Talk 4256: „Mach da die 100 weg … so krass, dass jeder denkt: wow, ich muss ihn buchen“).
-// Wirkung durch Größe und Ruhe statt Zahl-Spielerei: „SEIT 2017“ riesig in Gold, eine goldene rough.js-Ellipse zeichnet sich mit
+// Wirkung durch Größe und Ruhe statt Zahl-Spielerei: „SEIT 2017“ riesig (seit 07.11. dunkel mit gelber Markierung), eine rough.js-Ellipse in Anthrazit zeichnet sich mit
 // Schwung um die Jahreszahl (Achsen ≈ √2 × Textbox, berührt den Text nicht – Jamil 4228), daneben vier belegte Fakten.
 // Nur Fakten aus daten.ts (VERTRAUEN), keine Sterne, keine erfundenen Zahlen oder Kunden.
 import Skizze from "./Skizze.astro";
@@ -26,17 +26,19 @@ import { VERTRAUEN } from "../daten";
   .vertrauen-raster { display: grid; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
   @media (min-width: 60rem) { .vertrauen-raster { grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); } }
   .v-gross { display: flex; align-items: baseline; gap: 0.35em; margin: 0 0 0.6rem; padding-left: 0.2em; font-family: var(--serif); font-weight: 700; text-transform: uppercase; line-height: 0.85; }
-  .v-seit { font-size: clamp(2rem, 5vw, 3.6rem); color: var(--weiss); letter-spacing: 0.04em; }
+  .v-seit { font-size: clamp(2rem, 5vw, 3.6rem); color: var(--tinte); letter-spacing: 0.04em; }
   /* Abstand links = Überstand der Ellipse (≈ 0,33 × Schriftgröße) + Luft, damit sie „SEIT“ nicht schneidet */
-  .v-zahl { position: relative; display: inline-block; margin-left: 0.36em; font-size: clamp(6rem, 17vw, 11.5rem); color: var(--gelb); letter-spacing: 0.01em; }
+  /* hell: Zahl dunkel mit gelber Markierung dahinter (Gelb auf Hellgrau wäre nicht lesbar), Ellipse in Anthrazit */
+  .v-zahl { position: relative; display: inline-block; margin-left: 0.36em; font-size: clamp(6rem, 17vw, 11.5rem); color: var(--akzent-text); letter-spacing: 0.01em;
+    background: linear-gradient(transparent 48%, var(--akzent-mark) 48%, var(--akzent-mark) 86%, transparent 86%); }
   /* Ellipse um die Zahl: Achsen ≈ √2 × Textbox (+ Luft), damit keine Linie die Ziffern schneidet */
-  .v-zahl :global(.v-kreis) { position: absolute; left: -20.7%; top: -20.7%; width: 141.4%; height: 141.4%; color: var(--gelb); }
-  .v-satz { max-width: 26rem; margin: 2.6rem 0 0; font-size: 1.1rem; color: var(--weiss); }
+  .v-zahl :global(.v-kreis) { position: absolute; left: -20.7%; top: -20.7%; width: 141.4%; height: 141.4%; color: var(--akzent-linie); }
+  .v-satz { max-width: 26rem; margin: 2.6rem 0 0; font-size: 1.1rem; color: var(--tinte); }
   .v-fakten { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
   @media (min-width: 40rem) { .v-fakten { grid-template-columns: 1fr 1fr; gap: 1.25rem 1.5rem; } }
-  .v-fakten li { display: grid; gap: 0.35rem; padding-top: 1rem; border-top: 2px solid var(--gelb); }
-  .v-fakten strong { font: 700 clamp(1.25rem, 1.8vw, 1.5rem)/1.1 var(--serif); text-transform: uppercase; letter-spacing: 0.02em; color: var(--weiss); }
-  .v-fakten span { font-size: 1rem; line-height: 1.55; color: var(--silber); }
+  .v-fakten li { display: grid; gap: 0.35rem; padding-top: 1rem; border-top: 4px solid var(--gelb); }
+  .v-fakten strong { font: 700 clamp(1.25rem, 1.8vw, 1.5rem)/1.1 var(--serif); text-transform: uppercase; letter-spacing: 0.02em; color: var(--tinte); }
+  .v-fakten span { font-size: 1rem; line-height: 1.55; color: var(--tinte-leise); }
   /* Handy: nur die Titel (kompakt, Can „wenig Scrollen“) */
   @media (max-width: 39.99rem) { .v-fakten { grid-template-columns: 1fr 1fr; gap: 1rem 1rem; } .v-fakten span { display: none; } .v-fakten strong { font-size: 1.12rem; } }
 </style>

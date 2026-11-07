@@ -36,24 +36,25 @@ import { ZIELE, VORSCHAU, u } from "../daten";
   .kopfzeile-zeile h2 { margin: 0; }
   .ziel-liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.75rem; }
   .ziel-karte { background: var(--karte); border: 1px solid transparent; border-radius: 4px; transition: border-color var(--dur-fast) ease; }
-  .ziel-karte:hover, .ziel-karte[open] { border-color: rgba(141, 110, 77, 0.6); }
+  .ziel-karte[open] { border-color: var(--linie-dunkel); }
+  .ziel-karte:hover { border-color: var(--linie-mittel); }
   summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.1rem 1.25rem; cursor: pointer; }
   summary::-webkit-details-marker { display: none; }
-  .ziel-frage { font: 600 clamp(1.3rem, 2vw, 1.6rem)/1.2 var(--serif); color: var(--weiss); }
-  .ziel-plus { position: relative; flex: none; width: 1.6rem; height: 1.6rem; border: 1px solid var(--bronze); border-radius: 50%; }
-  .ziel-plus::before, .ziel-plus::after { content: ""; position: absolute; left: 50%; top: 50%; width: 0.7rem; height: 1.5px; background: var(--gelb); translate: -50% -50%; transition: transform var(--dur-fast) ease; }
+  .ziel-frage { font: 600 clamp(1.3rem, 2vw, 1.6rem)/1.2 var(--serif); color: var(--tinte); }
+  .ziel-plus { position: relative; flex: none; width: 1.6rem; height: 1.6rem; border: 1px solid var(--linie-mittel); border-radius: 50%; }
+  .ziel-plus::before, .ziel-plus::after { content: ""; position: absolute; left: 50%; top: 50%; width: 0.7rem; height: 1.5px; background: var(--akzent-linie); translate: -50% -50%; transition: transform var(--dur-fast) ease; }
   .ziel-plus::after { transform: rotate(90deg); }
   details[open] .ziel-plus::after { transform: rotate(0deg); }
   .ziel-inhalt { padding: 0 1.25rem 1.25rem; }
-  .ziel-bild { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 3px; margin-bottom: 0.9rem; background: #000; }
+  .ziel-bild { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 3px; margin-bottom: 0.9rem; background: var(--nacht); }
   .ziel-bild img, .ziel-bild video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .ziel-bild video { opacity: 0; transition: opacity 0.5s ease; }
   .ziel-bild.spielt video { opacity: 1; }
-  .ziel-loesung { margin: 0 0 0.5rem; color: var(--weiss); font-size: 1.08rem; }
+  .ziel-loesung { margin: 0 0 0.5rem; color: var(--tinte); font-size: 1.08rem; }
   .ziel-extra { margin: 0 0 0.6rem; font-size: 0.95rem; }
-  /* Link ohne Dauer-Unterstreichung (Jamil 3957), erkennbar an Gold + Gewicht; Unterstreichung nur bei Hover/Fokus */
-  .ziel-extra a { color: var(--gelb); font-weight: 600; }
-  .ziel-extra a:is(:hover, :focus-visible) { text-decoration: underline; text-underline-offset: 0.2em; }
+  /* Link: dunkle Schrift mit gelber Unterstreichung (Gelb-Regel seit 07.11., Jamil 4894 – gelbe Schrift wäre auf Hell nicht lesbar); bei Hover/Fokus gelbe Markierung */
+  .ziel-extra a { color: var(--tinte); font-weight: 600; box-shadow: inset 0 -2px 0 var(--gelb); }
+  .ziel-extra a:is(:hover, :focus-visible) { box-shadow: inset 0 -1.1em 0 rgba(255, 204, 0, 0.45); }
   .offen .ziel-karte { outline: 2px dashed var(--rot-vorschau); outline-offset: 2px; }
   /* Breit: vier Karten nebeneinander, alle offen; Vorschau beim Darüberfahren */
   @media (min-width: 64rem) {

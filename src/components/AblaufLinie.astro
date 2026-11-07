@@ -1,5 +1,5 @@
 ---
-// „So entsteht dein Film.“ – vertikale Zeitleiste; die goldene Linie zeichnet sich beim Scrollen mit (an die Scrollposition gekoppelt,
+// „So entsteht dein Film.“ – vertikale Zeitleiste; die Linie (hell Anthrazit, Punkte gelb) zeichnet sich beim Scrollen mit (an die Scrollposition gekoppelt,
 // springt nie ans Ende, läuft beim Zurückscrollen zurück). Ohne JS bzw. bei reduzierter Bewegung: Linie ganz gezeichnet.
 // Details auf Abruf (Langfassung von der bisherigen Seite).
 import { ABLAUF_KURZ, ABLAUF } from "../daten";
@@ -42,19 +42,19 @@ const { titel = "So entsteht dein Film.", id = "ablauf" } = Astro.props;
   .ablauf-spur > ol > li:not(:last-child)::before, .ablauf-spur > ol > li:not(:last-child)::after {
     content: ""; position: absolute; left: calc(1.15rem - 1px); top: 1.15rem; width: 2px; height: calc(100% + clamp(0.8rem, 2vw, 1.25rem));
   }
-  .ablauf-spur > ol > li:not(:last-child)::before { background: rgba(141, 110, 77, 0.35); }
-  .ablauf-spur > ol > li:not(:last-child)::after { background: var(--gelb); transform-origin: top; transform: scaleY(var(--seg)); }
+  .ablauf-spur > ol > li:not(:last-child)::before { background: rgba(30, 31, 34, 0.14); }
+  .ablauf-spur > ol > li:not(:last-child)::after { background: var(--akzent-linie); transform-origin: top; transform: scaleY(var(--seg)); }
   .ablauf-spur ol { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(0.8rem, 2vw, 1.25rem); }
   .ablauf-spur > ol > li { display: grid; grid-template-columns: 2.3rem 1fr; gap: 1.1rem; align-items: start; }
-  .ablauf-punkt { position: relative; z-index: 1; display: grid; place-items: center; width: 2.3rem; height: 2.3rem; border-radius: 50%; background: var(--grund); border: 1.5px solid var(--bronze);
-    font: 600 0.9rem/1 var(--titel); color: var(--silber); transition: border-color 0.3s ease, color 0.3s ease, background-color 0.3s ease; }
-  :global(html:not(.js)) .ablauf-punkt, [data-schritt].erreicht .ablauf-punkt { border-color: var(--gelb); color: #0a0a0a; background: var(--gelb); }
+  .ablauf-punkt { position: relative; z-index: 1; display: grid; place-items: center; width: 2.3rem; height: 2.3rem; border-radius: 50%; background: var(--grund); border: 1.5px solid var(--linie-mittel);
+    font: 600 0.9rem/1 var(--titel); color: var(--tinte-leise); transition: border-color 0.3s ease, color 0.3s ease, background-color 0.3s ease; }
+  :global(html:not(.js)) .ablauf-punkt, [data-schritt].erreicht .ablauf-punkt { border-color: var(--akzent-linie); color: var(--schwarz); background: var(--gelb); }
   .ablauf-spur h3 { margin: 0.35rem 0 0.15rem; }
   .ablauf-spur li p { margin: 0; }
   .ablauf-mehr { margin-top: 1.5rem; padding-left: 3.4rem; }
-  .ablauf-mehr summary { cursor: pointer; font: 600 0.98rem/1.3 var(--titel); color: var(--weiss); }
+  .ablauf-mehr summary { cursor: pointer; font: 600 0.98rem/1.3 var(--titel); color: var(--tinte); }
   .ablauf-mehr ol { margin-top: 0.9rem; gap: 0.6rem; padding-left: 1.1rem; list-style: decimal; display: block; }
   .ablauf-mehr li { margin-bottom: 0.6rem; }
-  .ablauf-mehr strong { color: var(--weiss); }
-  @media (prefers-reduced-motion: reduce) { :global(.js) .ablauf-spur > ol > li { --seg: 1; } [data-schritt] .ablauf-punkt { border-color: var(--gelb); color: #0a0a0a; background: var(--gelb); } }
+  .ablauf-mehr strong { color: var(--tinte); }
+  @media (prefers-reduced-motion: reduce) { :global(.js) .ablauf-spur > ol > li { --seg: 1; } [data-schritt] .ablauf-punkt { border-color: var(--akzent-linie); color: var(--schwarz); background: var(--gelb); } }
 </style>
