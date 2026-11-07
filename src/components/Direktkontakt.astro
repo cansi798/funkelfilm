@@ -26,7 +26,8 @@ const waTitel = "WhatsApp öffnet sich – dabei gelten die Datenschutzregeln vo
   .dk { display: flex; flex-wrap: wrap; gap: 0.75rem; }
   .dk-knopf { display: inline-flex; align-items: center; gap: 0.55rem; min-height: 3rem; padding: 0.65rem 1.15rem; border: 1px solid var(--rahmen);
     border-radius: 2px; color: var(--tinte); font: 600 0.98rem/1.2 var(--titel); background: transparent; }
-  a.dk-knopf:hover { border-color: var(--tinte); background: rgba(255, 204, 0, 0.16); }
+  /* Hover nur mit Maus: auf Touch-Geräten bliebe die Markierung nach dem Tippen stehen */
+  @media (hover: hover) { a.dk-knopf:hover { border-color: var(--tinte); background: rgba(255, 204, 0, 0.16); } }
   .dk-knopf :global(svg) { width: 1.2rem; height: 1.2rem; color: var(--akzent-linie); flex: none; }
   .dk-knopf small { font: 500 0.75rem/1 var(--text); color: var(--rot-klein); white-space: nowrap; }
   .dk.offen .dk-knopf { outline: 2px dashed var(--rot-vorschau); outline-offset: 2px; cursor: default; }

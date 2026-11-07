@@ -3,6 +3,7 @@
 // 2) Reveal + Zeitleiste: einmal starten, sobald gut ein Drittel im Bild ist.
 // 3) Kopfzeile: nur Schatten + gelbe Fortschrittsleiste; „Nach oben“ nach ca. einem Bildschirm.
 // 4) Hero-Film und Clips der Unterseiten: Video lädt erst nach dem Seitenaufbau, mit Pause-Knopf.
+// 7) Startseite: Stapel-Effekt (Abschnitte schieben sich übereinander, Jamil 4897).
 
 document.documentElement.classList.add("js");
 (function () {
@@ -190,6 +191,43 @@ document.documentElement.classList.add("js");
     var szenenGeplant = false;
     window.addEventListener("scroll", function () { if (!szenenGeplant) { szenenGeplant = true; requestAnimationFrame(function () { szenenGeplant = false; scrollSzenen(); }); } }, { passive: true });
     scrollSzenen();
+
+    // 7) Stapel-Effekt der Startseite (Jamil 4897): Abschnitte bleiben stehen, der nächste schiebt sich darüber (CSS position: sticky).
+    //    Hier nur: je Abschnitt --h (Höhe, per ResizeObserver – ändert sich nur bei Größenänderung) und --deckt (0…1, wie weit der
+    //    nächste Abschnitt ihn schon verdeckt). --deckt wird ohne Layout-Abfragen berechnet: aus den gespeicherten natürlichen
+    //    Positionen und scrollY, einmal je Bild (rAF), Scroll-Listener passiv. Ohne ResizeObserver: normales Scrollen.
+    var stapel = document.querySelector("main[data-stapel]");
+    if (stapel && "ResizeObserver" in window) {
+      var karten = Array.prototype.filter.call(stapel.children, function (el) { return el.tagName === "SECTION"; });
+      var hoehen = karten.map(function () { return 0; }), oben0 = [], kopfH = 0, stapelGeplant = false;
+      var lagen = function () {
+        // natürliche Lage (ohne sticky): Oberkante von main + Summe der Höhen davor
+        var y = stapel.getBoundingClientRect().top + window.scrollY;
+        kopfH = kopf ? kopf.offsetHeight : 0;
+        for (var i = 0; i < karten.length; i++) { oben0[i] = y; y += hoehen[i]; }
+      };
+      var decken = function () {
+        stapelGeplant = false;
+        if (ruhig) return;
+        var Y = window.scrollY, vh = window.innerHeight, weg = Math.max(1, vh - kopfH);
+        for (var i = 0; i < karten.length - 1; i++) {
+          var p = Math.min(1, Math.max(0, (vh - (oben0[i + 1] - Y)) / weg));
+          var alt = karten[i]._deckt;
+          if (alt === undefined || Math.abs(alt - p) > 0.004 || (p === 0) !== (alt === 0)) { karten[i]._deckt = p; karten[i].style.setProperty("--deckt", p.toFixed(3)); }
+        }
+      };
+      var ro = new ResizeObserver(function (eintraege) {
+        eintraege.forEach(function (e) {
+          var i = karten.indexOf(e.target), h = e.borderBoxSize && e.borderBoxSize[0] ? e.borderBoxSize[0].blockSize : e.target.offsetHeight;
+          if (i < 0) return; hoehen[i] = h; e.target.style.setProperty("--h", Math.round(h) + "px");
+        });
+        lagen(); decken();
+      });
+      karten.forEach(function (k) { ro.observe(k); });
+      html.classList.add("stapeln");
+      window.addEventListener("scroll", function () { if (!stapelGeplant) { stapelGeplant = true; requestAnimationFrame(decken); } }, { passive: true });
+      window.addEventListener("resize", function () { if (!stapelGeplant) { stapelGeplant = true; requestAnimationFrame(function () { lagen(); decken(); }); } }, { passive: true });
+    }
 
     // 6) YouTube erst nach Klick
     document.querySelectorAll("[data-film]").forEach(function (buehne) {

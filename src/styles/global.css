@@ -170,3 +170,33 @@ main > section.dunkel { background: var(--nacht); }
     color: var(--tinte-leise);
   }
 }
+
+/* Stapel-Effekt der Startseite (Jamil Talk 4897, 07.11.2026): Abschnitte liegen übereinander wie ein Kartenstapel – jeder bleibt beim
+   Scrollen stehen, der nächste schiebt sich darüber. Nur mit JS (seite.js setzt html.stapeln + je Abschnitt --h = Höhe); ohne JS normales Scrollen.
+   Stehen bleiben: oben unter dem Kopf, oder – wenn der Abschnitt höher als der Bildschirm ist (am Handy fast alle) – erst, wenn sein Ende
+   unten erreicht ist: top = min(Kopfhöhe, 100svh − Handy-Leiste − Höhe). So bleibt jeder Abschnitt vollständig lesbar.
+   z-index 0 = eigener Stapelkontext je Abschnitt, damit nichts aus einem unteren Abschnitt durch den oberen scheint; spätere liegen oben.
+   Der verdeckte Abschnitt dunkelt leicht ab und tritt minimal zurück (--deckt 0…1 aus seite.js, nur ohne reduzierte Bewegung). */
+:root { --stapel-unten: 0px; }
+@media (max-width: 47.99rem) { body.mit-leiste { --stapel-unten: calc(4rem + env(safe-area-inset-bottom)); } }
+html.stapeln main[data-stapel] { background: #1e1f22; }
+html.stapeln main[data-stapel] > section {
+  position: sticky; z-index: 0;
+  top: min(var(--kopf-h), calc(100svh - var(--stapel-unten) - var(--h, 0px)));
+  transform-origin: 50% 100%;
+}
+html.stapeln main[data-stapel] > section + section {
+  border-radius: 1.5rem 1.5rem 0 0;
+  box-shadow: 0 -18px 36px -22px rgba(30, 31, 34, 0.45);
+}
+@media (max-width: 47.99rem) { html.stapeln main[data-stapel] > section + section { border-radius: 1rem 1rem 0 0; } }
+html.stapeln main[data-stapel] > section::after {
+  content: ""; position: absolute; inset: 0; z-index: 10; pointer-events: none; border-radius: inherit;
+  background: #1e1f22; opacity: calc(var(--deckt, 0) * 0.5);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html.stapeln main[data-stapel] > section { transform: scale(calc(1 - var(--deckt, 0) * 0.04)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.stapeln main[data-stapel] > section::after { display: none; }
+}

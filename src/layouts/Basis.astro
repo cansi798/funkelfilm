@@ -25,8 +25,10 @@ interface Props {
   aufruf?: boolean;
   /** Bild für die Vorschau beim Teilen */
   vorladen?: string;
+  /** Stapel-Effekt: Abschnitte schieben sich übereinander (nur Startseite, Jamil 4897) */
+  stapel?: boolean;
 }
-const { titel, beschreibung = BESCHREIBUNG, schema = [], aufruf = true, vorladen } = Astro.props;
+const { titel, beschreibung = BESCHREIBUNG, schema = [], aufruf = true, vorladen, stapel = false } = Astro.props;
 const voll = titel ? `${titel} | ${NAME}` : `Unternehmensfilme, Recruitingfilme und Eventfilme aus Hamburg | ${NAME}`;
 const kanon = new URL(Astro.url.pathname, Astro.site);
 const start = new URL(u("/"), Astro.site).href;
@@ -96,7 +98,7 @@ const ld = (o: unknown) => JSON.stringify(o).replace(/</g, "\\u003c");
       </div>
     )}
     <Kopf />
-    <main id="inhalt">
+    <main id="inhalt" data-stapel={stapel ? "" : undefined}>
       <slot />
       {aufruf && <Aufruf />}
     </main>
