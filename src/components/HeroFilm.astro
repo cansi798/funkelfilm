@@ -62,8 +62,8 @@ const rund = (ext: string) => `${u(`/medien/bilder/sheeras-rund-112.${ext}`)} 11
   /* Genau zwei Zeilen (Jamil 4319): jede Zeile bleibt ganz, die Schrift passt sich der Breite an (längste Zeile ≈ 9,4 em) */
   .hero h1 { max-width: none; margin-bottom: 0.9rem; line-height: 1.06; font-size: min(clamp(2.45rem, 5.6vw, 4.6rem), calc((100vw - 2 * var(--rand)) / 9.8)); }
   .h1-zeile { display: block; white-space: nowrap; }
-  /* „Filme“: über dem Film gelb; hell (Handy) dunkel mit gelber Markierung dahinter, weil Gelb auf Weiß nicht lesbar ist */
-  .h1-wort { color: var(--akzent-text); background: linear-gradient(transparent 58%, var(--akzent-mark) 58%, var(--akzent-mark) 90%, transparent 90%); padding-inline: 0.04em; }
+  /* „Filme“: über dem Film gelb; hell (Handy) dunkel mit gelber Unterstreichung, weil Gelb auf Weiß nicht lesbar ist */
+  .h1-wort { color: var(--akzent-text); text-decoration: underline 0.075em var(--akzent-strich); text-underline-offset: 0.025em; text-decoration-skip-ink: none; }
   .hero-leistung { margin: 0 0 1.1rem; max-width: 36rem; font: 500 clamp(0.98rem, 1.25vw, 1.08rem)/1.5 var(--text); color: var(--tinte); }
   .hero-person { display: flex; align-items: center; gap: 0.8rem; margin: 0 0 1.5rem; font-size: 0.98rem; line-height: 1.4; color: var(--tinte-leise); }
   .hero-person picture { flex: none; }
