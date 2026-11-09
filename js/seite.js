@@ -21,6 +21,10 @@ document.documentElement.classList.add("js");
     setTimeout(function () { html.classList.remove("mit-intro", "intro-weg"); }, 260);
   }
   var sparen = navigator.connection && navigator.connection.saveData;
+  // Tastatur erkennen (WCAG 2.4.11, Prüfung 09.11.): Tab → html.tastatur (CSS schaltet den Stapel-Effekt ab), Maus/Touch → wieder weg.
+  // keydown kommt vor dem Fokuswechsel, darum liegt beim ersten Tab schon das normale Layout an.
+  document.addEventListener("keydown", function (e) { if (e.key === "Tab") html.classList.add("tastatur"); }, true);
+  document.addEventListener("pointerdown", function () { html.classList.remove("tastatur"); }, { capture: true, passive: true });
 
   function nachLaden(fn) {
     var los = function () { (window.requestIdleCallback || function (f) { setTimeout(f, 300); })(fn, { timeout: 2500 }); };
