@@ -2,7 +2,7 @@
 // Hero nach Jamils Konzept (Talk 4222): ein einziger Film, langsame Schnitte, Parallax, kein Slider.
 // 02.11.2026: H1 + Subheadline nach Jamil 4319 („Echte Geschichten. / Eindrucksvoll erzählt.“ / „Authentische Filme für …“),
 // Kennzeile entfernt (4320). Darunter Leistung + Gebiet und die Person
-// (rundes Porträt, „Sheeras Iqbal, Filmemacher & Videograph aus Hamburg“). Signature ist der Film selbst + der Vorspann 3-2-1.
+// (rundes Porträt, „Sheeras Iqbal, Filmemacher & Videograf aus Hamburg“). Signature ist der Film selbst + der Vorspann 3-2-1.
 // Die rough.js-Regieskizze (Rahmen, Filmklappe, „Take 1“) ist auf Jamils Wunsch wieder entfernt (Talk 4250: „Take 1 und die Umrandung entfernen“):
 // keine Zeichnungen über dem Hero-Film.
 // v1-Reste (Sucher-Ecken, Timecode) und der Weichzeichner auf dem Poster sind entfernt (Retrospektive 02.11.).
@@ -63,7 +63,10 @@ const rund = (ext: string) => `${u(`/medien/bilder/sheeras-rund-112.${ext}`)} 11
   .hero h1 { max-width: none; margin-bottom: 0.9rem; line-height: 1.06; font-size: min(clamp(2.45rem, 5.6vw, 4.6rem), calc((100vw - 2 * var(--rand)) / 9.8)); }
   .h1-zeile { display: block; white-space: nowrap; }
   /* „Filme“: über dem Film gelb; hell (Handy) dunkel mit gelber Unterstreichung, weil Gelb auf Weiß nicht lesbar ist */
-  .h1-wort { color: var(--akzent-text); text-decoration: underline 0.075em var(--akzent-strich); text-underline-offset: 0.025em; text-decoration-skip-ink: none; }
+  /* Einzelwerte statt Kurzschreibweise: WebKit (iPhone) verwirft „underline 0.075em Farbe“ komplett (Prüfung 09.11.) */
+  .h1-wort { color: var(--akzent-text); text-decoration-line: underline; text-decoration-style: solid; text-decoration-color: var(--akzent-strich);
+    -webkit-text-decoration-line: underline; -webkit-text-decoration-color: var(--akzent-strich);
+    text-decoration-thickness: 0.075em; text-underline-offset: 0.025em; text-decoration-skip-ink: none; }
   .hero-leistung { margin: 0 0 1.1rem; max-width: 36rem; font: 500 clamp(0.98rem, 1.25vw, 1.08rem)/1.5 var(--text); color: var(--tinte); }
   .hero-person { display: flex; align-items: center; gap: 0.8rem; margin: 0 0 1.5rem; font-size: 0.98rem; line-height: 1.4; color: var(--tinte-leise); }
   .hero-person picture { flex: none; }
@@ -72,6 +75,17 @@ const rund = (ext: string) => `${u(`/medien/bilder/sheeras-rund-112.${ext}`)} 11
   @media (max-width: 29.99rem) {
     .hero .knoepfe { gap: 0.6rem; }
     .hero .knoepfe .knopf { flex: 1 1 100%; }
+  }
+  /* Niedrige Handys (z. B. iPhone 13 mit Safari-Leisten: 390×664): Film 16:9 statt 16:10, Abstände etwas enger, Porträt etwas kleiner –
+     damit „Kostenloses Erstgespräch“ schon im ersten Bildschirm steht (Prüfung 09.11.). Aufbau und Reihenfolge bleiben gleich. */
+  @media (max-width: 59.99rem) and (max-height: 760px) {
+    .hero-bild { aspect-ratio: 16 / 9; }
+    .hero-inhalt { padding-top: 0.85rem; }
+    .hero h1 { margin-bottom: 0.6rem; }
+    .hero-unterzeile { margin-bottom: 0.45rem; }
+    .hero-leistung { margin-bottom: 0.75rem; line-height: 1.4; }
+    .hero-person { margin-bottom: 1rem; }
+    .hero-person img { width: 2.75rem; height: 2.75rem; }
   }
 
   /* Breit: Film im Vollbild hinter dem Text */

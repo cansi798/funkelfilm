@@ -16,4 +16,6 @@ const { klasse = "" } = Astro.props;
   .marke-unter { padding-left: 0.7rem; border-left: 1px solid var(--linie-mittel);
     font: 600 0.72rem/1.15 var(--serif); letter-spacing: 0.16em; text-transform: uppercase; color: var(--tinte-leise); white-space: nowrap; }
   @media (min-width: 40rem) { .marke-unter { font-size: 0.8rem; } }
+  /* Unter 360 px (z. B. 320er-Handys) passt die Unterzeile nicht neben Logo + Menüknopf → ausblenden, sonst scrollt die Seite quer (Prüfung 09.11.) */
+  @media (max-width: 22.49rem) { .marke-unter { display: none; } }
 </style>

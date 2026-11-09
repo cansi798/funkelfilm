@@ -12,7 +12,7 @@ import { PROBLEM } from "../daten";
     <h2 id="problem-titel">{PROBLEM.titel}</h2>
   </div>
   <div class="filmstreifen dunkel" data-szene>
-    <ol class="fs-reihe">
+    <ol class="fs-reihe" tabindex="0" aria-label="Vier Szenen, waagerecht scrollbar">
       <li class="fs-feld fs-leer" aria-hidden="true"><div class="fs-bild"></div></li>
       {PROBLEM.karten.map((k, i) => (
         <li class={`fs-feld b${i}`}>
@@ -63,6 +63,8 @@ import { PROBLEM } from "../daten";
     .fs-reihe { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: min(78%, 20rem); overflow-x: auto; scroll-snap-type: x mandatory;
       scroll-padding-inline: var(--rand); padding-inline: var(--rand); scrollbar-width: none; }
     .fs-reihe::-webkit-scrollbar { display: none; }
+    /* Tastatur (Prüfung 09.11., axe scrollable-region-focusable): Streifen fokussierbar, Pfeiltasten scrollen; Rahmen innen, weil .filmstreifen überläuft-versteckt ist */
+    .fs-reihe:focus-visible { outline: 2px solid var(--fokus); outline-offset: -4px; }
     .fs-feld { scroll-snap-align: start; }
     .fs-leer { display: none; }
     .fs-bild { min-height: 9.5rem; }

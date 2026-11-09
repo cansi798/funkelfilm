@@ -37,7 +37,7 @@ Stand: 02.11.2026 (nach Jamils Konzept „FUNKELFILM 2027“, Talk 4222; Hero un
 20. **FAQ-Antworten** („Muss ich vor die Kamera? Nein …“, „Wie lange dauert die Produktion?“) bitte bestätigen.
 21. **Leistungen:** „Produkt- und Erklärungsvideos“ und „Dokumentationen“ stehen nicht auf der bisherigen Seite. Bietet Funkelfilm das an?
 22. **Referenzen:** Projektname laut YouTube-Titel „Nexus Fighter Academy | NEXUS KIDS | Eindrücke“; die Beschreibung „Mehr Sichtbarkeit für Nachwuchsarbeit und Vereinsleben“ stammt aus dem Konzept – bitte bestätigen. Für die Recruitingfilm-Karte fehlt ein echtes Projekt (Titel, Kunde, Freigabe); der Vorschau-Ausschnitt stammt aus der Recruiting-Karte der alten Seite.
-23. **„Über 100 Projekte“** stammt von der alten Seite (Stand 2024). **Auf Cans Wunsch (Talk 4256) von der Startseite entfernt** – „100 ist zu wenig“. Die Seite zeigt Erfahrung jetzt über „Seit 2017“ und belegte Fakten. **Fragen an Funkelfilm:** Gibt es eine größere, belegbare Projektzahl? Bekannte Kunden, die genannt werden dürfen (mit Freigabe)? Auszeichnungen, Festivals, Presse?
+23. **„Über 100 Projekte“** stammt von der alten Seite (Stand 2024). **Auf Cans Wunsch (Talk 4256) von der Startseite entfernt** – „100 ist zu wenig“. Seit 09.11. auch auf /about/ raus (Zeitleiste 2024 heißt jetzt „Viele Projekte später“, einheitlich). Die Seite zeigt Erfahrung jetzt über „Seit 2017“ und belegte Fakten. **Fragen an Funkelfilm:** Gibt es eine größere, belegbare Projektzahl? Bekannte Kunden, die genannt werden dürfen (mit Freigabe)? Auszeichnungen, Festivals, Presse?
 
 ## Später (Idee, nicht umgesetzt)
 

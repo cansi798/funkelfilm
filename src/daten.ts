@@ -32,7 +32,7 @@ export const LOGO_UNTERZEILE = LOGO_UNTERZEILEN[VARIANTE];
 export const CLAIM = 'Echte Geschichten. Authentische Videos.';
 export const UNTERZEILE = 'Teile deine Botschaft in bewegten Bildern – ehrlich & kreativ.';
 export const BESCHREIBUNG =
-  'Funkelfilm aus Hamburg: Imagefilme, Kundenstimmen, Recruitingvideos und Eventfilme. Seit 2017 erzählt Sheeras Iqbal Geschichten in bewegten Bildern – ehrlich, kreativ und hochwertig.';
+  'Funkelfilm aus Hamburg: Imagefilme, Kundenstimmen, Recruitingfilme und Eventfilme. Seit 2017 erzählt Sheeras Iqbal Geschichten in bewegten Bildern – ehrlich, kreativ und hochwertig.';
 
 /** Impressumsangaben der bisherigen Seite (funkelfilm.com/impressum). Vor Livegang vom Kunden bestätigen lassen. */
 export const IMPRESSUM = {
@@ -71,7 +71,6 @@ export const NAV = [
 /** Vertrauensband – nur belegte Aussagen der bisherigen Seite. */
 export const BAND = [
   { wert: 'Seit 2017', text: 'Imagefilme für Menschen und Unternehmen' },
-  { wert: 'Über 100', text: 'Projekte (Stand 2024)' },
   { wert: 'Echt', text: 'Videos, die deine Botschaft nahbar vermitteln' },
   { wert: 'Einfach', text: 'Unkomplizierte Abläufe, du konzentrierst dich aufs Wesentliche' },
 ];
@@ -143,9 +142,9 @@ export const LEISTUNGEN: Leistung[] = [
   },
   {
     slug: 'recruitingfilm',
-    titel: 'Recruitingvideo',
+    titel: 'Recruitingfilm',
     kurz: 'Sprich potenzielle Mitarbeiter direkt an und zeige, warum dein Team besonders ist.',
-    ueberschrift: 'Recruitingvideos, die Menschen gewinnen',
+    ueberschrift: 'Recruitingfilme, die Menschen gewinnen',
     text: [
       'Zeig, wie dein Team wirklich tickt – mit einem Video, das mehr vermittelt als nur freie Stellen.',
       'Ein guter Recruitingfilm spricht nicht nur Bewerber an, sondern auch Herzen.',
@@ -197,12 +196,12 @@ export const ABLAUF = [
   {
     titel: 'Konzept',
     kurz: 'Kreative Planung',
-    lang: 'Ein maßgeschneidertes Konzept, das Storytelling, Emotionen und visuelle Highlights vereint. Wir planen jeden Schritt, damit dein Film Eindruck macht.',
+    lang: 'Ein maßgeschneidertes Konzept, das Storytelling, Emotionen und visuelle Highlights vereint. Ich plane jeden Schritt, damit dein Film Eindruck macht.',
   },
   {
     titel: 'Dreh',
     kurz: 'Professionelle Videoproduktion',
-    lang: 'Action! Mit moderner Technik und jahrelanger Erfahrung fangen wir die besten Bilder ein – immer mit einem Auge für Details und Ästhetik.',
+    lang: 'Action! Mit moderner Technik und jahrelanger Erfahrung fange ich die Bilder ein, auf die es ankommt – mit einem Auge für Details und Ästhetik.',
   },
   {
     titel: 'Postproduktion',
@@ -272,7 +271,7 @@ export const STIMMEN = [
 export const REISE = [
   { jahr: '2015', titel: 'Der Anfang', text: 'Aus purer Leidenschaft fürs Geschichtenerzählen entstanden die ersten Filme. Vieles war neu – aber die Begeisterung war riesig.', bild: 'reise-2015' },
   { jahr: '2017', titel: 'Fokus Imagefilme', text: 'Immer mehr Unternehmen wollten sich authentisch zeigen. Hier wurde mir klar: Menschen gewinnen Menschen.', bild: 'reise-2017' },
-  { jahr: '2024', titel: 'Über 100 Projekte', text: 'Heute blicke ich auf viele tolle Geschichten zurück – und freue mich auf all die, die noch kommen.', bild: 'reise-2024' },
+  { jahr: '2024', titel: 'Viele Projekte später', text: 'Heute blicke ich auf viele tolle Geschichten zurück – und freue mich auf all die, die noch kommen.', bild: 'reise-2024' },
 ];
 
 export const UEBER = {
@@ -309,7 +308,7 @@ export const HERO = {
   // Leistungszeile ohne „aus Hamburg“ (steht schon in der Personenzeile); „deutschlandweit“ bestätigt (Jamil 4231).
   leistung: 'Unternehmens-, Recruiting-, Eventfilme und Social-Media-Reels – deutschlandweit', // Reels: Jamil 4346
   // Schreibweise „Sheeras“ wie im Impressum der alten Seite (Frage „Sheeraz?“ offen, OFFENE-INFOS 15).
-  person: { name: 'Sheeras Iqbal', rolle: 'Filmemacher & Videograph aus Hamburg' }, // „Videograph“ in Jamils Schreibweise (Talk 4240)
+  person: { name: 'Sheeras Iqbal', rolle: 'Filmemacher & Videograf aus Hamburg' }, // einheitlich „Videograf“ wie /about/ + Schema (Prüfung 09.11.; Jamil schrieb 4240 „Videograph“)
   // Kennzeile „Deine Arbeit verdient mehr Aufmerksamkeit.“ entfernt (Jamil 4320).
 };
 
@@ -334,7 +333,7 @@ export const VERTRAUEN = {
   satz: 'Geschichten von Unternehmen und Menschen, in bewegten Bildern erzählt.',
   fakten: [
     { titel: 'Unternehmens-, Recruiting- und Eventfilme', text: 'Dazu Kundenstimmen-Videos, die Vertrauen schaffen.' },
-    { titel: 'Alles aus einer Hand', text: 'Konzept, Dreh, Schnitt, Farbe, Ton und Veröffentlichung.' },
+    { titel: 'Von der Idee bis zum fertigen Film', text: 'Konzept, Dreh, Schnitt, Farbe, Ton und Veröffentlichung.' },
     { titel: 'Direkt mit dem Filmemacher', text: 'Keine Agentur dazwischen. Ein Ansprechpartner für alles.' },
     { titel: 'Hamburg & deutschlandweit', text: 'Gedreht wird dort, wo deine Geschichte passiert.' },
   ],
@@ -361,8 +360,8 @@ export const PROBLEM = {
   titel: 'Kommt dir das bekannt vor?',
   karten: [
     'Dein Unternehmen leistet gute Arbeit. Aber online wirkt alles wie bei der Konkurrenz.',
-    'Interessenten verstehen nicht sofort, was euch besonders macht.',
-    'Neue Mitarbeiter kennen eure Kultur nicht.',
+    'Interessenten verstehen nicht sofort, was dein Unternehmen besonders macht.',
+    'Bewerber kennen deine Unternehmenskultur noch nicht.',
     'Es fehlt Vertrauen, bevor das erste Gespräch stattfindet.',
   ],
 };
@@ -381,7 +380,7 @@ export const REFERENZEN = [
   {
     titel: 'Die Goldmalerin',
     text: 'Mehr Vertrauen für Kunden und Geschäftspartner.',
-    art: 'Unternehmensfilm',
+    art: 'Imagefilm', // wie /erfolgsgeschichten/, Leistungsseite und URL (Prüfung 09.11.)
     youtube: 'WExx2qd8Uc0',
     poster: '/medien/clips/goldmalerin.webp',
     clip: '/medien/clips/goldmalerin.mp4',
@@ -411,7 +410,7 @@ export const MENSCH = {
 export const ZIELE = [
   { ziel: 'Ich möchte mehr Kunden gewinnen', loesung: 'Authentische Unternehmensfilme.', href: '/imagefilme/', clip: '/medien/clips/unternehmen.mp4', poster: '/medien/clips/unternehmen.webp', belegt: true, extra: { text: 'Kundenstimmen-Videos', href: '/erfahrungsberichte/' } },
   { ziel: 'Ich möchte Mitarbeiter finden', loesung: 'Recruitingfilme.', href: '/recruitingfilm/', clip: '/medien/clips/recruiting.mp4', poster: '/medien/clips/recruiting.webp', belegt: true },
-  { ziel: 'Ich möchte mein Angebot erklären', loesung: 'Produkt- und Erklärungsvideos.', href: '/kontakt/', clip: '/medien/clips/kundenstimmen.mp4', poster: '/medien/clips/kundenstimmen.webp', belegt: false },
+  { ziel: 'Ich möchte mein Angebot erklären', loesung: 'Produkt- und Erklärvideos.', href: '/kontakt/', clip: '/medien/clips/kundenstimmen.mp4', poster: '/medien/clips/kundenstimmen.webp', belegt: false },
   { ziel: 'Ich möchte ein Event festhalten', loesung: 'Eventfilme.', href: '/veranstaltungsfilm/', clip: '/medien/clips/event.mp4', poster: '/medien/clips/event.webp', belegt: true, platzhalter: '„und Dokumentationen“ (Konzept) bitte bestätigen.' },
   { ziel: 'Ich möchte auf Social Media sichtbar sein', loesung: 'Reels für Social Media.', href: '/services/#reels', clip: '/medien/clips/reel.mp4', poster: '/medien/clips/reel.webp', belegt: true, platzhalter: 'Reel-Beispiele folgen – das Vorschaubild stammt vorerst aus dem Showreel.' }, // Jamil 4346
 ];

@@ -11,7 +11,7 @@ export const GET: APIRoute = ({ site }) => {
 
 - Inhaber: ${INHABER}, Videograf, ${ORT}
 - Kontakt: ${MAIL}
-- Seit 2017 Filme für Unternehmen: Konzept, Dreh, Schnitt, Farbe, Ton und Veröffentlichung aus einer Hand
+- Seit 2017 Filme für Unternehmen, von der Idee bis zum fertigen Film: Konzept, Dreh, Schnitt, Farbe, Ton und Veröffentlichung
 
 ## Einsatzgebiet
 ${EINSATZ.text} Standort: ${HEIMAT.name}. Drehs in ganz Deutschland möglich; die Anreise wird im kostenlosen Erstgespräch mitgeplant.

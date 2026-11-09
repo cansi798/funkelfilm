@@ -46,7 +46,7 @@ const waTitel = "WhatsApp öffnet sich – dabei gelten die Datenschutzregeln vo
   /* „Nach oben“ sitzt am Handy in der Leiste statt schwebend über dem Text (Jamil 4267) */
   .dk-leiste .dk-hoch { flex: 0 0 3.25rem; padding-inline: 0; }
   .dk-leiste.offen .dk-knopf { outline-offset: -3px; }
-  :global(.js) .dk-leiste:not(.sichtbar) { transform: translateY(110%); }
+  :global(.js) .dk-leiste:not(.sichtbar):not(:focus-within) { transform: translateY(110%); } /* mit Tab erreicht → sichtbar (Prüfung 09.11.) */
   @media (min-width: 48rem) { .dk-leiste { display: none; } }
   @media (prefers-reduced-motion: reduce) { .dk-leiste { transition: none; } }
 </style>

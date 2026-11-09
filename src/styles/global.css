@@ -200,3 +200,10 @@ html.stapeln main[data-stapel] > section::after {
 @media (prefers-reduced-motion: reduce) {
   html.stapeln main[data-stapel] > section::after { display: none; }
 }
+/* Tastatur (WCAG 2.2, 2.4.11 – Prüfung 09.11.): Wer mit Tab navigiert, bekommt normales Scrollen ohne Stapel – sonst liegt das
+   fokussierte Element unter dem nächsten Abschnitt. seite.js setzt html.tastatur beim ersten Tab und nimmt es bei Maus/Touch wieder weg.
+   sticky → relative ändert die Seitenhöhe nicht (die natürliche Lage ist dieselbe), es springt also nichts. */
+html.stapeln.tastatur main[data-stapel] > section { position: relative; top: auto; transform: none; }
+html.stapeln.tastatur main[data-stapel] > section::after { display: none; }
+/* Fokus nie unter Kopf oder Handy-Leiste: Abstand oben (Kopf) gilt schon global, unten am Handy die Höhe der festen Leiste */
+@media (max-width: 47.99rem) { html { scroll-padding-bottom: calc(5rem + env(safe-area-inset-bottom)); } }
